@@ -1,0 +1,29 @@
+<<<<<<< HEAD
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+=======
+*~
+*.DS_Store
+*.class
+*.classpath
+*.apk
+*.ap_
+*.dex
+Thumbs.db
+bin/
+gen/
+>>>>>>> Create .gitignore
