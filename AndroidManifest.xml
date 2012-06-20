@@ -3,7 +3,7 @@
     package="com.lukekorth.screennotifications"
     android:versionCode="1"
     android:versionName="0.1" >
-    <uses-sdk android:minSdkVersion="7" />
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />
     
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         
-        <service android:name=".NotificationsCaptureService" >
+        <service android:name=".ScreenNotificationsService" >
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>

@@ -12,7 +12,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.view.accessibility.AccessibilityEvent;
 
-public class NotificationsCaptureService extends AccessibilityService {
+public class ScreenNotificationsService extends AccessibilityService {
 	
 	SensorManager mySensorManager;
 	Sensor myProximitySensor;
@@ -30,8 +30,7 @@ public class NotificationsCaptureService extends AccessibilityService {
 	    setServiceInfo(localAccessibilityServiceInfo);
 
 		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		myProximitySensor = mySensorManager
-				.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+		myProximitySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
 		if (myProximitySensor == null) {
 			sensor = false;
@@ -49,17 +48,14 @@ public class NotificationsCaptureService extends AccessibilityService {
 		if(sensor && !close && !pm.isScreenOn()) {
 			mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 			int time = mPrefs.getInt("time", 10);
-			PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "My Tag");
+			PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
 			wl.acquire();
-			System.out.println("Screen on!");
 			try {
 				Thread.sleep(time * 1000);
 			}
 			catch (Exception e) {}
 			wl.release(); 
 		}
-		
-		
 	}
 
 	@Override
@@ -73,12 +69,10 @@ public class NotificationsCaptureService extends AccessibilityService {
 		@Override
 		public void onSensorChanged(SensorEvent event) {
 			if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-				System.out.println(event.values[0]);
-				if(event.values[0] == 0.0)
+				if(event.values[0] < event.sensor.getMaximumRange())
 					close = true;
 				else
 					close = false;
-				System.out.println(String.valueOf(close));
 			}
 		}
 	};
