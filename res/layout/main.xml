@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-<TextView  
-    android:id="@+id/proximitySensor"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    />
-<TextView  
-    android:id="@+id/proximityMax"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    />
-<TextView  
-    android:id="@+id/proximityReading"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    />
-</LinearLayout>
+<PreferenceScreen xmlns:picker="http://schemas.android.com/apk/res/com.lukekorth.screennotifications" xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Service" >
+         <Preference
+            android:key="service"
+            android:title="Screen Notifications inactive" 
+            android:summary="Click here to activate" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Time to keep screen on" >
+        <com.michaelnovakjr.numberpicker.NumberPickerPreference
+            android:key="time"
+            android:title="Screen wake length"
+            android:summary="Seconds to keep screen on"
+            picker:defaultValue="10"
+            picker:startRange="0"
+            picker:endRange="120" />
+    </PreferenceCategory>
+</PreferenceScreen>
