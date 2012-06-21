@@ -13,21 +13,23 @@ import android.preference.PreferenceManager;
 import android.view.accessibility.AccessibilityEvent;
 
 public class ScreenNotificationsService extends AccessibilityService {
-	
+
 	SensorManager mySensorManager;
 	Sensor myProximitySensor;
 	boolean close, sensor;
 	SharedPreferences mPrefs;
-	
-	 public void onServiceConnected()
-	  {
+
+	public void onServiceConnected()
+	{
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
 		close = false;
-	    AccessibilityServiceInfo localAccessibilityServiceInfo = new AccessibilityServiceInfo();
-	    localAccessibilityServiceInfo.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
-	    localAccessibilityServiceInfo.feedbackType = 16;
-	    localAccessibilityServiceInfo.notificationTimeout = 0L;
-	    localAccessibilityServiceInfo.flags = 1;
-	    setServiceInfo(localAccessibilityServiceInfo);
+		AccessibilityServiceInfo localAccessibilityServiceInfo = new AccessibilityServiceInfo();
+		localAccessibilityServiceInfo.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
+		localAccessibilityServiceInfo.feedbackType = 16;
+		localAccessibilityServiceInfo.notificationTimeout = 0L;
+		localAccessibilityServiceInfo.flags = 1;
+		setServiceInfo(localAccessibilityServiceInfo);
 
 		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		myProximitySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -39,28 +41,29 @@ public class ScreenNotificationsService extends AccessibilityService {
 					myProximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
 			sensor = true;
 		}
-	  }
+	}
 
 	@Override
-	public void onAccessibilityEvent(AccessibilityEvent event) {	
-		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		
-		if(sensor && !close && !pm.isScreenOn()) {
-			mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-			int time = mPrefs.getInt("time", 10);
-			PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
-			wl.acquire();
-			try {
-				Thread.sleep(time * 1000);
+	public void onAccessibilityEvent(AccessibilityEvent event) {
+		if(mPrefs.getBoolean((String) event.getPackageName(), false)) {
+			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+
+			if(sensor && !close && !pm.isScreenOn()) {
+				int time = mPrefs.getInt("time", 10);
+				PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
+				wl.acquire();
+				try {
+					Thread.sleep(time * 1000);
+				}
+				catch (Exception e) {}
+				wl.release();
 			}
-			catch (Exception e) {}
-			wl.release(); 
 		}
 	}
 
 	@Override
 	public void onInterrupt() {}
-	
+
 	SensorEventListener proximitySensorEventListener = new SensorEventListener() {
 
 		@Override

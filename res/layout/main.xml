@@ -6,6 +6,12 @@
             android:title="Screen Notifications inactive" 
             android:summary="Click here to activate" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Apps" >
+        <Preference
+            android:key="app"
+            android:title="Select Apps"
+            android:summary="Select apps that will turn the screen on when they create a notification" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Time to keep screen on" >
         <com.michaelnovakjr.numberpicker.NumberPickerPreference
             android:key="time"
