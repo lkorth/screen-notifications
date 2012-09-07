@@ -3,7 +3,7 @@
     package="com.lukekorth.screennotifications"
     android:versionCode="2"
     android:versionName="0.2" >
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="16" />
     
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
