@@ -14,7 +14,6 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class ScreenNotificationsService extends AccessibilityService {
 
-	SensorManager mySensorManager;
 	Sensor myProximitySensor;
 	boolean close, sensor;
 
@@ -27,7 +26,7 @@ public class ScreenNotificationsService extends AccessibilityService {
 		localAccessibilityServiceInfo.flags = 1;
 		setServiceInfo(localAccessibilityServiceInfo);
 
-		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		SensorManager mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		myProximitySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
 		if (myProximitySensor == null) {
