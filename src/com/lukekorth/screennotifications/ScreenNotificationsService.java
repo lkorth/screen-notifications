@@ -65,7 +65,6 @@ public class ScreenNotificationsService extends AccessibilityService {
 	public void onInterrupt() {}
 
 	SensorEventListener proximitySensorEventListener = new SensorEventListener() {
-
 		@Override
 		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
