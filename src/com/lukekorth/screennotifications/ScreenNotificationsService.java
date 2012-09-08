@@ -17,12 +17,8 @@ public class ScreenNotificationsService extends AccessibilityService {
 	SensorManager mySensorManager;
 	Sensor myProximitySensor;
 	boolean close, sensor;
-	SharedPreferences mPrefs;
 
-	public void onServiceConnected()
-	{
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+	public void onServiceConnected() {
 		close = false;
 		AccessibilityServiceInfo localAccessibilityServiceInfo = new AccessibilityServiceInfo();
 		localAccessibilityServiceInfo.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
@@ -45,6 +41,8 @@ public class ScreenNotificationsService extends AccessibilityService {
 
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
+		SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
 		if(mPrefs.getBoolean((String) event.getPackageName(), false)) {
 			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
