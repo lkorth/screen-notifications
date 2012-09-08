@@ -30,7 +30,7 @@ public class AppsActivity extends PreferenceActivity {
 		root.addPreference(inlinePrefCat);
 
 		final PackageManager pm = getPackageManager();
-		//get a list of installed apps.
+		//get a list of installed apps
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
 
