@@ -48,6 +48,16 @@ public class ScreenNotificationsServiceJB extends AccessibilityService {
 				catch (Exception e) {}
 				wl.release();
 			}
+			else if(sensor == false && !pm.isScreenOn()) {
+				int time = mPrefs.getInt("time", 10);
+				PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
+				wl.acquire();
+				try {
+					Thread.sleep(time * 1000);
+				}
+				catch (Exception e) {}
+				wl.release();
+			}
 		}
 	}
 
