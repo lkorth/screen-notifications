@@ -1,7 +1,6 @@
 package com.lukekorth.screennotifications;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -19,12 +18,6 @@ public class ScreenNotificationsServiceJB extends AccessibilityService {
 
 	public void onServiceConnected() {
 		close = false;
-		AccessibilityServiceInfo localAccessibilityServiceInfo = new AccessibilityServiceInfo();
-		localAccessibilityServiceInfo.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED;
-		localAccessibilityServiceInfo.feedbackType = 16;
-		localAccessibilityServiceInfo.notificationTimeout = 0L;
-		localAccessibilityServiceInfo.flags = 1;
-		setServiceInfo(localAccessibilityServiceInfo);
 
 		SensorManager mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		myProximitySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);

@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppsActivity"></activity>
         
+        <activity android:name=".AppsActivity"></activity>
         
         <service android:name=".ScreenNotificationsService" android:enabled="@bool/is_not_jelly_bean">
             <intent-filter>
@@ -32,6 +32,10 @@
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+            
+	        <meta-data
+	           android:name="android.accessibilityservice"
+	           android:resource="@xml/accessibilityservice" />
         </service>
     </application>
 
