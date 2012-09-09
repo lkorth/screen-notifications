@@ -20,7 +20,15 @@
         </activity>
         <activity android:name=".AppsActivity"></activity>
         
-        <service android:name=".ScreenNotificationsService" >
+        
+        <service android:name=".ScreenNotificationsService" android:enabled="@bool/is_not_jelly_bean">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+        </service>
+        
+        <service android:name=".ScreenNotificationsServiceJB" android:enabled="@bool/is_jelly_bean"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>

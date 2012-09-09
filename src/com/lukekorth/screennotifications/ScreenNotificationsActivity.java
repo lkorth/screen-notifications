@@ -69,9 +69,18 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
 	private boolean isMyServiceRunning() {
 		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		boolean jb = getResources().getBoolean(R.bool.is_jelly_bean);
+
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
-				return true;
+			if(jb) {
+				if (ScreenNotificationsServiceJB.class.getName().equals(service.service.getClassName())) {
+					return true;
+				}
+			}
+			else {
+				if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
+					return true;
+				}
 			}
 		}
 		return false;
