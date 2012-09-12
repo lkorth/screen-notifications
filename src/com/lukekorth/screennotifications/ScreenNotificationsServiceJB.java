@@ -38,7 +38,7 @@ public class ScreenNotificationsServiceJB extends AccessibilityService {
 		if(mPrefs.getBoolean((String) event.getPackageName(), false)) {
 			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
-			if(sensor && !close && !pm.isScreenOn()) {
+			if(sensor && mPrefs.getBoolean("proxSensor", false) == false && !close && !pm.isScreenOn()) {
 				int time = mPrefs.getInt("time", 10);
 				PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
 				wl.acquire();
@@ -48,7 +48,7 @@ public class ScreenNotificationsServiceJB extends AccessibilityService {
 				catch (Exception e) {}
 				wl.release();
 			}
-			else if(sensor == false && !pm.isScreenOn()) {
+			else if((sensor == false || mPrefs.getBoolean("proxSensor", false)) && !pm.isScreenOn()) {
 				int time = mPrefs.getInt("time", 10);
 				PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
 				wl.acquire();
