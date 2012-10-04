@@ -1,0 +1,3 @@
+[submodule "numberpicker"]
+	path = numberpicker
+	url = https://github.com/mrn/numberpicker.git
