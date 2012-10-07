@@ -16,10 +16,12 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
     private boolean close;
 
     public void onServiceConnected() {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if(proximitySensor == null)
+        if(proximitySensor == null || mPrefs.getBoolean("proxSensor", false))
             close = false;
         else
             sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -39,6 +41,10 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
                 else {
                     if(close == false)
                         turnOnScreen(mPrefs, pm);
+
+                    SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+                    Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+                    sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
                 }
             }
         }
