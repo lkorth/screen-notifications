@@ -23,6 +23,8 @@ public class AppsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTitle(R.string.select);
+
         AppLoader task = new AppLoader();
         task.execute();
     }
