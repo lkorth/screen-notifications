@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/inverse_apps" android:title="@string/inverse" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/uncheck_all_apps" android:title="@string/uncheck_all" android:showAsAction="ifRoom"></item>
+    
+
+</menu>

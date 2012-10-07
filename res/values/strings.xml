@@ -3,4 +3,6 @@
     <string name="app_name">Screen Notifications</string>
     <string name="description">Screen Notifications will turn your screen on when you get a 
         notification from the selected apps. The screen will not turn on if your device is in your pocket.</string>
+    <string name="inverse">Inverse</string>
+    <string name="uncheck_all">Uncheck all</string>
 </resources>
