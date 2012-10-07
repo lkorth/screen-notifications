@@ -37,6 +37,9 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
             if(!pm.isScreenOn()) {
                 if(mPrefs.getBoolean("proxSensor", false)) {
                     turnOnScreen(mPrefs, pm);
+
+                    SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+                    sensorManager.unregisterListener(this);
                 }
                 else {
                     if(close == false)
