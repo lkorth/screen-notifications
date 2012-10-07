@@ -13,7 +13,17 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
-    public void onServiceConnected() {}
+    private boolean close;
+
+    public void onServiceConnected() {
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+        if(proximitySensor == null)
+            close = false;
+        else
+            sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -27,15 +37,8 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
                     turnOnScreen(mPrefs, pm);
                 }
                 else {
-                    SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-                    Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-
-                    if(proximitySensor == null) {
+                    if(close == false)
                         turnOnScreen(mPrefs, pm);
-                    }
-                    else {
-                        sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
-                    }
                 }
             }
         }
@@ -62,11 +65,10 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if(event.values[0] < event.sensor.getMaximumRange()) { //Could not unregister here and then screen would turn on as soon as user took out of pocket
-                ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).unregisterListener(this);
+            if(event.values[0] < event.sensor.getMaximumRange()) {
+                close = true;
             } else {
-                ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).unregisterListener(this);
-                turnOnScreen(PreferenceManager.getDefaultSharedPreferences(this), (PowerManager) getSystemService(Context.POWER_SERVICE));
+                close = false;
             }
         }
     }
