@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import java.util.Collections;
 import java.util.List;
 
+//TODO: change to ListActivity so we can use fastScroll and possibly pinned headers
 public class AppsActivity extends PreferenceActivity {
 
     @Override
