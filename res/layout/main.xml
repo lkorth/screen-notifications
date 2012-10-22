@@ -31,4 +31,21 @@
             android:title="Disable Proximity Sensor"
             android:summary="When checked, the screen will always turn on for notifications, even in your pocket" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Quiet Time">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="quiet"
+            android:summary="@string/quietSum"
+            android:title="@string/quietHours" />
+        <com.lukekorth.screennotifications.TimePreference
+            android:defaultValue="22:00"
+            android:key="startTime"
+            android:showDefault="true"
+            android:title="@string/startTime" />
+        <com.lukekorth.screennotifications.TimePreference
+            android:defaultValue="08:00"
+            android:key="stopTime"
+            android:showDefault="true"
+            android:title="@string/stopTime" />
+    </PreferenceCategory>
 </PreferenceScreen>
