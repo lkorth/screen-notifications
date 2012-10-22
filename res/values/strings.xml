@@ -6,4 +6,11 @@
     <string name="select">Select Apps</string>
     <string name="inverse">Inverse</string>
     <string name="uncheck_all">Uncheck all</string>
+    
+    <string name="quietHours">Enable quiet hours</string>
+    <string name="quietSum">Do not turn the screen on between the hours below</string>
+    <string name="startTime">Start quiet hours</string>
+    <string name="stopTime">Stop quiet hours</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
 </resources>
