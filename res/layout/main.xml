@@ -10,7 +10,12 @@
         <Preference
             android:key="app"
             android:title="Select Apps"
-            android:summary="Select apps that will turn the screen on when they create a notification" />
+            android:summary="Select apps that will turn the screen on when they create a notification">
+                 <intent
+                     android:action="android.intent.action.VIEW"
+                     android:targetPackage="com.lukekorth.screennotifications"
+                     android:targetClass="com.lukekorth.screennotifications.AppsActivity" />
+            </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="Options" >
         <com.michaelnovakjr.numberpicker.NumberPickerPreference
