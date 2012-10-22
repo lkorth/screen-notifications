@@ -32,14 +32,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 			}
 		});
 
-		Preference app = (Preference) findPreference("app");
-		app.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			public boolean onPreferenceClick(Preference preference) {
-				Intent myIntent = new Intent(getBaseContext(), AppsActivity.class);
-				startActivity(myIntent);
-				return true;
-			}
-		});
 	}
 
 	public void onResume() {
