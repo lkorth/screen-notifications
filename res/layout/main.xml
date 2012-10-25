@@ -27,6 +27,11 @@
             picker:endRange="120" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="bright"
+            android:title="Full Brightness"
+            android:summary="When checked, the screen will always turn on at full brightness for notifications" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="proxSensor"
             android:title="Disable Proximity Sensor"
             android:summary="When checked, the screen will always turn on for notifications, even in your pocket" />

@@ -89,10 +89,15 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private void turnOnScreen(SharedPreferences mPrefs, PowerManager pm) {
         int time = mPrefs.getInt("time", 10);
 
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
+        PowerManager.WakeLock wl;
+        if(mPrefs.getBoolean("bright", false))
+            wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
+        else
+            wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
         wl.acquire();
         try {
             Thread.sleep(time * 1000);
