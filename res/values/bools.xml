@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!-- 
 Copyright 2012 Luke Korth <korth.luke@gmail.com>
 
@@ -16,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_jelly_bean">false</bool>
     <bool name="is_not_jelly_bean">true</bool>    
