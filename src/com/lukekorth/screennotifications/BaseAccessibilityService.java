@@ -19,6 +19,10 @@
 
 package com.lukekorth.screennotifications;
 
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,17 +32,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
     private boolean close;
 
     public void onServiceConnected() {
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this); 
 
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -117,14 +119,29 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
             wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
         else
             wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
-        wl.acquire();
+        wl.acquire();   
+        
         try {
+        	if(mPrefs.getBoolean("status-bar", false)) {
+	        	Object sbservice = getSystemService("statusbar");
+	        	Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+	        	Method showsb = statusbarManager.getMethod("expand");
+	        	showsb.invoke(sbservice);
+        	}
+        } catch (Exception e) {
+        	Log.d("screen-notifications", "Exception: " + e);
+        }
+        
+        try {    	
             Thread.sleep(time * 1000);
         }
-        catch (Exception e) {}
-        wl.release();
+        catch (Exception e) {
+        }
+        finally {
+        	wl.release();
+        }
     }
-
+        
     @Override
     public void onInterrupt() {}
 

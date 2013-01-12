@@ -31,4 +31,8 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="stopTime">Stop quiet hours</string>
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
+    <string name="statusBar">Open notification tray</string>
+    <string name="statusBarSum">Open the notification tray when the screen is turned on due to a notification. 
+        This is experimental and will only work on a small number of phones. It will not cause any issues if it 
+        does not work on your phone.</string>
 </resources>

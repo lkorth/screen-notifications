@@ -71,4 +71,11 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             android:showDefault="true"
             android:title="@string/stopTime" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Experimental">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="status-bar"
+            android:summary="@string/statusBarSum"
+            android:title="@string/statusBar" />
+    </PreferenceCategory>
 </PreferenceScreen>
