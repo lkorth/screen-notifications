@@ -21,7 +21,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     android:description="@string/description"
     android:accessibilityEventTypes="typeNotificationStateChanged"
     android:accessibilityFlags="flagDefault"
-    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFeedbackType="feedbackVisual"
     android:notificationTimeout="0"
     android:canRetrieveWindowContent="false"
     android:settingsActivity="com.lukekorth.screennotifications.ScreenNotificationsActivity"/>
