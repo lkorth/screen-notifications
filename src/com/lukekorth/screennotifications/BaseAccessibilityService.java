@@ -112,6 +112,14 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
 
     @SuppressWarnings("deprecation")
     private void turnOnScreen(SharedPreferences mPrefs, PowerManager pm) {
+    	if(mPrefs.getBoolean("status-bar", false)) {
+    		try {    	
+                Thread.sleep(3000);
+            }
+            catch (Exception e) {
+            }
+    	}
+    	
         int time = mPrefs.getInt("time", 10);
 
         PowerManager.WakeLock wl;
