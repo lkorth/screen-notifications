@@ -1,3 +1,6 @@
 [submodule "numberpicker"]
 	path = numberpicker
 	url = https://github.com/mrn/numberpicker.git
+[submodule "ez-loaders"]
+	path = ez-loaders
+	url = https://github.com/lkorth/ez-loaders.git
