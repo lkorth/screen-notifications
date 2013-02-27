@@ -39,7 +39,9 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
         
-        <activity android:name=".AppsActivity"></activity>
+        <activity android:name=".AppsActivity" 
+            android:label="@string/select"
+            android:icon="@drawable/ic_launcher" />
         
         <service android:name=".ScreenNotificationsService" android:enabled="@bool/is_not_jelly_bean">
             <intent-filter>

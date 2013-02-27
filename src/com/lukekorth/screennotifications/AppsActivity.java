@@ -19,34 +19,38 @@
 
 package com.lukekorth.screennotifications;
 
-import android.app.ProgressDialog;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: change to ListActivity so we can use fastScroll and possibly pinned headers
-public class AppsActivity extends PreferenceActivity {
+import android.app.ProgressDialog;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.Loader;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.lukekorth.ez_loaders.EzLoader;
+import com.lukekorth.ez_loaders.EzLoaderInterface;
+
+public class AppsActivity extends FragmentActivity implements EzLoaderInterface<Data> {
+	
+	private ProgressDialog mLoadingDialog;
+	private AppAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(R.string.select);
+        setContentView(R.layout.apps);
 
-        AppLoader task = new AppLoader();
-        task.execute();
+        mLoadingDialog = ProgressDialog.show(AppsActivity.this, "", "Loading. Please wait...", true);
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -62,74 +66,100 @@ public class AppsActivity extends PreferenceActivity {
         int itemId = item.getItemId();
         boolean check;
 
-        switch (itemId) {
-
-            case R.id.uncheck_all_apps: case R.id.inverse_apps:
-                PreferenceScreen ps = this.getPreferenceScreen();
-                PreferenceCategory pc = (PreferenceCategory) ps.getPreference(0);
-
-                for (int i = 0; i < pc.getPreferenceCount(); i++) {
-                    Preference preference = pc.getPreference(i);
-
-                    if (preference instanceof CheckBoxPreference) {
-                        CheckBoxPreference checkboxPreference = (CheckBoxPreference) preference;
-
-                        // should've used something like strategy pattern here
-                        if (itemId == R.id.uncheck_all_apps) {
-                            check = false;
-                        } else {
-                            check = !checkboxPreference.isChecked();
-                        }
-
-                        checkboxPreference.setChecked(check);
-                    }
-                }
-
-                return true;
+        if(mAdapter != null) {
+	        switch (itemId) {
+	            case R.id.uncheck_all_apps:
+	            	mAdapter.uncheckAll();
+	            	break;
+	            case R.id.inverse_apps:
+	            	mAdapter.invertSelection();
+	            	break;	            	
+	        }
         }
 
-        return false;
+        return true;
     }
 
-    private class AppLoader extends AsyncTask<Void, Void, Void>{
-        ProgressDialog loadingDialog;
-        PreferenceScreen root;
-
-        protected void onPreExecute() {
-            loadingDialog = ProgressDialog.show(AppsActivity.this, "", "Loading. Please wait...", true);
+	@Override
+	public Loader<Data> onCreateLoader(int arg0, Bundle arg1) {
+		return new EzLoader<Data>(this, "android.intent.action.PACKAGE_ADDED", this);
+	}
+	
+	@Override
+	public Data loadInBackground(int id) {
+		final PackageManager pm = getPackageManager();
+        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
+        
+        Data data = new Data();
+        data.sections = new ArrayList<Section>();
+        data.apps = new App[packages.size()];
+        
+        String lastSection = "";
+        String currentSection;
+        for(int i = 0; i < packages.size(); i++) {
+        	ApplicationInfo appInfo = packages.get(i);
+        	
+        	data.apps[i] = new App();
+        	data.apps[i].name = (String) appInfo.loadLabel(pm);
+        	data.apps[i].packageName = appInfo.packageName;
+        	data.apps[i].icon = appInfo.loadIcon(pm);
+        	
+        	currentSection = data.apps[i].name.substring(0, 1).toUpperCase();
+        	if(!lastSection.equals(currentSection)) {        		
+        		data.sections.add(new Section(i, currentSection));
+        		lastSection = currentSection;
+        	}
         }
+        
+        return data;
+	}
 
-        @Override
-        protected Void doInBackground(Void... nothing) {
-            // Root
-            root = getPreferenceManager().createPreferenceScreen(AppsActivity.this);
+	@Override
+	public void onLoadFinished(Loader<Data> arg0, Data data) {
+		mAdapter = new AppAdapter(this, data);
+		((ListView) findViewById(R.id.appsList)).setAdapter(mAdapter);
+		
+		if(mLoadingDialog.isShowing())
+			mLoadingDialog.cancel();         
+	}
+	
+	@Override
+	public void onLoaderReset(Loader<Data> arg0) {		
+	}
 
-            // Inline preferences
-            PreferenceCategory inlinePrefCat = new PreferenceCategory(AppsActivity.this);
-            inlinePrefCat.setTitle("Apps");
-            root.addPreference(inlinePrefCat);
+	@Override
+	public void onReleaseResources(Data t) {		
+	}
 
-            final PackageManager pm = getPackageManager();
-            //get a list of installed apps
-            List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-            Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
+}
 
-            for (ApplicationInfo packageInfo : packages) {
-                // Checkbox preference
-                CheckBoxPreference checkboxPref = new CheckBoxPreference(AppsActivity.this);
-                checkboxPref.setKey(packageInfo.packageName);
-                checkboxPref.setTitle(packageInfo.loadLabel(pm));
-                inlinePrefCat.addPreference(checkboxPref);
-            }
+class Data {
+	
+	ArrayList<Section> sections;
+	App[] apps;
+	
+}
 
-            return null;
-        }
+class App {
+	
+	String name;
+	String packageName;
+	Drawable icon;
+	
+}
 
-        protected void onPostExecute(Void nothing) {
-            setPreferenceScreen(root);
-            loadingDialog.cancel();
-        }
-
-    }
-
+class Section {
+	
+	int startingIndex;
+	String section;
+	
+	public Section(int startingIndex, String section) {
+		this.startingIndex = startingIndex;
+		this.section = section;
+	}
+	
+	public String toString() {
+		return section;
+	}
 }
