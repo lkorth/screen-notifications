@@ -120,7 +120,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 		
 		holder.icon.setImageDrawable(apps[position].icon);
 		holder.name.setText(apps[position].name);
-		holder.selected.setChecked(mPrefs.getBoolean(apps[position].packageName, false));
+
 		final String packageName = apps[position].packageName;
 		holder.selected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -128,6 +128,8 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 				mPrefs.edit().putBoolean(packageName, isChecked).commit();
 			}
 		});
+		
+		holder.selected.setChecked(mPrefs.getBoolean(apps[position].packageName, false));
 		
 		return convertView;
 	}
