@@ -25,6 +25,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
 
     <application
         android:icon="@drawable/ic_launcher"

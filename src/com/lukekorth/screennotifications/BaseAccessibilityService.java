@@ -30,6 +30,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if(mPrefs.getBoolean((String) event.getPackageName(), false)) {
-            if(shouldTurnOnScreen(mPrefs)) {
+            if(notInCall() && shouldTurnOnScreen(mPrefs)) {
                 PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
                 if(!pm.isScreenOn()) {
@@ -79,6 +80,15 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         }
     }
 
+    private boolean notInCall() {
+    	AudioManager manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    	
+    	if(manager.getMode() == AudioManager.MODE_IN_CALL || manager.getMode() == AudioManager.MODE_IN_COMMUNICATION)
+    		return false;
+	    else
+	    	return true;
+    }
+    
     private boolean shouldTurnOnScreen(SharedPreferences mPrefs) {
         if(mPrefs.getBoolean("quiet", false)) {
             String startTime = mPrefs.getString("startTime", "22:00");
