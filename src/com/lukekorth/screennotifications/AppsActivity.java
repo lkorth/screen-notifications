@@ -105,10 +105,12 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
         	data.apps[i].packageName = appInfo.packageName;
         	data.apps[i].icon = appInfo.loadIcon(pm);
         	
-        	currentSection = data.apps[i].name.substring(0, 1).toUpperCase();
-        	if(!lastSection.equals(currentSection)) {        		
-        		data.sections.add(new Section(i, currentSection));
-        		lastSection = currentSection;
+        	if(data.apps[i].name != null && data.apps[i].name.length() > 0) {
+	        	currentSection = data.apps[i].name.substring(0, 1).toUpperCase();
+	        	if(!lastSection.equals(currentSection)) {        		
+	        		data.sections.add(new Section(i, currentSection));
+	        		lastSection = currentSection;
+	        	}
         	}
         }
         
