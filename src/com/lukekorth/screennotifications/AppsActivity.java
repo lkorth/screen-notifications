@@ -103,7 +103,12 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
         	data.apps[i] = new App();
         	data.apps[i].name = (String) appInfo.loadLabel(pm);
         	data.apps[i].packageName = appInfo.packageName;
-        	data.apps[i].icon = appInfo.loadIcon(pm);
+        	
+        	try {
+        		data.apps[i].icon = appInfo.loadIcon(pm);
+        	} catch (OutOfMemoryError e) {
+        		data.apps[i].icon = this.getResources().getDrawable(R.drawable.sym_def_app_icon);
+        	}
         	
         	if(data.apps[i].name != null && data.apps[i].name.length() > 0) {
 	        	currentSection = data.apps[i].name.substring(0, 1).toUpperCase();
