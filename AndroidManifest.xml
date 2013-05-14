@@ -19,8 +19,8 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lukekorth.screennotifications"
-    android:versionCode="12"
-    android:versionName="0.77" >
+    android:versionCode="13"
+    android:versionName="0.80" >
 
     <uses-sdk
         android:minSdkVersion="7"
