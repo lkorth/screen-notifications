@@ -18,6 +18,12 @@ You should have received a copy of the GNU General Public License
 along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <PreferenceScreen xmlns:picker="http://schemas.android.com/apk/res/com.lukekorth.screennotifications" xmlns:android="http://schemas.android.com/apk/res/android">
+     <PreferenceCategory android:title="Donate" >
+         <Preference
+            android:key="donate"
+            android:title="Donate" 
+            android:summary="Donate to help support app development" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Service" >
          <Preference
             android:key="service"

@@ -29,6 +29,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
@@ -67,6 +68,24 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibilityservice" />
         </service>
+
+        <activity
+            android:name="org.donations.DonationsActivity"
+            android:excludeFromRecents="true"
+            android:label="Donations"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Dialog" />
+
+        <!-- - Google Play Store donations -->
+        <service android:name="org.donations.google.BillingService" />
+
+        <receiver android:name="org.donations.google.BillingReceiver" >
+            <intent-filter>
+                <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+                <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+                <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
