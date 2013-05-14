@@ -6,3 +6,7 @@
 	path = ez-loaders
 	url = https://github.com/lkorth/ez-loaders.git
 	ignore = dirty
+[submodule "android-donations-lib"]
+	path = android-donations-lib
+	url = https://github.com/dschuermann/android-donations-lib.git
+	ignore = dirty
