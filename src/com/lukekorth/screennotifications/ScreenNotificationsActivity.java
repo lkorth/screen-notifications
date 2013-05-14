@@ -19,6 +19,8 @@
 
 package com.lukekorth.screennotifications;
 
+import org.donations.DonationsActivity;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
@@ -44,6 +46,15 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.layout.main);
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        ((Preference) findPreference("donate")).setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				ScreenNotificationsActivity.this
+					.startActivity(new Intent(ScreenNotificationsActivity.this, DonationsActivity.class));
+				return true;
+			}
+        });
 
         service = (Preference) findPreference("service");
         service.setOnPreferenceClickListener(new OnPreferenceClickListener() {
