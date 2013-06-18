@@ -64,7 +64,6 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        boolean check;
 
         if(mAdapter != null) {
 	        switch (itemId) {
