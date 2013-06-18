@@ -21,10 +21,37 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="app_name">Screen Notifications</string>
     <string name="description">Screen Notifications will turn your screen on when you get a 
         notification from the selected apps. The screen will not turn on if your device is in your pocket.</string>
+    <string name="accessibility_launch">You will be now taken to the Accessibility settings. 
+        If you wish to stop Screen Notificaitons, simply turn it off.</string>
+    <string name="accessibility_warning">Clicking ok will take you to the Accessibility settings. 
+        For this app to work you will need to turn on Screen Notifications. 
+        Android will warn you that the app may capture your private data, this app in no way captures any data and has no access to the internet.</string>
+    <string name="active">Screen Notifications active</string>
+    <string name="active_summary">Click here to deactivate</string>
+    <string name="inactive">Screen Notifications inactive</string>
+    <string name="inactive_summary">Click here to activate</string>
+    <string name="ok">Ok</string>
+    <string name="donate">Donate</string>
+    <string name="donate_summary">Donate to help support app development</string>
+    <string name="service">Service</string>
+    <string name="service_title">Screen Notifications inactive</string>
+    <string name="service_summary">Click here to activate</string>
+    <string name="apps">Apps</string>
+    <string name="select_apps">Select Apps</string>
+    <string name="select_apps_summary">Select apps that will turn the screen on when they create a notification</string>
+    <string name="options">Options</string>
+    <string name="wake_length">Screen wake length</string>
+    <string name="wake_length_summary">Seconds to keep screen on</string>
+    <string name="full_brightness">Full Brightness</string>
+    <string name="full_brightness_summary">When checked, the screen will always turn on at full brightness for notifications</string>
+    <string name="disable_sensor">Disable Proximity Sensor</string>
+    <string name="disable_sensor_summary">When checked, the screen will always turn on for notifications, even in your pocket</string>
+    <string name="quiet_time">Quiet Time</string>
+    <string name="experimental">Experimental</string>
     <string name="select">Select Apps</string>
     <string name="inverse">Inverse</string>
     <string name="uncheck_all">Uncheck all</string>
-    
+    <string name="loading">Loading. Please wait...</string>
     <string name="quietHours">Enable quiet hours</string>
     <string name="quietSum">Do not turn the screen on between the hours below</string>
     <string name="startTime">Start quiet hours</string>
