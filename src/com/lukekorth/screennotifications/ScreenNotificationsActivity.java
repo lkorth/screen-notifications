@@ -60,9 +60,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         service.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 if(active)
-                    showDialog("You will be now taken to the Accessibility settings. If you wish to stop Screen Notificaitons, simply turn it off.");
+                    showDialog(R.string.accessibility_launch);
                 else
-                    showDialog("Clicking ok will take you to the Accessibility settings. For this app to work you will need to turn on Screen Notifications. Android will warn you that the app may capture your private data, this app in no way captures any data and has no access to the internet.");
+                    showDialog(R.string.accessibility_warning);
 
                 return true;
             }
@@ -88,12 +88,12 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         super.onResume();
         active = isMyServiceRunning();
         if(active) {
-            service.setTitle("Screen Notifications active");
-            service.setSummary("Click here to deactivate");
+            service.setTitle(R.string.active);
+            service.setSummary(R.string.active_summary);
         }
         else {
-            service.setTitle("Screen Notifications inactive");
-            service.setSummary("Click here to activate");
+            service.setTitle(R.string.inactive);
+            service.setSummary(R.string.inactive_summary);
         }
     }
 
@@ -120,7 +120,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
     private void showDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message).setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface alertDialog, int id) {
                 alertDialog.cancel();
                 startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));

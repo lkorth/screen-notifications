@@ -17,50 +17,52 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<PreferenceScreen xmlns:picker="http://schemas.android.com/apk/res/com.lukekorth.screennotifications" xmlns:android="http://schemas.android.com/apk/res/android">
-     <PreferenceCategory android:title="Donate" >
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:picker="http://schemas.android.com/apk/res/com.lukekorth.screennotifications">
+     <PreferenceCategory android:title="@string/donate" >
          <Preference
             android:key="donate"
-            android:title="Donate" 
-            android:summary="Donate to help support app development" />
+            android:title="@string/donate" 
+            android:summary="@string/donate_summary" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Service" >
+    <PreferenceCategory android:title="@string/service" >
          <Preference
             android:key="service"
-            android:title="Screen Notifications inactive" 
-            android:summary="Click here to activate" />
+            android:title="@string/service_title" 
+            android:summary="@string/service_summary" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Apps" >
+    <PreferenceCategory android:title="@string/apps" >
         <Preference
             android:key="app"
-            android:title="Select Apps"
-            android:summary="Select apps that will turn the screen on when they create a notification">
+            android:title="@string/select_apps"
+            android:summary="@string/select_apps_summary">
                  <intent
                      android:action="android.intent.action.VIEW"
                      android:targetPackage="com.lukekorth.screennotifications"
                      android:targetClass="com.lukekorth.screennotifications.AppsActivity" />
             </Preference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Options" >
+    <PreferenceCategory android:title="@string/options" >
         <com.michaelnovakjr.numberpicker.NumberPickerPreference
             android:key="time"
-            android:title="Screen wake length"
-            android:summary="Seconds to keep screen on"
+            android:title="@string/wake_length"
+            android:summary="@string/wake_length_summary"
             picker:defaultValue="10"
             picker:startRange="0"
             picker:endRange="120" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="bright"
-            android:title="Full Brightness"
-            android:summary="When checked, the screen will always turn on at full brightness for notifications" />
+            android:title="@string/full_brightness"
+            android:summary="@string/full_brightness_summary" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="proxSensor"
-            android:title="Disable Proximity Sensor"
-            android:summary="When checked, the screen will always turn on for notifications, even in your pocket" />
+            android:title="@string/disable_sensor"
+            android:summary="@string/disable_sensor_summary" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Quiet Time">
+    <PreferenceCategory android:title="@string/quiet_time">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="quiet"
@@ -77,7 +79,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             android:showDefault="true"
             android:title="@string/stopTime" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Experimental">
+    <PreferenceCategory android:title="@string/experimental">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="status-bar"

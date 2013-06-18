@@ -49,7 +49,7 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
 
         setContentView(R.layout.apps);
 
-        mLoadingDialog = ProgressDialog.show(AppsActivity.this, "", "Loading. Please wait...", true);
+        mLoadingDialog = ProgressDialog.show(AppsActivity.this, "", getString(R.string.loading), true);
         getSupportLoaderManager().initLoader(0, null, this);
     }
 
