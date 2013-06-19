@@ -63,6 +63,18 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
         This is experimental and will only work on a small number of phones. It will not cause any issues if it 
         does not work on your phone.</string>
         
+    <string name="donations__button_close">Close</string>
+    <string name="donations__description">Do you find this application useful?\n Support it\'s development by sending donations to the developer!</string>
+    <string name="donations__google_android_market">Google Play Store</string>
+    <string name="donations__google_android_market_not_supported_title">In-App Donations are not supported</string>
+    <string name="donations__google_android_market_not_supported">In-App Donations are not supported. Is Google Play Store installed correctly?</string>
+    <string name="donations__google_android_market_description">Google takes 30 % off every donation!</string>
+    <string name="donations__google_android_market_donate_button">Donate!</string>
+    <string name="donations__google_android_market_text">How much?</string>
+
+    <string name="donations__thanks_dialog_title">Thanks!</string>
+    <string name="donations__thanks_dialog">Thanks for donating!\nI really appreciate this!</string>
+        
     <string name="market_description">
         A very simple app that turns your screen on for a specified period time when you get a notification. 
         If your device is in your pocket or the proximity sensor is otherwise covered, the screen will not turn on.
