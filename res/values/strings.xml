@@ -30,7 +30,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="active_summary">Click here to deactivate</string>
     <string name="inactive">Screen Notifications inactive</string>
     <string name="inactive_summary">Click here to activate</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="donate">Donate</string>
     <string name="donate_summary">Donate to help support app development</string>
     <string name="service">Service</string>
