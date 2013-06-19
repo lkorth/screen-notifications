@@ -60,9 +60,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         service.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 if(active)
-                    showDialog(R.string.accessibility_launch);
+                    showServiceDialog(R.string.accessibility_launch);
                 else
-                    showDialog(R.string.accessibility_warning);
+                    showServiceDialog(R.string.accessibility_warning);
 
                 return true;
             }
@@ -118,7 +118,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         }
     }
 
-    private void showDialog(String message) {
+    private void showServiceDialog(int message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface alertDialog, int id) {
