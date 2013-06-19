@@ -33,6 +33,8 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -150,13 +152,30 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         	Log.d("screen-notifications", "Exception: " + e);
         }
         
+        int origTimeout = -1;
+        try {
+			origTimeout = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT);
+			Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 100);
+		} catch (SettingNotFoundException e1) {
+			// ignore
+		}
+        
         try {    	
             Thread.sleep(time * 1000);
-        }
-        catch (Exception e) {
-        }
-        finally {
+        } catch (Exception e) {
+        	// ignore
+        } finally {
         	wl.release();
+        }
+        
+        try {
+        	Thread.sleep(200);
+        } catch (Exception e) {
+        	// ignore
+        }
+        
+        if(origTimeout != -1) {
+        	Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, origTimeout);
         }
     }
         
