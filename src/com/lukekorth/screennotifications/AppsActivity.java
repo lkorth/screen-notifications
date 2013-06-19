@@ -165,6 +165,13 @@ class Section {
 		this.section = section;
 	}
 	
+	public boolean equals(Object obj) {
+		if(this.section.equals(((Section) obj).section))
+			return true;		
+		
+		return false;
+	}
+	
 	public String toString() {
 		return section;
 	}
