@@ -127,8 +127,8 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
     	if(mPrefs.getBoolean("status-bar", false)) {
     		try {    	
                 Thread.sleep(3000);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
+            	// ignore
             }
     	}
     	
@@ -141,15 +141,15 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
             wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
         wl.acquire();   
         
-        try {
-        	if(mPrefs.getBoolean("status-bar", false)) {
+        if(mPrefs.getBoolean("status-bar", false)) {
+	        try {
 	        	Object sbservice = getSystemService("statusbar");
 	        	Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
 	        	Method showsb = statusbarManager.getMethod("expand");
 	        	showsb.invoke(sbservice);
-        	}
-        } catch (Exception e) {
-        	Log.d("screen-notifications", "Exception: " + e);
+	        } catch (Exception e) {
+	        	// ignore
+	        }
         }
         
         int origTimeout = -1;
