@@ -85,7 +85,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public long getItemId(int position) {
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -95,10 +95,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public int getSectionForPosition(int position) {
-		if (apps[position].name != null && apps[position].name.length() > 0)
-			sections.get(sections.indexOf(new Section(0, apps[position].name.substring(0, 1).toUpperCase())));
-		
-		return 0;
+		return sections.indexOf(new Section(0, apps[position].name.substring(0, 1).toUpperCase()));
 	}
 
 	@Override
