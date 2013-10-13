@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
+Copyright 2012 Luke Korth <korth.luke@gmail.com>
+
+This file is part of Screen Notifications.
+
+Screen Notifications is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Screen Notifications is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+  <string name="app_name">Screen Notifications</string>
+  <string name="description">Screen Notification zapne Váš displej při oznámení ze zvolené aplikace. Displej se nezapne, když máte zařízení v kapse.</string>
+  <string name="accessibility_launch">Nyní přejede do nastavení zabezpečení telefonu.\nJestli budete chtít zastavit Screen Notifications, jednoduše ho vypněte.</string>
+  <string name="accessibility_warning">Stisknutím na OK, přejdeme do nastavení systému - Usnadnění.\nAby byla aplikace funkční je potřeba zde Screen Notification povolit.\nAndroid Vás bude varovat, že aplikace může zaznamenávat Vaše data, ale tato aplikace nezaznamenává žádná data ani nevyžaduje přístup k internetu.</string>
+  <string name="active">Screen Notifications zapnuto</string>
+  <string name="active_summary">Stiskni zde pro vypnutí</string>
+  <string name="inactive">Screen Notifications vypnuto</string>
+  <string name="inactive_summary">Stiskni zde pro zapnutí</string>
+  <string name="ok">OK</string>
+  <string name="donate">Donate</string>
+  <string name="donate_summary">Přispějte na vývoj aplikace</string>
+  <string name="service">Služby</string>
+  <string name="service_title">Screen Notifications vypnuto</string>
+  <string name="service_summary">Stiskni zde pro zapnutí</string>
+  <string name="apps">Aplikace</string>
+  <string name="select_apps">Vyber aplikace</string>
+  <string name="select_apps_summary">Vyber aplikace které zapnout displej při oznámení</string>
+  <string name="options">Nastavení</string>
+  <string name="wake_length">Doba probuzení displeje</string>
+  <string name="wake_length_summary">Čas zapnutí displeje v sekundách</string>
+  <string name="full_brightness">Maximální jas</string>
+  <string name="full_brightness_summary">Při zaškrtnutí bude displej zapnutý s maximálním jasem</string>
+  <string name="disable_sensor">Vypnutí Proximity senzoru</string>
+  <string name="disable_sensor_summary">Pokud je zaškrtnuto zapne se displej při oznámení, i když máte telefon v kapse</string>
+  <string name="quiet_time">Noční režim</string>
+  <string name="experimental">Experimentální funkce</string>
+  <string name="select">Vyber aplikace</string>
+  <string name="inverse">Inverzní</string>
+  <string name="uncheck_all">Zruš vše</string>
+  <string name="loading">Nahráván. Prosím čekejte...</string>
+  <string name="quietHours">Povolit noční režim</string>
+  <string name="quietSum">Nezapínat obrazovku v následující době</string>
+  <string name="startTime">Začátek nočního režimu</string>
+  <string name="stopTime">Konec nočního režimu</string>
+  <string name="set">Nastav</string>
+  <string name="cancel">Zruš</string>
+  <string name="statusBar">Otevření notifikační lišty</string>
+  <string name="statusBarSum">Otevře notifikační lištu když oznámení zapne displej.\nToto je experimentální funkce, která bude fungovat jen na některých telefonech.</string>
+  <string name="donations__button_close">Zavři</string>
+  <string name="donations__description">Připadá Vám aplikace užitečná?\nPodpoře vývojáře zasláním příspěvku!</string>
+  <string name="donations__google_android_market">Obchod Google Play</string>
+  <string name="donations__google_android_market_not_supported_title">Příspěvky v aplikací nejsou podporovány</string>
+  <string name="donations__google_android_market_not_supported">Příspěvky v aplikací nejsou podporovány. Máte správně nainstalovány Google Play?</string>
+  <string name="donations__google_android_market_description">Google si bere 30 % o z každého příspěvku!</string>
+  <string name="donations__google_android_market_donate_button">Donate</string>
+  <string name="donations__google_android_market_text">Kolik?</string>
+  <string name="donations__thanks_dialog_title">Děkuji!</string>
+  <string name="donations__thanks_dialog">Děkuji za příspěvek!\nOpravdu si toho vážím!</string>
+  <string name="market_description">\n        Jednoduchá aplikace která zapne displej při oznámení z vybraných aplikací. Když je telefon v kapse nebo pouzdře tak se díky proximity senzoru displej nezapne.\n\n\n\t\tNápady a přání jsou vítány. Prosím pište mi na email. \n\t\t\n\t\tJestli chcete pomocí s překladem, navštivte následující web: \n\t\thttps://raw.github.com/lkorth/screen-notifications/master/res/values/strings.xml\n\n\t\tJestli narazíte na chybu nebo problém, zastihnete mě na github:\n\t\thttps://github.com/lkorth/screen-notifications\n    </string>
+</resources>
