@@ -81,8 +81,8 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 
 		Any ideas or feature requests are welcome, please email me with them.
 		
-		If you would like to translate this app, the file to translate can be found here: 
-		https://raw.github.com/lkorth/screen-notifications/master/res/values/strings.xml
+		If you would like to translate this app, please visit the following link: 
+		https://www.transifex.com/projects/p/screen-notifications/
 
 		If you have issues or enhancements, fork me on github:
 		https://github.com/lkorth/screen-notifications
