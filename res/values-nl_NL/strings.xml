@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
+Copyright 2012 Luke Korth <korth.luke@gmail.com>
+
+This file is part of Screen Notifications.
+
+Screen Notifications is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Screen Notifications is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+  <string name="app_name">Scherm Notificaties</string>
+  <string name="description">Scherm Notificaties zal u scherm aan zetten als u een notificatie krijgt van een geselecteerde app. U scherm zal niet aan gaan als u apparaat in u zak zit.</string>
+  <string name="accessibility_launch">U gaat nu naar de toegankelijkheids instellingen. \n Indien u wenst te stoppen met Scherm Notificaties, sluit dan simpel het programma af.</string>
+  <string name="accessibility_warning">Klikt u op OK dan zult u naar de toegankelijkheids instellingen gaan. \n Om deze app te laten werken dient u scherm notificaties te activeren. \n Android zal u waarschuwen dat de app mogelijk prive data opslaat, deze app slaat op geen enkele manier gegevens op en maakt ook geen verbinding met het internet.</string>
+  <string name="active">Scherm Notificaties actief</string>
+  <string name="active_summary">Klik hier om te deactiveren</string>
+  <string name="inactive">Scherm Notificaties inactief</string>
+  <string name="inactive_summary">Klik hier om te activeren</string>
+  <string name="ok">OK</string>
+  <string name="donate">Doneer</string>
+  <string name="donate_summary">Doneer om verdere ontwikkeling van de app te steunen</string>
+  <string name="service">Service</string>
+  <string name="service_title">Scherm Notificaties inactief</string>
+  <string name="service_summary">Klik hier om te activeren</string>
+  <string name="apps">Apps</string>
+  <string name="select_apps">Selecteer een Apps</string>
+  <string name="select_apps_summary">Selecteer apps waarvan u een scherm notificatie wil</string>
+  <string name="options">Opties</string>
+  <string name="wake_length">Lengte van actief scherm</string>
+  <string name="wake_length_summary">Secondes om scherm actief te houden</string>
+  <string name="full_brightness">Volledige helderheid</string>
+  <string name="full_brightness_summary">Wanneer geactiveerd, zal het scherm altijd op volle helderheid gaan voor de nofiticaties</string>
+  <string name="disable_sensor">Deactiveer omgeving sensor</string>
+  <string name="disable_sensor_summary">Wanneer geactiveerd, zal het scherm aan gaan voor notificaties. Ook als deze in u zak zit</string>
+  <string name="quiet_time">Rust tijd</string>
+  <string name="experimental">Experiment</string>
+  <string name="select">Selecteer Apps</string>
+  <string name="inverse">Omgekeerd</string>
+  <string name="uncheck_all">Deactiveer alles</string>
+  <string name="loading">Laden. Moment geduld...</string>
+  <string name="quietHours">Activeer rust tijd</string>
+  <string name="quietSum">Zet het scherm niet aan tussen de volgende tijden</string>
+  <string name="startTime">Begin rust tijd</string>
+  <string name="stopTime">Einde rust tijd</string>
+  <string name="set">Instellen</string>
+  <string name="cancel">Annuleren</string>
+  <string name="statusBar">Open notificatie scherm</string>
+  <string name="statusBarSum">Open de notificatie scherm wanneer het scherm geactiveerd wordt voor een notificatie. \n Dit is nog in ontwikkeling en werkt momenteel alleen op een aantal telefoons. Het zal geen problemen veroorzaken indien het niet werkt op u telefoon.</string>
+  <string name="donations__button_close">Sluiten</string>
+  <string name="donations__description">Vind u deze applicatie handig?\n Steun onze onwikkeling door geld te doneren aan onze ontwikkelaars!</string>
+  <string name="donations__google_android_market">Google Play Store</string>
+  <string name="donations__google_android_market_not_supported_title">In-App Doneren wordt helaas niet ondersteund</string>
+  <string name="donations__google_android_market_not_supported">In-App Doneren wordt helaas niet ondersteund. Is Google Play Store correct geïnstalleerd?</string>
+  <string name="donations__google_android_market_description">Google neemt 30% van alle donaties!</string>
+  <string name="donations__google_android_market_donate_button">Doneren!</string>
+  <string name="donations__google_android_market_text">Hoeveel?</string>
+  <string name="donations__thanks_dialog_title">Dank u wel!</string>
+  <string name="donations__thanks_dialog">Bedankt voor u donatie! Wij zijn u erg dankbaar!</string>
+</resources>
