@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
+Copyright 2012 Luke Korth <korth.luke@gmail.com>
+
+This file is part of Screen Notifications.
+
+Screen Notifications is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Screen Notifications is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+  <string name="app_name">Screen Notifications</string>
+  <string name="description">Screen Notifications accenderà il tuo schermo quando riceverai una\nnotifica dalle app selezionate. Lo schermo non si accenderà se il tuo dispositivo è in tasca.</string>
+  <string name="accessibility_launch">Ora sarai portato alle impostazioni di Accessibilità.        \nSe vuoi disattivare Screen Notificaitons, semplicemente impostalo su OFF.</string>
+  <string name="accessibility_warning">Cliccando ok verrai portato alle impostazioni di Accessibilità. \nPer far si che questa app funzioni dovrai impostare Screen Notifications su ON.\nAndroid ti avvertirà che alcune app potrebbero acquisire informazioni riservate, ma questa non accede né a informazioni personali né a internet.</string>
+  <string name="active">Screen Notifications attivo</string>
+  <string name="active_summary">Tocca qui per disattivare</string>
+  <string name="inactive">Screen Notifications inattivo</string>
+  <string name="inactive_summary">Tocca qui per attivare</string>
+  <string name="ok">OK</string>
+  <string name="donate">Dona</string>
+  <string name="donate_summary">Dona per supportare lo sviluppo dell\'applicazione</string>
+  <string name="service">Servizio</string>
+  <string name="service_title">Screen Notifications inattivo</string>
+  <string name="service_summary">Tocca qui per attivare</string>
+  <string name="apps">Applicazioni</string>
+  <string name="select_apps">Seleziona Applicazioni</string>
+  <string name="select_apps_summary">Seleziona le app che desideri accendano lo schermo alla ricezione di una nuova notifica</string>
+  <string name="options">Opzioni</string>
+  <string name="wake_length">Durata accensione schermo</string>
+  <string name="wake_length_summary">Per quanti secondi lo schermo sarà acceso</string>
+  <string name="full_brightness">Luminosità Massima</string>
+  <string name="full_brightness_summary">Se selezionato, lo schermo si accenderà sempre a luminosità massima alla ricezione di notifiche</string>
+  <string name="disable_sensor">Disattiva Sensore di Prossimità</string>
+  <string name="disable_sensor_summary">Se selezionato, lo schermo si accenderà sempre alla ricezione di notifiche, anche se è in tasca</string>
+  <string name="quiet_time">Periodo di Quiete</string>
+  <string name="experimental">Sperimentale</string>
+  <string name="select">Seleziona Applicazioni</string>
+  <string name="inverse">Inverti</string>
+  <string name="uncheck_all">Deseleziona tutte</string>
+  <string name="loading">Caricamento. Attendi prego...</string>
+  <string name="quietHours">Attiva Periodo di Quiete</string>
+  <string name="quietSum">Non accendere lo schermo durante questo periodo</string>
+  <string name="startTime">Inizio periodo di quiete</string>
+  <string name="stopTime">Fine periodo di quiete</string>
+  <string name="set">Imposta</string>
+  <string name="cancel">Annulla</string>
+  <string name="statusBar">Apri centro notifiche</string>
+  <string name="statusBarSum">Apri il centro notifiche quando lo schermo è acceso da una notifica. \nQuesta opzione è sperimentale e funzionerà solo su alcuni cellulari. Non causerà comunque problemi \nse non supporta il tuo cellulare</string>
+  <string name="donations__button_close">Chiudi</string>
+  <string name="donations__description">Trovi questa applicazione utile?\nSupporta il suo sviluppo inviando una donazione allo sviluppatore!</string>
+  <string name="donations__google_android_market">Google Play Store</string>
+  <string name="donations__google_android_market_not_supported_title">Le donazioni In-App non sono supportate</string>
+  <string name="donations__google_android_market_not_supported">Le donazioni In-App non sono supportate. Google Play Store è installato correttamente?</string>
+  <string name="donations__google_android_market_description">Google prende il 30 % di ogni donazione!</string>
+  <string name="donations__google_android_market_donate_button">Dona!</string>
+  <string name="donations__google_android_market_text">Quanto?</string>
+  <string name="donations__thanks_dialog_title">Grazie!</string>
+  <string name="donations__thanks_dialog">Grazie per la donazione!\nLo apprezzo moltissimo!</string>
+</resources>
