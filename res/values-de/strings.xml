@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
+Copyright 2012 Luke Korth <korth.luke@gmail.com>
+
+This file is part of Screen Notifications.
+
+Screen Notifications is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Screen Notifications is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+  <string name="description">Screen Notifications schaltet Dein Display an, wenn Du eine Benachrichtigung von vorab ausgewählten Apps erhältst. Das Display schaltet sich nicht ein, wenn das Gerät in Deiner Tasche ist.</string>
+  <string name="accessibility_launch">Es werden jetzt die Einstellungen zu den Eingabehilfen angezeigt.\nWenn Du Screen Notifications deaktivieren möchtest, schalte es einfach aus.</string>
+  <string name="accessibility_warning">Als nächstes werden die Einstellungen zu den Eingabehilfen angezeigt.\nDamit diese App funktioniert musst Du Screen Notifications dort einschalten.\nAndroid wird Dich warnen, dass die App private Daten abfangen könnte, wenn Du diese Funktion aktivierst; es werden durch diese App keine Daten auf irgend eine Weise gespeichert, noch hat sie Zugriff auf das Internet.</string>
+  <string name="active">Screen Notifications aktiv</string>
+  <string name="active_summary">Klick hier zum Deaktivieren</string>
+  <string name="inactive">Screen Notifications inaktiv</string>
+  <string name="inactive_summary">Klicke hier zum Aktivieren</string>
+  <string name="ok">OK</string>
+  <string name="donate">Spenden</string>
+  <string name="donate_summary">Spende um die Weiterenwicklung zu unterstützen</string>
+  <string name="service">Dienst</string>
+  <string name="service_title">Screen Notifications inaktiv</string>
+  <string name="service_summary">Klicke hier zum Aktivieren</string>
+  <string name="apps">Apps</string>
+  <string name="select_apps">Wähle Apps</string>
+  <string name="select_apps_summary">Wähle Apps aus, deren Benachrichtigungen das Display einschalten sollen</string>
+  <string name="options">Optionen</string>
+  <string name="wake_length">Display Aufwachzeit</string>
+  <string name="wake_length_summary">Dauer in Sekunden für Displayaktivierung</string>
+  <string name="full_brightness">Volle Helligkeit</string>
+  <string name="full_brightness_summary">Wenn aktiviert wird das Display immer mit voller Helligkeit bei Benachrichtigungen eingeschaltet</string>
+  <string name="inverse">Umkehren</string>
+  <string name="loading">Lade. Bitte warten...</string>
+  <string name="quietHours">Ruhezeit einschalten</string>
+  <string name="quietSum">Das Display wird während der Ruhezeiten nicht durch Benachrichtigungen eingeschaltet</string>
+  <string name="statusBarSum">Öffnet die Benachrichtigungsleiste wenn das Display durch eine Benachrichtigung aktiviert wird.\nDies ist experimentell und wird nur bei wenigen Telefonen funktionieren. Andererseits wird es keine Probleme bereiten, falls es auf diesem Telefon nicht funktioniert.</string>
+  <string name="donations__google_android_market_not_supported_title">In-App Spenden werden nicht unterstützt</string>
+  <string name="donations__google_android_market_not_supported">In-App Spenden werden nicht unterstützt. Ist der Google Play Store korrekt installiert?</string>
+  <string name="donations__google_android_market_donate_button">Spenden!</string>
+  <string name="donations__google_android_market_text">Wieviel?</string>
+  <string name="donations__thanks_dialog_title">Danke!</string>
+  <string name="donations__thanks_dialog">Danke für Deine Spende!\nIch weiß das wirklich zu schätzen!</string>
+</resources>
