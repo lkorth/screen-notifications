@@ -35,7 +35,6 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
