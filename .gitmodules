@@ -1,8 +1,0 @@
-[submodule "numberpicker"]
-	path = numberpicker
-	url = https://github.com/mrn/numberpicker.git
-	ignore = dirty
-[submodule "android-donations-lib"]
-	path = android-donations-lib
-	url = https://github.com/dschuermann/android-donations-lib.git
-	ignore = dirty
