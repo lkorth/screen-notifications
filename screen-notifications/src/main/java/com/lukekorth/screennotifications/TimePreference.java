@@ -30,7 +30,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class TimePreference extends DialogPreference {
-	protected int lastHour=0;
+
+    protected int lastHour=0;
 	protected int lastMinute=0;
 	protected boolean is24HourFormat;
 	protected TimePicker picker=null;

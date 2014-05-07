@@ -35,14 +35,13 @@ import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.NumberPicker;
 
 import com.lukekorth.screennotifications.util.IabHelper;
 import com.lukekorth.screennotifications.util.IabResult;
 
-public class ScreenNotificationsActivity extends PreferenceActivity implements IabHelper.OnIabSetupFinishedListener {
+public class ScreenNotificationsActivity extends PreferenceActivity {
 
-    private boolean active;
-    private Preference service;
 
     private static final String ONE_DOLLAR = "$1";
     private static final String TWO_DOLLARS = "$2";
@@ -59,12 +58,16 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements I
     public static final String[] DONATION_ITEMS = { ONE_DOLLAR_ITEM, TWO_DOLLARS_ITEM,
                                             THREE_DOLLARS_ITEM, FIVE_DOLLARS_ITEM, TEN_DOLLARS_ITEM };
 
+    private SharedPreferences mPrefs;
+    private boolean active;
+    private Preference service;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.layout.main);
 
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         findPreference("donate").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
@@ -125,14 +128,19 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements I
             public boolean onPreferenceClick(Preference preference) {
                 LayoutInflater inflater = (LayoutInflater)
                         getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View npView = inflater.inflate(R.layout.number_picker_dialog, null);
+                View numberPickerView = inflater.inflate(R.layout.number_picker_dialog, null);
+
+                final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
+                numberPicker.setValue(mPrefs.getInt("time", 10));
+
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle(R.string.wake_length)
-                        .setView(npView)
+                        .setView(numberPickerView)
                         .setPositiveButton(R.string.ok,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-
+                                        dialog.dismiss();
+                                        mPrefs.edit().putInt("time", numberPicker.getValue()).commit();
                                     }
                                 })
                         .setNegativeButton(R.string.cancel,
