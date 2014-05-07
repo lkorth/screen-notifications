@@ -42,22 +42,6 @@ import com.lukekorth.screennotifications.util.IabResult;
 
 public class ScreenNotificationsActivity extends PreferenceActivity {
 
-
-    private static final String ONE_DOLLAR = "$1";
-    private static final String TWO_DOLLARS = "$2";
-    private static final String THREE_DOLLARS = "$3";
-    private static final String FIVE_DOLLARS = "$5";
-    private static final String TEN_DOLLARS = "$10";
-    private static final String[] DONATION_AMOUNTS = { ONE_DOLLAR, TWO_DOLLARS, THREE_DOLLARS,
-            FIVE_DOLLARS, TEN_DOLLARS };
-    private static final String ONE_DOLLAR_ITEM = "screennotifications.donation.1";
-    private static final String TWO_DOLLARS_ITEM = "screennotifications.donation.2";
-    private static final String THREE_DOLLARS_ITEM = "screennotifications.donation.3";
-    private static final String FIVE_DOLLARS_ITEM = "screennotifications.donation.5";
-    private static final String TEN_DOLLARS_ITEM = "screennotifications.donation.10";
-    public static final String[] DONATION_ITEMS = { ONE_DOLLAR_ITEM, TWO_DOLLARS_ITEM,
-                                            THREE_DOLLARS_ITEM, FIVE_DOLLARS_ITEM, TEN_DOLLARS_ITEM };
-
     private SharedPreferences mPrefs;
     private boolean active;
     private Preference service;
@@ -74,9 +58,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle("Select a donation amount")
-                        .setItems(DONATION_AMOUNTS, new DialogInterface.OnClickListener() {
+                        .setItems(getResources().getStringArray(R.array.amounts), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                final String purchaseItem = DONATION_ITEMS[which];
+                                final String purchaseItem = getResources().getStringArray(R.array.billing_items)[which];
 
                                 final IabHelper iabHelper = new IabHelper(ScreenNotificationsActivity.this, getString(R.string.billing_public_key));
                                 iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
