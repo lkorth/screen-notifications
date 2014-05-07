@@ -1,1 +1,1 @@
-include 'screen-notifications'
+include 'screen-notifications', 'ScreenNotifications'
