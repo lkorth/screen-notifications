@@ -44,9 +44,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements I
     private boolean active;
     private Preference service;
 
-    private IabHelper mHelper;
-    private boolean mMakePurchase = false;
-    private String purchaseItem;
     private static final String ONE_DOLLAR = "$1";
     private static final String TWO_DOLLARS = "$2";
     private static final String THREE_DOLLARS = "$3";
@@ -76,8 +73,16 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements I
                         .setTitle("Select a donation amount")
                         .setItems(DONATION_AMOUNTS, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                purchaseItem = DONATION_ITEMS[which];
-                                makePurchase();
+                                final String purchaseItem = DONATION_ITEMS[which];
+
+                                final IabHelper iabHelper = new IabHelper(ScreenNotificationsActivity.this, getString(R.string.billing_public_key));
+                                iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                                    @Override
+                                    public void onIabSetupFinished(IabResult result) {
+                                        iabHelper.launchPurchaseFlow(ScreenNotificationsActivity.this,
+                                                purchaseItem, 1, null, "donate");
+                                    }
+                                });
                             }
                         })
                         .create()
@@ -154,42 +159,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements I
             service.setTitle(R.string.inactive);
             service.setSummary(R.string.inactive_summary);
         }
-    }
-
-    private void initialize() {
-        disposeHelper();
-        mHelper = new IabHelper(this, getString(R.string.billing_public_key));
-        mHelper.startSetup(this);
-    }
-
-    private void makePurchase() {
-        if(!mMakePurchase) {
-            mMakePurchase = true;
-            initialize();
-        } else {
-            mMakePurchase = false;
-            mHelper.launchPurchaseFlow(this, purchaseItem, 1, null, "donate");
-        }
-    }
-
-    @Override
-    public void onIabSetupFinished(IabResult result) {
-        if(result.isSuccess()) {
-            if(mMakePurchase)
-                makePurchase();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        disposeHelper();
-    }
-
-    private void disposeHelper() {
-        if (mHelper != null)
-            mHelper.dispose();
-        mHelper = null;
     }
 
     private String handleTime(String time) {
