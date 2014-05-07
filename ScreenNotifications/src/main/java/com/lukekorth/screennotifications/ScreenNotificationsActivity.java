@@ -132,6 +132,8 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
                 final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
                 numberPicker.setValue(mPrefs.getInt("time", 10));
+                numberPicker.setMinValue(1);
+                numberPicker.setMaxValue(600);
 
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle(R.string.wake_length)
