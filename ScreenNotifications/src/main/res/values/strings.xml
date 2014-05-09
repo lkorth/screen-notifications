@@ -33,6 +33,9 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="ok">OK</string>
     <string name="donate">Donate</string>
     <string name="donate_summary">Donate to help support app development</string>
+    <string name="select_an_amount">Select a donation amount</string>
+    <string name="there_was_a_problem">There was a problem</string>
+    <string name="failed_billing">There was a problem trying to make a donation, your phone may not support in app billing or there may be a problem communicating with the server. Please try again later</string>
     <string name="service">Service</string>
     <string name="service_title">Screen Notifications inactive</string>
     <string name="service_summary">Click here to activate</string>

@@ -53,31 +53,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        findPreference("donate").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new AlertDialog.Builder(ScreenNotificationsActivity.this)
-                        .setTitle("Select a donation amount")
-                        .setItems(getResources().getStringArray(R.array.amounts), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String purchaseItem = getResources().getStringArray(R.array.billing_items)[which];
-
-                                final IabHelper iabHelper = new IabHelper(ScreenNotificationsActivity.this, getString(R.string.billing_public_key));
-                                iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                                    @Override
-                                    public void onIabSetupFinished(IabResult result) {
-                                        iabHelper.launchPurchaseFlow(ScreenNotificationsActivity.this,
-                                                purchaseItem, 1, null, "donate");
-                                    }
-                                });
-                            }
-                        })
-                        .create()
-                        .show();
-
-                return true;
-            }
-        });
+        initializeDonateIfAvailable();
 
         service = findPreference("service");
         service.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -153,6 +129,47 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
             service.setTitle(R.string.inactive);
             service.setSummary(R.string.inactive_summary);
         }
+    }
+
+    private void initializeDonateIfAvailable() {
+        findPreference("donate").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(ScreenNotificationsActivity.this)
+                        .setTitle(R.string.select_an_amount)
+                        .setItems(getResources().getStringArray(R.array.amounts), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                final String purchaseItem = getResources().getStringArray(R.array.billing_items)[which];
+
+                                final IabHelper iabHelper = new IabHelper(ScreenNotificationsActivity.this, getString(R.string.billing_public_key));
+                                iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                                    @Override
+                                    public void onIabSetupFinished(IabResult result) {
+                                        if (result.isSuccess()) {
+                                            iabHelper.launchPurchaseFlow(ScreenNotificationsActivity.this,
+                                                    purchaseItem, 1, null, "donate");
+                                        } else {
+                                            new AlertDialog.Builder(ScreenNotificationsActivity.this)
+                                                    .setTitle(R.string.there_was_a_problem)
+                                                    .setMessage(R.string.failed_billing)
+                                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .create()
+                        .show();
+
+                return true;
+            }
+        });
     }
 
     private String handleTime(String time) {
