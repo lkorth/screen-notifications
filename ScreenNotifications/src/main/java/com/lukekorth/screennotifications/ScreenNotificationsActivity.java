@@ -156,9 +156,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     }
 
     private String handleTime(String time) {
-        String[] timeParts=time.split(":");
-        int lastHour=Integer.parseInt(timeParts[0]);
-        int lastMinute=Integer.parseInt(timeParts[1]);
+        String[] timeParts = time.split(":");
+        int lastHour = Integer.parseInt(timeParts[0]);
+        int lastMinute = Integer.parseInt(timeParts[1]);
 
         boolean is24HourFormat = DateFormat.is24HourFormat(this);
 
@@ -177,33 +177,34 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     }
 
     private void showServiceDialog(int message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface alertDialog, int id) {
-                alertDialog.cancel();
-                startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface alertDialog, int id) {
+                        alertDialog.cancel();
+                        startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                    }
+                })
+                .show();
     }
 
     private boolean isMyServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        boolean jb = getResources().getBoolean(R.bool.is_jelly_bean);
+        boolean isJellyBean = getResources().getBoolean(R.bool.is_jelly_bean);
 
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if(jb) {
+            if(isJellyBean) {
                 if (ScreenNotificationsServiceJB.class.getName().equals(service.service.getClassName())) {
                     return true;
                 }
-            }
-            else {
+            } else {
                 if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 }
