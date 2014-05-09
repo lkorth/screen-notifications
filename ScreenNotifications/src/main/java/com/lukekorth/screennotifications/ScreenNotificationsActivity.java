@@ -82,8 +82,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         start.setOnPreferenceChangeListener(listener);
         stop.setOnPreferenceChangeListener(listener);
 
-        Preference time = findPreference("time");
-        time.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference("time").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 LayoutInflater inflater = (LayoutInflater)
@@ -91,26 +90,26 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 View numberPickerView = inflater.inflate(R.layout.number_picker_dialog, null);
 
                 final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
-                numberPicker.setValue(mPrefs.getInt("time", 10));
                 numberPicker.setMinValue(1);
                 numberPicker.setMaxValue(900);
+                numberPicker.setValue(mPrefs.getInt("time", 10));
 
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle(R.string.wake_length)
                         .setView(numberPickerView)
-                        .setPositiveButton(R.string.ok,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        dialog.dismiss();
-                                        mPrefs.edit().putInt("time", numberPicker.getValue()).commit();
-                                    }
-                                })
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                mPrefs.edit().putInt("time", numberPicker.getValue()).commit();
+                                dialog.dismiss();
+                            }
+                        })
                         .setNegativeButton(R.string.cancel,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         dialog.dismiss();
                                     }
-                                })
+                                }
+                        )
                         .show();
 
                 return true;
