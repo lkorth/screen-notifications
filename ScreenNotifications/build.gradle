@@ -43,7 +43,7 @@ dependencies {
 // and https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
 gradle.taskGraph.whenReady { taskGraph ->
     // Only execute when we are trying to assemble a release build
-    if(taskGraph.hasTask(':screen-notifications:assembleRelease') || taskGraph.hasTask(':screen-notifications:installRelease')) {
+    if(taskGraph.hasTask(':ScreenNotifications:assembleRelease') || taskGraph.hasTask(':ScreenNotifications:installRelease')) {
         def password = ''
 
         if(System.console() == null) {
