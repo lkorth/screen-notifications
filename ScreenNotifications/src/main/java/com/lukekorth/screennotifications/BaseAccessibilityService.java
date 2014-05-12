@@ -19,10 +19,6 @@
 
 package com.lukekorth.screennotifications;
 
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,11 +27,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.view.accessibility.AccessibilityEvent;
+
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
@@ -141,14 +142,7 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         wl.acquire();   
         
         if(mPrefs.getBoolean("status-bar", false)) {
-	        try {
-	        	Object sbservice = getSystemService("statusbar");
-	        	Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
-	        	Method showsb = statusbarManager.getMethod("expand");
-	        	showsb.invoke(sbservice);
-	        } catch (Exception e) {
-	        	// ignore
-	        }
+            expandStatusBar();
         }
         
         int origTimeout = -1;
@@ -175,6 +169,24 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
         
         if(origTimeout != -1) {
         	Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, origTimeout);
+        }
+    }
+
+    private void expandStatusBar() {
+        try {
+            Object statusbarService = getSystemService("statusbar");
+            Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+
+            Method showStatusbar;
+            if (Build.VERSION.SDK_INT >= 17) {
+                showStatusbar = statusbarManager.getMethod("expandNotificationsPanel");
+            } else {
+                showStatusbar = statusbarManager.getMethod("expand");
+            }
+
+            showStatusbar.invoke(statusbarService);
+        } catch (Exception e) {
+            // ignore
         }
     }
         
