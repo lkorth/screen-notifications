@@ -56,14 +56,4 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
   <string name="cancel">Annuleren</string>
   <string name="statusBar">Open notificatie scherm</string>
   <string name="statusBarSum">Open de notificatie scherm wanneer het scherm geactiveerd wordt voor een notificatie. \n Dit is nog in ontwikkeling en werkt momenteel alleen op een aantal telefoons. Het zal geen problemen veroorzaken indien het niet werkt op u telefoon.</string>
-  <string name="donations__button_close">Sluiten</string>
-  <string name="donations__description">Vind u deze applicatie handig?\n Steun onze onwikkeling door geld te doneren aan onze ontwikkelaars!</string>
-  <string name="donations__google_android_market">Google Play Store</string>
-  <string name="donations__google_android_market_not_supported_title">In-App Doneren wordt helaas niet ondersteund</string>
-  <string name="donations__google_android_market_not_supported">In-App Doneren wordt helaas niet ondersteund. Is Google Play Store correct geïnstalleerd?</string>
-  <string name="donations__google_android_market_description">Google neemt 30% van alle donaties!</string>
-  <string name="donations__google_android_market_donate_button">Doneren!</string>
-  <string name="donations__google_android_market_text">Hoeveel?</string>
-  <string name="donations__thanks_dialog_title">Dank u wel!</string>
-  <string name="donations__thanks_dialog">Bedankt voor u donatie! Wij zijn u erg dankbaar!</string>
 </resources>

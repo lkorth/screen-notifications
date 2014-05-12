@@ -56,15 +56,5 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
   <string name="cancel">Zruš</string>
   <string name="statusBar">Otevření notifikační lišty</string>
   <string name="statusBarSum">Otevře notifikační lištu když oznámení zapne displej.\nToto je experimentální funkce, která bude fungovat jen na některých telefonech.</string>
-  <string name="donations__button_close">Zavři</string>
-  <string name="donations__description">Připadá Vám aplikace užitečná?\nPodpoře vývojáře zasláním příspěvku!</string>
-  <string name="donations__google_android_market">Obchod Google Play</string>
-  <string name="donations__google_android_market_not_supported_title">Příspěvky v aplikací nejsou podporovány</string>
-  <string name="donations__google_android_market_not_supported">Příspěvky v aplikací nejsou podporovány. Máte správně nainstalovány Google Play?</string>
-  <string name="donations__google_android_market_description">Google si bere 30 % o z každého příspěvku!</string>
-  <string name="donations__google_android_market_donate_button">Donate</string>
-  <string name="donations__google_android_market_text">Kolik?</string>
-  <string name="donations__thanks_dialog_title">Děkuji!</string>
-  <string name="donations__thanks_dialog">Děkuji za příspěvek!\nOpravdu si toho vážím!</string>
   <string name="market_description">\n        Jednoduchá aplikace která zapne displej při oznámení z vybraných aplikací.  \n        Když je telefon v kapse nebo pouzdře tak se díky proximity senzoru displej nezapne.\n\n\t\tNápady a přání jsou vítány.\n\t\t\n\t\tProsím pište mi na email. Jestli chcete pomocí s překladem, navštivte následující web: \n\t\thttps://www.transifex.com/projects/p/screen-notifications/\n\n\t\tJestli narazíte na chybu nebo problém, zastihnete mě na github: \n\t\thttps://github.com/lkorth/screen-notifications\n    </string>
 </resources>

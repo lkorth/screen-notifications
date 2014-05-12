@@ -44,10 +44,4 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
   <string name="quietHours">Ruhezeit einschalten</string>
   <string name="quietSum">Das Display wird während der Ruhezeiten nicht durch Benachrichtigungen eingeschaltet</string>
   <string name="statusBarSum">Öffnet die Benachrichtigungsleiste wenn das Display durch eine Benachrichtigung aktiviert wird.\nDies ist experimentell und wird nur bei wenigen Telefonen funktionieren. Andererseits wird es keine Probleme bereiten, falls es auf diesem Telefon nicht funktioniert.</string>
-  <string name="donations__google_android_market_not_supported_title">In-App Spenden werden nicht unterstützt</string>
-  <string name="donations__google_android_market_not_supported">In-App Spenden werden nicht unterstützt. Ist der Google Play Store korrekt installiert?</string>
-  <string name="donations__google_android_market_donate_button">Spenden!</string>
-  <string name="donations__google_android_market_text">Wieviel?</string>
-  <string name="donations__thanks_dialog_title">Danke!</string>
-  <string name="donations__thanks_dialog">Danke für Deine Spende!\nIch weiß das wirklich zu schätzen!</string>
 </resources>
