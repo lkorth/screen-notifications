@@ -35,7 +35,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile files('libs/ez-loaders.jar')
+    compile 'com.lukekorth:ez-loaders:1.3'
 }
 
 
