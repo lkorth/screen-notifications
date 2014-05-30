@@ -19,12 +19,11 @@
 
 package com.lukekorth.screennotifications;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class AppAdapter extends BaseAdapter implements SectionIndexer {
 	
@@ -95,7 +96,13 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 
 	@Override
 	public int getSectionForPosition(int position) {
-		return sections.indexOf(new Section(0, apps[position].name.substring(0, 1).toUpperCase()));
+        if (!TextUtils.isEmpty(apps[position].name))
+		    return sections.indexOf(new Section(0, apps[position].name.substring(0, 1).toUpperCase()));
+
+        if (position == 0)
+            return 0;
+        else
+            return sections.size();
 	}
 
 	@Override
