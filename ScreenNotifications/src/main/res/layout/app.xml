@@ -23,8 +23,10 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher" />
     
 	<CheckBox
