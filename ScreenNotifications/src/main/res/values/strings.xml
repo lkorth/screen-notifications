@@ -19,6 +19,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <resources>
     <string name="app_name">Screen Notifications</string>
+    <string name="rate">Rate Screen Notifications</string>
     <string name="description">Screen Notifications will turn your screen on when you get a 
         notification from the selected apps. The screen will not turn on if your device is in your pocket.</string>
     <string name="accessibility_launch">You will be now taken to the Accessibility settings. 

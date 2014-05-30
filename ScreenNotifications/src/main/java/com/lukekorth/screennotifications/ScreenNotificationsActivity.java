@@ -40,6 +40,9 @@ import android.widget.NumberPicker;
 import com.lukekorth.screennotifications.util.IabHelper;
 import com.lukekorth.screennotifications.util.IabResult;
 
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
+
 public class ScreenNotificationsActivity extends PreferenceActivity {
 
     private SharedPreferences mPrefs;
@@ -115,6 +118,12 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 return true;
             }
         });
+
+        AppRate.with(this)
+                .text(R.string.rate)
+                .initialLaunchCount(3)
+                .retryPolicy(RetryPolicy.EXPONENTIAL)
+                .checkAndShow();
     }
 
     public void onResume() {
