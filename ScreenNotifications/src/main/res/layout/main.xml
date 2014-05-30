@@ -55,7 +55,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/full_brightness"
             android:summary="@string/full_brightness_summary" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
             android:summary="@string/disable_sensor_summary" />
