@@ -33,5 +33,4 @@ public class ScreenNotificationsService extends BaseAccessibilityService {
         localAccessibilityServiceInfo.notificationTimeout = 0L;
         setServiceInfo(localAccessibilityServiceInfo);
     }
-
 }

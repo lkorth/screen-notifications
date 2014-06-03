@@ -28,10 +28,14 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             android:summary="@string/donate_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/service" >
-         <Preference
+         <CheckBoxPreference
             android:key="service"
             android:title="@string/service_title" 
             android:summary="@string/service_summary" />
+        <CheckBoxPreference
+            android:key="device_admin"
+            android:title="@string/admin_title"
+            android:summary="@string/admin_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/apps" >
         <Preference
@@ -46,9 +50,8 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/options" >
         <Preference
-            android:key="time"
-            android:title="@string/wake_length"
-            android:summary="@string/wake_length_summary" />
+            android:key="wake_length"
+            android:title="@string/wake_length" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="bright"

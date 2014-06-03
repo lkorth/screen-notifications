@@ -22,11 +22,15 @@ package com.lukekorth.screennotifications;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -45,9 +49,16 @@ import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
 public class ScreenNotificationsActivity extends PreferenceActivity {
 
+    private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
+
     private SharedPreferences mPrefs;
-    private boolean active;
-    private Preference service;
+
+    private boolean mServiceActive;
+    private CheckBoxPreference mServicePreference;
+
+    private DevicePolicyManager mDPM;
+    private ComponentName mDeviceAdmin;
+    private CheckBoxPreference mDeviceAdminPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,19 +68,106 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         initializeDonateIfAvailable();
+        initializeService();
+        initializeDeviceAdmin();
+        initializeTime();
 
-        service = findPreference("service");
-        service.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        AppRate.with(this)
+                .text(R.string.rate)
+                .initialLaunchCount(3)
+                .retryPolicy(RetryPolicy.EXPONENTIAL)
+                .checkAndShow();
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        checkForRunningService();
+        checkForActiveDeviceAdmin();
+    }
+
+    private void initializeService() {
+        mServicePreference = (CheckBoxPreference) findPreference("service");
+        mServicePreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                if(active)
+                if (mServiceActive) {
                     showServiceDialog(R.string.accessibility_launch);
-                else
+                } else {
                     showServiceDialog(R.string.accessibility_warning);
+                }
 
-                return true;
+                // don't update checkbox until we're really active
+                return false;
             }
         });
+    }
 
+    private void checkForRunningService() {
+        mServiceActive = isMyServiceRunning();
+        if(mServiceActive) {
+            mServicePreference.setChecked(true);
+            enableOptions(true);
+        }
+        else {
+            mServicePreference.setChecked(false);
+            enableOptions(false);
+        }
+    }
+
+    private void initializeDeviceAdmin() {
+        mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDeviceAdmin = new ComponentName(this, CustomDeviceAdminReceiver.class);
+        mDeviceAdminPreference = (CheckBoxPreference) findPreference("device_admin");
+
+        mDeviceAdminPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if ((Boolean) newValue) {
+                    // Launch the activity to have the user enable our admin.
+                    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
+                    intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, R.string.device_admin_explanation);
+                    startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+
+                    // don't update checkbox until we're really active
+                    return false;
+                } else {
+                    mDPM.removeActiveAdmin(mDeviceAdmin);
+                    enableScreenTimeoutOption(false);
+
+                    return true;
+                }
+            }
+        });
+    }
+
+    private void checkForActiveDeviceAdmin() {
+        if(mDPM.isAdminActive(mDeviceAdmin)) {
+            mDeviceAdminPreference.setChecked(true);
+            enableScreenTimeoutOption(true);
+        } else {
+            mDeviceAdminPreference.setChecked(false);
+            enableScreenTimeoutOption(false);
+        }
+    }
+
+    private void enableScreenTimeoutOption(boolean enable) {
+        Preference wakeLength = findPreference("wake_length");
+        wakeLength.setEnabled(enable);
+
+        if (enable) {
+            setWakeLengthSummary();
+        } else {
+            wakeLength.setSummary(R.string.disabled_wake_length);
+        }
+    }
+
+    private void setWakeLengthSummary() {
+        findPreference("wake_length").setSummary(getString(R.string.wake_length_summary) + " " +
+                mPrefs.getInt("wake_length", 10) + " " + getString(R.string.wake_length_summary_2));
+    }
+
+    private void initializeTime() {
         OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -85,7 +183,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         start.setOnPreferenceChangeListener(listener);
         stop.setOnPreferenceChangeListener(listener);
 
-        findPreference("time").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference("wake_length").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 LayoutInflater inflater = (LayoutInflater)
@@ -95,14 +193,15 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
                 numberPicker.setMinValue(1);
                 numberPicker.setMaxValue(900);
-                numberPicker.setValue(mPrefs.getInt("time", 10));
+                numberPicker.setValue(mPrefs.getInt("wake_length", 10));
 
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle(R.string.wake_length)
                         .setView(numberPickerView)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                mPrefs.edit().putInt("time", numberPicker.getValue()).commit();
+                                mPrefs.edit().putInt("wake_length", numberPicker.getValue()).commit();
+                                setWakeLengthSummary();
                                 dialog.dismiss();
                             }
                         })
@@ -118,25 +217,17 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
-        AppRate.with(this)
-                .text(R.string.rate)
-                .initialLaunchCount(3)
-                .retryPolicy(RetryPolicy.EXPONENTIAL)
-                .checkAndShow();
     }
 
-    public void onResume() {
-        super.onResume();
-        active = isMyServiceRunning();
-        if(active) {
-            service.setTitle(R.string.active);
-            service.setSummary(R.string.active_summary);
-        }
-        else {
-            service.setTitle(R.string.inactive);
-            service.setSummary(R.string.inactive_summary);
-        }
+    private void enableOptions(boolean enable) {
+        findPreference("app").setEnabled(enable);
+        findPreference("wake_length").setEnabled(enable);
+        findPreference("bright").setEnabled(enable);
+        findPreference("proxSensor").setEnabled(enable);
+        findPreference("quiet").setEnabled(enable);
+        findPreference("startTime").setEnabled(enable);
+        findPreference("stopTime").setEnabled(enable);
+        findPreference("status-bar").setEnabled(enable);
     }
 
     private void initializeDonateIfAvailable() {
@@ -231,5 +322,34 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         }
 
         return false;
+    }
+
+    public static class CustomDeviceAdminReceiver extends DeviceAdminReceiver {
+
+        @Override
+        public void onEnabled(Context context, Intent intent) {}
+
+        @Override
+        public CharSequence onDisableRequested(Context context, Intent intent) {
+            ComponentName deviceAdmin = new ComponentName(context, CustomDeviceAdminReceiver.class);
+            ((DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE)).removeActiveAdmin(deviceAdmin);
+
+            return null;
+        }
+
+        @Override
+        public void onDisabled(Context context, Intent intent) {}
+
+        @Override
+        public void onPasswordChanged(Context context, Intent intent) {}
+
+        @Override
+        public void onPasswordFailed(Context context, Intent intent) {}
+
+        @Override
+        public void onPasswordSucceeded(Context context, Intent intent) {}
+
+        @Override
+        public void onPasswordExpiring(Context context, Intent intent) {}
     }
 }

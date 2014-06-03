@@ -27,10 +27,7 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="accessibility_warning">Clicking ok will take you to the Accessibility settings. 
         For this app to work you will need to turn on Screen Notifications. 
         Android will warn you that the app may capture your private data, this app in no way captures any data and has no access to the internet.</string>
-    <string name="active">Screen Notifications active</string>
-    <string name="active_summary">Click here to deactivate</string>
-    <string name="inactive">Screen Notifications inactive</string>
-    <string name="inactive_summary">Click here to activate</string>
+    <string name="device_admin_explanation">Screen Notifications needs device admin access to turn off your screen after a notification</string>
     <string name="ok">OK</string>
     <string name="donate">Donate</string>
     <string name="donate_summary">Donate to help support app development</string>
@@ -38,14 +35,18 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
     <string name="there_was_a_problem">There was a problem</string>
     <string name="failed_billing">There was a problem trying to make a donation, your phone may not support in app billing or there may be a problem communicating with the server. Please try again later</string>
     <string name="service">Service</string>
-    <string name="service_title">Screen Notifications inactive</string>
-    <string name="service_summary">Click here to activate</string>
+    <string name="service_title">Screen Notifications Service</string>
+    <string name="service_summary">Enable to turn on Screen Notifications</string>
+    <string name="admin_title">Device Admin</string>
+    <string name="admin_summary">Enable to allow shorter screen timeouts</string>
     <string name="apps">Apps</string>
     <string name="select_apps">Select Apps</string>
     <string name="select_apps_summary">Select apps that will turn the screen on when they create a notification</string>
     <string name="options">Options</string>
     <string name="wake_length">Screen wake length</string>
-    <string name="wake_length_summary">Seconds to keep screen on</string>
+    <string name="wake_length_summary">Keep screen on for</string>
+    <string name="wake_length_summary_2">seconds after notification</string>
+    <string name="disabled_wake_length">Device Admin option must be enabled first</string>
     <string name="full_brightness">Full Brightness</string>
     <string name="full_brightness_summary">When checked, the screen will always turn on at full brightness for notifications</string>
     <string name="disable_sensor">Disable Proximity Sensor</string>
