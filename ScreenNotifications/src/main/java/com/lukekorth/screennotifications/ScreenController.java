@@ -34,8 +34,11 @@ import android.view.accessibility.AccessibilityEvent;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executors;
 
 public class ScreenController {
+
+    private static long sLastNotification;
 
     private Context mContext;
     private SharedPreferences mPrefs;
@@ -50,9 +53,15 @@ public class ScreenController {
     }
 
     public void processNotification(AccessibilityEvent notificationEvent) {
+        ScreenController.sLastNotification = System.currentTimeMillis();
         if(mPrefs.getBoolean(notificationEvent.getPackageName().toString(), false) &&
                 shouldTurnOnScreen()) {
-            turnOnScreen();
+            Executors.newSingleThreadExecutor().submit(new Runnable() {
+                @Override
+                public void run() {
+                    turnOnScreen();
+                }
+            });
         }
     }
 
@@ -79,14 +88,14 @@ public class ScreenController {
         ComponentName deviceAdmin =
                 new ComponentName(mContext, ScreenNotificationsActivity.CustomDeviceAdminReceiver.class);
 
-        int wakeLength;
-        if (dpm.isAdminActive(deviceAdmin)) {
-            wakeLength = mPrefs.getInt("wake_length", 10);
-        } else {
-            wakeLength = 10;
-        }
+        long desiredWakeLength = mPrefs.getInt("wake_length", 10) * 1000;
+        long actualWakeLength = desiredWakeLength;
+        do {
+            SystemClock.sleep(actualWakeLength);
+            actualWakeLength = ScreenController.sLastNotification + desiredWakeLength -
+                    System.currentTimeMillis();
+        } while (actualWakeLength > 1000);
 
-        SystemClock.sleep(wakeLength * 1000);
         wakeLock.release();
 
         if (dpm.isAdminActive(deviceAdmin) && isDeviceLocked()) {
