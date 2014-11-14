@@ -1,14 +1,12 @@
-import groovy.swing.SwingBuilder
-
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1.1'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 17
         versionName "0.11.0"
     }
@@ -35,7 +33,7 @@ android {
 
 dependencies {
     compile 'com.lukekorth:ez-loaders:1.3'
-    compile 'fr.nicolaspomepuy:discreetapprate:2.0+@aar'
+    compile 'fr.nicolaspomepuy:discreetapprate:2.0@aar'
 }
 
 
@@ -44,31 +42,7 @@ dependencies {
 gradle.taskGraph.whenReady { taskGraph ->
     // Only execute when we are trying to assemble a release build
     if(taskGraph.hasTask(':ScreenNotifications:assembleRelease') || taskGraph.hasTask(':ScreenNotifications:installRelease')) {
-        def password = ''
-
-        if(System.console() == null) {
-            new SwingBuilder().edt {
-                dialog(modal: true, // Otherwise the build will continue running before you closed the dialog
-                        title: 'Enter password',
-                        alwaysOnTop: true,
-                        resizable: false,
-                        locationRelativeTo: null, // Place dialog in center of the screen
-                        pack: true, // We need to pack the dialog (so it will take the size of it's children)
-                        show: true
-                ) {
-                    vbox { // Put everything below each other
-                        label(text: "Please enter key passphrase:")
-                        input = passwordField()
-                        button(defaultButton: true, text: 'OK', actionPerformed: {
-                            password = input.password;
-                            dispose();
-                        })
-                    }
-                }
-            }
-        } else {
-            password = System.console().readPassword("\nPlease enter key passphrase: ")
-        }
+        def password = System.console().readPassword("\nPlease enter key passphrase: ")
 
         if(password.size() <= 0) {
             throw new InvalidUserDataException("You must enter a password to proceed.")
