@@ -30,36 +30,53 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
-    private boolean mListening;
-    private boolean mClose;
-
-    public void onServiceConnected() {
-        handleListenerRegistration();
-    }
+    private String mPackageName;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        new ScreenController(this, mClose).processNotification(event);
-        handleListenerRegistration();
+        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+            if (isProximitySensorEnabled()) {
+                mPackageName = event.getPackageName().toString();
+                if (!registerProximitySensorListener()) {
+                    new ScreenController(this, false).processNotification(mPackageName);
+                    mPackageName = null;
+                }
+            } else {
+                new ScreenController(this, false).processNotification(mPackageName);
+                mPackageName = null;
+            }
+        }
     }
 
-    private void handleListenerRegistration() {
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            unregisterProximitySensorListener();
+
+            boolean close = event.values[0] < event.sensor.getMaximumRange();
+            new ScreenController(this, close).processNotification(mPackageName);
+            mPackageName = null;
+        }
+    }
+
+    private boolean isProximitySensorEnabled() {
+        return !PreferenceManager.getDefaultSharedPreferences(this).getBoolean("proxSensor", true);
+    }
+
+    private boolean registerProximitySensorListener() {
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if(proximitySensor == null ||
-                PreferenceManager.getDefaultSharedPreferences(this).getBoolean("proxSensor", true)) {
-            if (mListening) {
-                sensorManager.unregisterListener(this);
-            }
-            mListening = false;
-            mClose = false;
+        if (proximitySensor == null) {
+            return false;
         } else {
-            if (!mListening) {
-                sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
-            }
-            mListening = true;
+            sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+            return true;
         }
+    }
+
+    private void unregisterProximitySensorListener() {
+        ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).unregisterListener(this);
     }
 
     @Override
@@ -68,14 +85,4 @@ public class BaseAccessibilityService extends AccessibilityService implements Se
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if(event.values[0] < event.sensor.getMaximumRange()) {
-                mClose = true;
-            } else {
-                mClose = false;
-            }
-        }
-    }
 }

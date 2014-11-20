@@ -29,7 +29,6 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.view.accessibility.AccessibilityEvent;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -52,11 +51,9 @@ public class ScreenController {
         mCloseToProximitySensor = closeToProximitySensor;
     }
 
-    public void processNotification(AccessibilityEvent notificationEvent) {
+    public void processNotification(String packageName) {
         ScreenController.sLastNotificationTime = System.currentTimeMillis();
-        if(notificationEvent != null && notificationEvent.getPackageName() != null &&
-           mPrefs.getBoolean(notificationEvent.getPackageName().toString(), false) &&
-                shouldTurnOnScreen()) {
+        if(packageName != null && mPrefs.getBoolean(packageName, false) && shouldTurnOnScreen()) {
             Executors.newSingleThreadExecutor().submit(new Runnable() {
                 @Override
                 public void run() {
