@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.lukekorth.screennotifications.util;
+package com.lukekorth.screennotifications.billing;
 
 /**
  * Represents the result of an in-app billing operation.

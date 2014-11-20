@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.lukekorth.screennotifications.util;
+package com.lukekorth.screennotifications.billing;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -41,8 +41,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.lukekorth.screennotifications.util.IabHelper;
-import com.lukekorth.screennotifications.util.IabResult;
+import com.lukekorth.screennotifications.billing.IabHelper;
+import com.lukekorth.screennotifications.billing.IabResult;
 
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
