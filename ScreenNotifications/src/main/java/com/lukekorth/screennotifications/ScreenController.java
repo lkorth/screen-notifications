@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
 
 public class ScreenController {
 
-    private static long sLastNotification;
+    private static long sLastNotificationTime;
 
     private Context mContext;
     private SharedPreferences mPrefs;
@@ -53,8 +53,9 @@ public class ScreenController {
     }
 
     public void processNotification(AccessibilityEvent notificationEvent) {
-        ScreenController.sLastNotification = System.currentTimeMillis();
-        if(mPrefs.getBoolean(notificationEvent.getPackageName().toString(), false) &&
+        ScreenController.sLastNotificationTime = System.currentTimeMillis();
+        if(notificationEvent != null && notificationEvent.getPackageName() != null &&
+           mPrefs.getBoolean(notificationEvent.getPackageName().toString(), false) &&
                 shouldTurnOnScreen()) {
             Executors.newSingleThreadExecutor().submit(new Runnable() {
                 @Override
@@ -92,7 +93,7 @@ public class ScreenController {
         long actualWakeLength = desiredWakeLength;
         do {
             SystemClock.sleep(actualWakeLength);
-            actualWakeLength = ScreenController.sLastNotification + desiredWakeLength -
+            actualWakeLength = ScreenController.sLastNotificationTime + desiredWakeLength -
                     System.currentTimeMillis();
         } while (actualWakeLength > 1000);
 
