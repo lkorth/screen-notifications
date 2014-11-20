@@ -54,6 +54,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     private SharedPreferences mPrefs;
 
     private boolean mServiceActive;
+    private boolean mSupportsNotificationListenerService = false;
     private CheckBoxPreference mServicePreference;
 
     private DevicePolicyManager mDPM;
@@ -67,10 +68,14 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        initializeDonateIfAvailable();
+        if (android.os.Build.VERSION.SDK_INT >= 18) {
+            mSupportsNotificationListenerService = true;
+        }
+
         initializeService();
         initializeDeviceAdmin();
         initializeTime();
+        initializeDonations();
 
         AppRate.with(this)
                 .text(R.string.rate)
@@ -89,11 +94,20 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     private void initializeService() {
         mServicePreference = (CheckBoxPreference) findPreference("service");
         mServicePreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mServiceActive) {
-                    showServiceDialog(R.string.accessibility_launch);
+                    if (mSupportsNotificationListenerService) {
+                        showServiceDialog(R.string.notification_listener_launch);
+                    } else {
+                        showServiceDialog(R.string.accessibility_launch);
+                    }
                 } else {
-                    showServiceDialog(R.string.accessibility_warning);
+                    if (mSupportsNotificationListenerService) {
+                        showServiceDialog(R.string.notification_listener_warning);
+                    } else {
+                        showServiceDialog(R.string.accessibility_warning);
+                    }
                 }
 
                 // don't update checkbox until we're really active
@@ -103,7 +117,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     }
 
     private void checkForRunningService() {
-        mServiceActive = isMyServiceRunning();
+        mServiceActive = isServiceRunning();
         if(mServiceActive) {
             mServicePreference.setChecked(true);
             enableOptions(true);
@@ -230,7 +244,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         findPreference("status-bar").setEnabled(enable);
     }
 
-    private void initializeDonateIfAvailable() {
+    private void initializeDonations() {
         findPreference("donate").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -265,7 +279,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                         })
                         .create()
                         .show();
-
                 return true;
             }
         });
@@ -299,25 +312,30 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface alertDialog, int id) {
                         alertDialog.cancel();
-                        startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
+
+                        if (mSupportsNotificationListenerService) {
+                            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                        } else {
+                            startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                        }
                     }
                 })
                 .show();
     }
 
-    private boolean isMyServiceRunning() {
+    private boolean isServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         boolean isJellyBean = getResources().getBoolean(R.bool.is_jelly_bean);
 
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if(isJellyBean) {
-                if (ScreenNotificationsServiceJB.class.getName().equals(service.service.getClassName())) {
-                    return true;
-                }
-            } else {
-                if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
-                    return true;
-                }
+            if (mSupportsNotificationListenerService &&
+                    NotificationListener.class.getName().equals(service.service.getClassName())) {
+                return true;
+            } else if (isJellyBean &&
+                    ScreenNotificationsServiceJB.class.getName().equals(service.service.getClassName())) {
+                return true;
+            } else if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
+                return true;
             }
         }
 
