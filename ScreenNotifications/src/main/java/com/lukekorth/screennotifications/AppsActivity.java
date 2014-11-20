@@ -19,10 +19,6 @@
 
 package com.lukekorth.screennotifications;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -37,6 +33,10 @@ import android.widget.ListView;
 
 import com.lukekorth.ez_loaders.EzLoader;
 import com.lukekorth.ez_loaders.EzLoaderInterface;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AppsActivity extends FragmentActivity implements EzLoaderInterface<Data> {
 	
