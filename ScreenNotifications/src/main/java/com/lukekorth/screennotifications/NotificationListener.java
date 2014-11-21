@@ -35,8 +35,6 @@ public class NotificationListener extends NotificationListenerService implements
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        super.onNotificationPosted(sbn);
-
         if (!sbn.isOngoing() && isAppEnabled(sbn)) {
             if (isProximitySensorEnabled()) {
                 if (!registerProximitySensorListener()) {
@@ -83,9 +81,7 @@ public class NotificationListener extends NotificationListenerService implements
     }
 
     @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {
-        super.onNotificationPosted(sbn);
-    }
+    public void onNotificationRemoved(StatusBarNotification sbn) {}
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
