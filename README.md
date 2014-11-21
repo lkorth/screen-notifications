@@ -1,6 +1,6 @@
 ![](images/banner.png)
 
-screen-notifications
+Screen Notifications
 ====================
 
 An Android app to turn the screen on for notifications
