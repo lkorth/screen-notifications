@@ -64,7 +64,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.layout.main);
+        addPreferencesFromResource(R.xml.settings);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
