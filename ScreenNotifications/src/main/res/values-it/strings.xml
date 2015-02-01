@@ -22,9 +22,6 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
   <string name="description">Screen Notifications accenderà il tuo schermo quando riceverai una\nnotifica dalle app selezionate. Lo schermo non si accenderà se il tuo dispositivo è in tasca.</string>
   <string name="accessibility_launch">Ora sarai portato alle impostazioni di Accessibilità.        \nSe vuoi disattivare Screen Notificaitons, semplicemente impostalo su OFF.</string>
   <string name="accessibility_warning">Cliccando ok verrai portato alle impostazioni di Accessibilità. \nPer far si che questa app funzioni dovrai impostare Screen Notifications su ON.\nAndroid ti avvertirà che alcune app potrebbero acquisire informazioni riservate, ma questa non accede né a informazioni personali né a internet.</string>
-  <string name="ok">OK</string>
-  <string name="donate">Dona</string>
-  <string name="donate_summary">Dona per supportare lo sviluppo dell\'applicazione</string>
   <string name="service">Servizio</string>
   <string name="apps">Applicazioni</string>
   <string name="select_apps">Seleziona Applicazioni</string>
@@ -40,13 +37,12 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
   <string name="select">Seleziona Applicazioni</string>
   <string name="inverse">Inverti</string>
   <string name="uncheck_all">Deseleziona tutte</string>
-  <string name="loading">Caricamento. Attendi prego...</string>
+  <string name="loading">Caricamento. Attendi prego…</string>
   <string name="quietHours">Attiva Periodo di Quiete</string>
   <string name="quietSum">Non accendere lo schermo durante questo periodo</string>
   <string name="startTime">Inizio periodo di quiete</string>
   <string name="stopTime">Fine periodo di quiete</string>
   <string name="set">Imposta</string>
-  <string name="cancel">Annulla</string>
   <string name="statusBar">Apri centro notifiche</string>
   <string name="statusBarSum">Apri il centro notifiche quando lo schermo è acceso da una notifica. \nQuesta opzione è sperimentale e funzionerà solo su alcuni cellulari. Non causerà comunque problemi \nse non supporta il tuo cellulare</string>
 </resources>

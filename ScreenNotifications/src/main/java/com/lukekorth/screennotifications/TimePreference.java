@@ -50,7 +50,7 @@ public class TimePreference extends DialogPreference {
 
         is24HourFormat = DateFormat.is24HourFormat(ctxt);
         setPositiveButtonText(R.string.set);
-        setNegativeButtonText(R.string.cancel);
+        setNegativeButtonText(android.R.string.cancel);
     }
 
     @Override

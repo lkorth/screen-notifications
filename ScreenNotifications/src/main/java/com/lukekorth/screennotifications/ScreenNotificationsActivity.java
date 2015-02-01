@@ -41,9 +41,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.lukekorth.screennotifications.billing.IabHelper;
-import com.lukekorth.screennotifications.billing.IabResult;
-
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
@@ -75,7 +72,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         initializeService();
         initializeDeviceAdmin();
         initializeTime();
-        initializeDonations();
 
         AppRate.with(this)
                 .text(R.string.rate)
@@ -212,14 +208,14 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                 new AlertDialog.Builder(ScreenNotificationsActivity.this)
                         .setTitle(R.string.wake_length)
                         .setView(numberPickerView)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 mPrefs.edit().putInt("wake_length", numberPicker.getValue()).commit();
                                 setWakeLengthSummary();
                                 dialog.dismiss();
                             }
                         })
-                        .setNegativeButton(R.string.cancel,
+                        .setNegativeButton(android.R.string.cancel,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         dialog.dismiss();
@@ -242,46 +238,6 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         findPreference("startTime").setEnabled(enable);
         findPreference("stopTime").setEnabled(enable);
         findPreference("status-bar").setEnabled(enable);
-    }
-
-    private void initializeDonations() {
-        findPreference("donate").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new AlertDialog.Builder(ScreenNotificationsActivity.this)
-                        .setTitle(R.string.select_an_amount)
-                        .setItems(getResources().getStringArray(R.array.amounts), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String purchaseItem = getResources().getStringArray(R.array.billing_items)[which];
-
-                                final IabHelper iabHelper = new IabHelper(ScreenNotificationsActivity.this, getString(R.string.billing_public_key));
-                                iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                                    @Override
-                                    public void onIabSetupFinished(IabResult result) {
-                                        if (result.isSuccess()) {
-                                            iabHelper.launchPurchaseFlow(ScreenNotificationsActivity.this,
-                                                    purchaseItem, 1, null, "donate");
-                                        } else {
-                                            new AlertDialog.Builder(ScreenNotificationsActivity.this)
-                                                    .setTitle(R.string.there_was_a_problem)
-                                                    .setMessage(R.string.failed_billing)
-                                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            dialog.dismiss();
-                                                        }
-                                                    })
-                                                    .show();
-                                        }
-                                    }
-                                });
-                            }
-                        })
-                        .create()
-                        .show();
-                return true;
-            }
-        });
     }
 
     private String handleTime(String time) {
@@ -309,7 +265,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface alertDialog, int id) {
                         alertDialog.cancel();
 
