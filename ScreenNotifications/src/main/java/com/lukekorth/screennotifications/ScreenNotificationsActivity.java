@@ -210,7 +210,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
                         .setView(numberPickerView)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                mPrefs.edit().putInt("wake_length", numberPicker.getValue()).commit();
+                                mPrefs.edit().putInt("wake_length", numberPicker.getValue()).apply();
                                 setWakeLengthSummary();
                                 dialog.dismiss();
                             }

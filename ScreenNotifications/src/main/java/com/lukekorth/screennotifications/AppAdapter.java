@@ -59,7 +59,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 			editor.putBoolean(app.packageName, false);
 		}
 		
-		editor.commit();
+		editor.apply();
 		notifyDataSetChanged();
 	}
 	
@@ -70,7 +70,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 			editor.putBoolean(app.packageName, !mPrefs.getBoolean(app.packageName, true));
 		}
 		
-		editor.commit();
+		editor.apply();
 		notifyDataSetChanged();
 	}
 
@@ -132,7 +132,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 		holder.selected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				mPrefs.edit().putBoolean(packageName, isChecked).commit();
+				mPrefs.edit().putBoolean(packageName, isChecked).apply();
 			}
 		});
 		
