@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  *
  * This file is part of Screen Notifications.
  *
@@ -17,7 +17,7 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.helpers;
 
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
@@ -29,6 +29,8 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+
+import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -84,7 +86,7 @@ public class ScreenController {
         DevicePolicyManager dpm =
                 (DevicePolicyManager) mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
         ComponentName deviceAdmin =
-                new ComponentName(mContext, ScreenNotificationsActivity.CustomDeviceAdminReceiver.class);
+                new ComponentName(mContext, ScreenNotificationsDeviceAdminReceiver.class);
 
         long desiredWakeLength = mPrefs.getInt("wake_length", 10) * 1000;
         long actualWakeLength = desiredWakeLength;

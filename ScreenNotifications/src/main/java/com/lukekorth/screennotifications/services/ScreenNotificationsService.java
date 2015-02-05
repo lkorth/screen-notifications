@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  * 
  * This file is part of Screen Notifications.
  * 
@@ -17,7 +17,7 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.services;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.view.accessibility.AccessibilityEvent;

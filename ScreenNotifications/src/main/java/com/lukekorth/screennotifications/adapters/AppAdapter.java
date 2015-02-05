@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  * 
  * This file is part of Screen Notifications.
  * 
@@ -17,7 +17,7 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -35,6 +35,11 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.lukekorth.screennotifications.R;
+import com.lukekorth.screennotifications.models.App;
+import com.lukekorth.screennotifications.models.DisplayableApps;
+import com.lukekorth.screennotifications.models.Section;
+
 import java.util.ArrayList;
 
 public class AppAdapter extends BaseAdapter implements SectionIndexer {
@@ -44,7 +49,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 	private App[] apps;
 	private ArrayList<Section> sections;
 	
-	public AppAdapter(Context context, Data data) {		
+	public AppAdapter(Context context, DisplayableApps data) {
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		

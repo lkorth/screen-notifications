@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
-Copyright 2012 Luke Korth <korth.luke@gmail.com>
+Copyright 2015 Luke Korth <korth.luke@gmail.com>
 
 This file is part of Screen Notifications.
 
@@ -63,12 +63,12 @@ along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
             android:key="quiet"
             android:summary="@string/quietSum"
             android:title="@string/quietHours" />
-        <com.lukekorth.screennotifications.TimePreference
+        <com.lukekorth.screennotifications.views.TimePreference
             android:defaultValue="22:00"
             android:key="startTime"
             android:showDefault="true"
             android:title="@string/startTime" />
-        <com.lukekorth.screennotifications.TimePreference
+        <com.lukekorth.screennotifications.views.TimePreference
             android:defaultValue="08:00"
             android:key="stopTime"
             android:showDefault="true"

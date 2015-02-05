@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  * 
  * This file is part of Screen Notifications.
  * 
@@ -17,7 +17,7 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.lukekorth.screennotifications.R;
 
 public class TimePreference extends DialogPreference {
 

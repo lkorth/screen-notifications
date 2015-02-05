@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  * 
  * This file is part of Screen Notifications.
  * 
@@ -17,12 +17,11 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.activities;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
-import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -40,6 +39,12 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
+
+import com.lukekorth.screennotifications.R;
+import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
+import com.lukekorth.screennotifications.services.NotificationListener;
+import com.lukekorth.screennotifications.services.ScreenNotificationsService;
+import com.lukekorth.screennotifications.services.ScreenNotificationsServiceJB;
 
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
@@ -126,7 +131,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
 
     private void initializeDeviceAdmin() {
         mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mDeviceAdmin = new ComponentName(this, CustomDeviceAdminReceiver.class);
+        mDeviceAdmin = new ComponentName(this, ScreenNotificationsDeviceAdminReceiver.class);
         mDeviceAdminPreference = (CheckBoxPreference) findPreference("device_admin");
 
         mDeviceAdminPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -296,34 +301,5 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         }
 
         return false;
-    }
-
-    public static class CustomDeviceAdminReceiver extends DeviceAdminReceiver {
-
-        @Override
-        public void onEnabled(Context context, Intent intent) {}
-
-        @Override
-        public CharSequence onDisableRequested(Context context, Intent intent) {
-            ComponentName deviceAdmin = new ComponentName(context, CustomDeviceAdminReceiver.class);
-            ((DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE)).removeActiveAdmin(deviceAdmin);
-
-            return null;
-        }
-
-        @Override
-        public void onDisabled(Context context, Intent intent) {}
-
-        @Override
-        public void onPasswordChanged(Context context, Intent intent) {}
-
-        @Override
-        public void onPasswordFailed(Context context, Intent intent) {}
-
-        @Override
-        public void onPasswordSucceeded(Context context, Intent intent) {}
-
-        @Override
-        public void onPasswordExpiring(Context context, Intent intent) {}
     }
 }

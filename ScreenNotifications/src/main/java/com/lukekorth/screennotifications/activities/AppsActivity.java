@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
  * 
  * This file is part of Screen Notifications.
  * 
@@ -17,12 +17,11 @@
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.activities;
 
 import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.Loader;
@@ -33,12 +32,17 @@ import android.widget.ListView;
 
 import com.lukekorth.ez_loaders.EzLoader;
 import com.lukekorth.ez_loaders.EzLoaderInterface;
+import com.lukekorth.screennotifications.R;
+import com.lukekorth.screennotifications.adapters.AppAdapter;
+import com.lukekorth.screennotifications.models.App;
+import com.lukekorth.screennotifications.models.DisplayableApps;
+import com.lukekorth.screennotifications.models.Section;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AppsActivity extends FragmentActivity implements EzLoaderInterface<Data> {
+public class AppsActivity extends FragmentActivity implements EzLoaderInterface<DisplayableApps> {
 	
 	private ProgressDialog mLoadingDialog;
 	private AppAdapter mAdapter;
@@ -80,17 +84,17 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
     }
 
 	@Override
-	public Loader<Data> onCreateLoader(int arg0, Bundle arg1) {
-		return new EzLoader<Data>(this, "android.intent.action.PACKAGE_ADDED", this);
+	public Loader<DisplayableApps> onCreateLoader(int arg0, Bundle arg1) {
+		return new EzLoader<DisplayableApps>(this, "android.intent.action.PACKAGE_ADDED", this);
 	}
 	
 	@Override
-	public Data loadInBackground(int id) {
+	public DisplayableApps loadInBackground(int id) {
 		final PackageManager pm = getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
         
-        Data data = new Data();
+        DisplayableApps data = new DisplayableApps();
         data.sections = new ArrayList<Section>();
         data.apps = new App[packages.size()];
         
@@ -122,7 +126,7 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Data> arg0, Data data) {
+	public void onLoadFinished(Loader<DisplayableApps> arg0, DisplayableApps data) {
 		mAdapter = new AppAdapter(this, data);
 		((ListView) findViewById(R.id.appsList)).setAdapter(mAdapter);
 		
@@ -131,48 +135,11 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
 	}
 	
 	@Override
-	public void onLoaderReset(Loader<Data> arg0) {		
+	public void onLoaderReset(Loader<DisplayableApps> arg0) {
 	}
 
 	@Override
-	public void onReleaseResources(Data t) {		
-	}
-
-}
-
-class Data {
-	
-	ArrayList<Section> sections;
-	App[] apps;
-	
-}
-
-class App {
-	
-	String name;
-	String packageName;
-	Drawable icon;
-	
-}
-
-class Section {
-	
-	int startingIndex;
-	String section;
-	
-	public Section(int startingIndex, String section) {
-		this.startingIndex = startingIndex;
-		this.section = section;
-	}
-	
-	public boolean equals(Object obj) {
-		if(this.section.equals(((Section) obj).section))
-			return true;		
-		
-		return false;
-	}
-	
-	public String toString() {
-		return section;
+	public void onReleaseResources(DisplayableApps t) {
 	}
 }
+

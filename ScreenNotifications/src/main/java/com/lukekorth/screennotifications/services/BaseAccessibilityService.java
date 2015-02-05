@@ -1,41 +1,41 @@
 /*
- * Copyright 2012 Luke Korth <korth.luke@gmail.com>
- *
+ * Copyright 2015 Luke Korth <korth.luke@gmail.com>
+ * 
  * This file is part of Screen Notifications.
- *
+ * 
  * Screen Notifications is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * Screen Notifications is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Screen Notifications.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.lukekorth.screennotifications;
+package com.lukekorth.screennotifications.services;
 
-import android.annotation.TargetApi;
+import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.service.notification.NotificationListenerService;
-import android.service.notification.StatusBarNotification;
+import android.view.accessibility.AccessibilityEvent;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class NotificationListener extends NotificationListenerService implements SensorEventListener {
+import com.lukekorth.screennotifications.helpers.ScreenController;
+
+public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
     @Override
-    public void onNotificationPosted(StatusBarNotification sbn) {
-        if (!sbn.isOngoing() && isAppEnabled(sbn)) {
+    public void onAccessibilityEvent(AccessibilityEvent event) {
+        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED &&
+                isAppEnabled(event)) {
             if (isProximitySensorEnabled()) {
                 if (!registerProximitySensorListener()) {
                     new ScreenController(this, false).handleNotification();
@@ -56,8 +56,9 @@ public class NotificationListener extends NotificationListenerService implements
         }
     }
 
-    private boolean isAppEnabled(StatusBarNotification sbn) {
-        return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sbn.getPackageName(), false);
+    private boolean isAppEnabled(AccessibilityEvent event) {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(event.getPackageName().toString(), false);
     }
 
     private boolean isProximitySensorEnabled() {
@@ -81,8 +82,9 @@ public class NotificationListener extends NotificationListenerService implements
     }
 
     @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {}
+    public void onInterrupt() {}
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
 }
