@@ -10,5 +10,5 @@ or [F-Droid](http://f-droid.org/repository/browse/?fdid=com.lukekorth.screennoti
 
 ## License
 
-Screen Notifications is open source and available under a GPL license. See the [LICENSE](COPYING)
-for more info.
+Screen Notifications is open source and available under the MIT license.
+See the [LICENSE](LICENSE) file for more info.
