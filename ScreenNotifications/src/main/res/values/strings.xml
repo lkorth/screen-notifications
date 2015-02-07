@@ -34,6 +34,10 @@
     <string name="disable_sensor_summary">When checked, the screen will always turn on for notifications, even in your pocket</string>
     <string name="quiet_time">Quiet Time</string>
     <string name="experimental">Experimental</string>
+    <string name="help">Help</string>
+    <string name="contact">Contact Developer</string>
+    <string name="contact_summary">If you are having problems, click here to contact the developer</string>
+    <string name="version">Version</string>
     <string name="select">Select Apps</string>
     <string name="inverse">Inverse</string>
     <string name="uncheck_all">Uncheck all</string>

@@ -13,12 +13,15 @@ import android.service.notification.StatusBarNotification;
 
 import com.lukekorth.screennotifications.helpers.ScreenController;
 
+import org.slf4j.LoggerFactory;
+
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class NotificationListener extends NotificationListenerService implements SensorEventListener {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         if (!sbn.isOngoing() && isAppEnabled(sbn)) {
+            LoggerFactory.getLogger("NotificationListener").debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
             if (isProximitySensorEnabled()) {
                 if (!registerProximitySensorListener()) {
                     new ScreenController(this, false).handleNotification();

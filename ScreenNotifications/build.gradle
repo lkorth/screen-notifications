@@ -33,6 +33,7 @@ android {
 
 dependencies {
     compile 'com.lukekorth:ez-loaders:1.3'
+    compile 'com.lukekorth:mailable_log:0.1.3'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0@aar'
 }
 

@@ -13,6 +13,9 @@ import android.preference.PreferenceManager;
 
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,12 +26,14 @@ public class ScreenController {
     private static long sLastNotificationTime;
 
     private Context mContext;
+    private Logger mLogger;
     private SharedPreferences mPrefs;
     private PowerManager mPowerManager;
     private boolean mCloseToProximitySensor;
 
     public ScreenController(Context context, boolean closeToProximitySensor) {
         mContext = context;
+        mLogger = LoggerFactory.getLogger("ScreenController");
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mCloseToProximitySensor = closeToProximitySensor;
@@ -47,7 +52,10 @@ public class ScreenController {
     }
 
     private void turnOnScreen() {
+        mLogger.debug("Turning on screen");
+
         if(mPrefs.getBoolean("status-bar", false)) {
+            mLogger.debug("Sleeping for 3 seconds before turning on screen");
             SystemClock.sleep(3000);
         }
 
@@ -72,6 +80,7 @@ public class ScreenController {
         long desiredWakeLength = mPrefs.getInt("wake_length", 10) * 1000;
         long actualWakeLength = desiredWakeLength;
         do {
+            mLogger.debug("Sleeping for " + actualWakeLength);
             SystemClock.sleep(actualWakeLength);
             actualWakeLength = ScreenController.sLastNotificationTime + desiredWakeLength -
                     System.currentTimeMillis();
@@ -80,6 +89,7 @@ public class ScreenController {
         wakeLock.release();
 
         if (dpm.isAdminActive(deviceAdmin) && isDeviceLocked()) {
+            mLogger.debug("Device is an active admin and device is still on lock screen, locking");
             dpm.lockNow();
         }
     }
@@ -98,8 +108,10 @@ public class ScreenController {
             }
 
             showStatusBar.invoke(statusBarService);
+
+            mLogger.debug("Expanding status bar");
         } catch (Exception e) {
-            // ignore
+            mLogger.debug("Failed to expand the status bar: " + e.getMessage());
         }
     }
 
@@ -115,6 +127,7 @@ public class ScreenController {
             turnOnScreen = turnOnScreen && !mCloseToProximitySensor;
         }
 
+        mLogger.debug("Should turn on screen: " + turnOnScreen);
         return turnOnScreen;
     }
 
@@ -147,15 +160,16 @@ public class ScreenController {
             }
         }
 
+        mLogger.debug("Device is in quiet time: " + quietTime);
         return quietTime;
     }
 
     private boolean isInCall() {
         AudioManager manager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        if(manager.getMode() == AudioManager.MODE_IN_CALL || manager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
-            return true;
-        } else {
-            return false;
-        }
+        boolean inCall = (manager.getMode() == AudioManager.MODE_IN_CALL ||
+                manager.getMode() == AudioManager.MODE_IN_COMMUNICATION);
+
+        mLogger.debug("Device is in a call: " + inCall);
+        return inCall;
     }
 }

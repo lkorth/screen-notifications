@@ -11,12 +11,16 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.lukekorth.screennotifications.helpers.ScreenController;
 
+import org.slf4j.LoggerFactory;
+
 public class BaseAccessibilityService extends AccessibilityService implements SensorEventListener {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED &&
                 isAppEnabled(event)) {
+            LoggerFactory.getLogger("BaseAccessibilityService")
+                    .debug("Received a notification accessibility event for an enabled app. " + event.getPackageName());
             if (isProximitySensorEnabled()) {
                 if (!registerProximitySensorListener()) {
                     new ScreenController(this, false).handleNotification();

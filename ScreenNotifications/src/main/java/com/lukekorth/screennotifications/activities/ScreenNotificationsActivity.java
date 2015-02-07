@@ -21,7 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
+import com.lukekorth.screennotifications.BuildConfig;
 import com.lukekorth.screennotifications.R;
+import com.lukekorth.screennotifications.helpers.LogReporting;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 import com.lukekorth.screennotifications.services.NotificationListener;
 import com.lukekorth.screennotifications.services.ScreenNotificationsService;
@@ -30,7 +32,7 @@ import com.lukekorth.screennotifications.services.ScreenNotificationsServiceJB;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
-public class ScreenNotificationsActivity extends PreferenceActivity {
+public class ScreenNotificationsActivity extends PreferenceActivity implements OnPreferenceClickListener {
 
     private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
 
@@ -54,6 +56,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
         if (android.os.Build.VERSION.SDK_INT >= 18) {
             mSupportsNotificationListenerService = true;
         }
+
+        findPreference("contact").setOnPreferenceClickListener(this);
+        findPreference("version").setSummary(BuildConfig.VERSION_NAME);
 
         initializeService();
         initializeDeviceAdmin();
@@ -281,6 +286,15 @@ public class ScreenNotificationsActivity extends PreferenceActivity {
             }
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference.getKey().equals("contact")) {
+            new LogReporting(this).collectAndSendLogs();
+            return true;
+        }
         return false;
     }
 }

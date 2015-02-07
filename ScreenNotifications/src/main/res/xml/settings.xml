@@ -63,4 +63,13 @@
             android:summary="@string/statusBarSum"
             android:title="@string/statusBar" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/help">
+        <Preference
+            android:key="contact"
+            android:title="@string/contact"
+            android:summary="@string/contact_summary" />
+        <Preference
+            android:key="version"
+            android:title="@string/version" />
+    </PreferenceCategory>
 </PreferenceScreen>
