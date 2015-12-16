@@ -27,7 +27,6 @@ import com.lukekorth.screennotifications.helpers.LogReporting;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 import com.lukekorth.screennotifications.services.NotificationListener;
 import com.lukekorth.screennotifications.services.ScreenNotificationsService;
-import com.lukekorth.screennotifications.services.ScreenNotificationsServiceJB;
 
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
@@ -272,14 +271,9 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
 
     private boolean isServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        boolean isJellyBean = getResources().getBoolean(R.bool.is_jelly_bean);
-
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (mSupportsNotificationListenerService &&
                     NotificationListener.class.getName().equals(service.service.getClassName())) {
-                return true;
-            } else if (isJellyBean &&
-                    ScreenNotificationsServiceJB.class.getName().equals(service.service.getClassName())) {
                 return true;
             } else if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
                 return true;
