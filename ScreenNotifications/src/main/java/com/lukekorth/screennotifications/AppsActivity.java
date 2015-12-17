@@ -1,4 +1,4 @@
-package com.lukekorth.screennotifications.activities;
+package com.lukekorth.screennotifications;
 
 import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.lukekorth.ez_loaders.EzLoader;
 import com.lukekorth.ez_loaders.EzLoaderInterface;
-import com.lukekorth.screennotifications.R;
 import com.lukekorth.screennotifications.adapters.AppAdapter;
 import com.lukekorth.screennotifications.models.App;
 import com.lukekorth.screennotifications.models.DisplayableApps;

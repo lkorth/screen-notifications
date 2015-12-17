@@ -1,7 +1,7 @@
-package com.lukekorth.screennotifications.activities;
+package com.lukekorth.screennotifications;
 
+import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -12,17 +12,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.lukekorth.screennotifications.BuildConfig;
-import com.lukekorth.screennotifications.R;
 import com.lukekorth.screennotifications.helpers.LogReporting;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 import com.lukekorth.screennotifications.services.NotificationListener;
@@ -31,7 +27,7 @@ import com.lukekorth.screennotifications.services.ScreenNotificationsService;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
-public class ScreenNotificationsActivity extends PreferenceActivity implements OnPreferenceClickListener {
+public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
     private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
 
@@ -50,7 +46,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         if (android.os.Build.VERSION.SDK_INT >= 18) {
             mSupportsNotificationListenerService = true;
@@ -63,7 +59,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
         initializeDeviceAdmin();
         initializeTime();
 
-        AppRate.with(this)
+        AppRate.with(getActivity())
                 .text(R.string.rate)
                 .initialLaunchCount(3)
                 .retryPolicy(RetryPolicy.EXPONENTIAL)
@@ -79,7 +75,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
 
     private void initializeService() {
         mServicePreference = (CheckBoxPreference) findPreference("service");
-        mServicePreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        mServicePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mServiceActive) {
@@ -115,11 +111,11 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
     }
 
     private void initializeDeviceAdmin() {
-        mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mDeviceAdmin = new ComponentName(this, ScreenNotificationsDeviceAdminReceiver.class);
+        mDPM = (DevicePolicyManager) getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDeviceAdmin = new ComponentName(getActivity(), ScreenNotificationsDeviceAdminReceiver.class);
         mDeviceAdminPreference = (CheckBoxPreference) findPreference("device_admin");
 
-        mDeviceAdminPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        mDeviceAdminPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if ((Boolean) newValue) {
@@ -168,7 +164,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
     }
 
     private void initializeTime() {
-        OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
+        Preference.OnPreferenceChangeListener listener = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 preference.setSummary(handleTime(newValue.toString()));
@@ -183,11 +179,11 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
         start.setOnPreferenceChangeListener(listener);
         stop.setOnPreferenceChangeListener(listener);
 
-        findPreference("wake_length").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference("wake_length").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 LayoutInflater inflater = (LayoutInflater)
-                        getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View numberPickerView = inflater.inflate(R.layout.number_picker_dialog, null);
 
                 final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
@@ -195,7 +191,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
                 numberPicker.setMaxValue(900);
                 numberPicker.setValue(mPrefs.getInt("wake_length", 10));
 
-                new AlertDialog.Builder(ScreenNotificationsActivity.this)
+                new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.wake_length)
                         .setView(numberPickerView)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -235,7 +231,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
         int lastHour = Integer.parseInt(timeParts[0]);
         int lastMinute = Integer.parseInt(timeParts[1]);
 
-        boolean is24HourFormat = DateFormat.is24HourFormat(this);
+        boolean is24HourFormat = DateFormat.is24HourFormat(getActivity());
 
         if(is24HourFormat) {
             return ((lastHour < 10) ? "0" : "")
@@ -252,7 +248,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
     }
 
     private void showServiceDialog(int message) {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getActivity())
                 .setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -270,8 +266,8 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
     }
 
     private boolean isServiceRunning() {
-        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (mSupportsNotificationListenerService &&
                     NotificationListener.class.getName().equals(service.service.getClassName())) {
                 return true;
@@ -286,7 +282,7 @@ public class ScreenNotificationsActivity extends PreferenceActivity implements O
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("contact")) {
-            new LogReporting(this).collectAndSendLogs();
+            new LogReporting(getActivity()).collectAndSendLogs();
             return true;
         }
         return false;
