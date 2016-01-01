@@ -12,7 +12,7 @@
   <string name="wake_length">Doba probuzení displeje</string>
   <string name="full_brightness">Maximální jas</string>
   <string name="full_brightness_summary">Při zaškrtnutí bude displej zapnutý s maximálním jasem</string>
-  <string name="disable_sensor">Vypnutí Proximity senzoru</string>
+  <string name="disable_sensor">Vypnutí senzoru</string>
   <string name="disable_sensor_summary">Pokud je zaškrtnuto zapne se displej při oznámení, i když máte telefon v kapse</string>
   <string name="quiet_time">Noční režim</string>
   <string name="experimental">Experimentální funkce</string>
@@ -28,4 +28,5 @@
   <string name="statusBar">Otevření notifikační lišty</string>
   <string name="statusBarSum">Otevře notifikační lištu když oznámení zapne displej.\nToto je experimentální funkce, která bude fungovat jen na některých telefonech.</string>
   <string name="market_description">\n        Jednoduchá aplikace která zapne displej při oznámení z vybraných aplikací.  \n        Když je telefon v kapse nebo pouzdře tak se díky proximity senzoru displej nezapne.\n\n\t\tNápady a přání jsou vítány.\n\t\t\n\t\tProsím pište mi na email. Jestli chcete pomocí s překladem, navštivte následující web: \n\t\thttps://www.transifex.com/projects/p/screen-notifications/\n\n\t\tJestli narazíte na chybu nebo problém, zastihnete mě na github: \n\t\thttps://github.com/lkorth/screen-notifications\n    </string>
+  <string name="maximumPoolingTime"></string>
 </resources>

@@ -12,7 +12,7 @@
   <string name="wake_length">Lengte van actief scherm</string>
   <string name="full_brightness">Volledige helderheid</string>
   <string name="full_brightness_summary">Wanneer geactiveerd, zal het scherm altijd op volle helderheid gaan voor de nofiticaties</string>
-  <string name="disable_sensor">Deactiveer omgeving sensor</string>
+  <string name="disable_sensor">Deactiveer sensors</string>
   <string name="disable_sensor_summary">Wanneer geactiveerd, zal het scherm aan gaan voor notificaties. Ook als deze in u zak zit</string>
   <string name="quiet_time">Rust tijd</string>
   <string name="experimental">Experiment</string>

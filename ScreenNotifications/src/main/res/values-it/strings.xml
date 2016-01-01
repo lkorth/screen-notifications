@@ -12,7 +12,7 @@
   <string name="wake_length">Durata accensione schermo</string>
   <string name="full_brightness">Luminosità Massima</string>
   <string name="full_brightness_summary">Se selezionato, lo schermo si accenderà sempre a luminosità massima alla ricezione di notifiche</string>
-  <string name="disable_sensor">Disattiva Sensore di Prossimità</string>
+  <string name="disable_sensor">Disattiva Sensore</string>
   <string name="disable_sensor_summary">Se selezionato, lo schermo si accenderà sempre alla ricezione di notifiche, anche se è in tasca</string>
   <string name="quiet_time">Periodo di Quiete</string>
   <string name="experimental">Sperimentale</string>

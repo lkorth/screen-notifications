@@ -29,14 +29,14 @@ public class ScreenController {
     private Logger mLogger;
     private SharedPreferences mPrefs;
     private PowerManager mPowerManager;
-    private boolean mCloseToProximitySensor;
+    private boolean mSensorsAllowWakeUp;
 
-    public ScreenController(Context context, boolean closeToProximitySensor) {
+    public ScreenController(Context context, boolean SensorsAllowWakeUp) {
         mContext = context;
         mLogger = LoggerFactory.getLogger("ScreenController");
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mCloseToProximitySensor = closeToProximitySensor;
+        mSensorsAllowWakeUp = SensorsAllowWakeUp;
     }
 
     public void handleNotification() {
@@ -54,10 +54,10 @@ public class ScreenController {
     private void turnOnScreen() {
         mLogger.debug("Turning on screen");
 
-        if(mPrefs.getBoolean("status-bar", false)) {
-            mLogger.debug("Sleeping for 3 seconds before turning on screen");
-            SystemClock.sleep(3000);
-        }
+//        if(mPrefs.getBoolean("status-bar", false)) {
+//            mLogger.debug("Sleeping for 3 seconds before turning on screen");
+//            SystemClock.sleep(3000);
+//        }
 
         int flag;
         if(mPrefs.getBoolean("bright", false)) {
@@ -124,7 +124,7 @@ public class ScreenController {
         boolean turnOnScreen = !isInQuietTime() && !isInCall() && !mPowerManager.isScreenOn();
 
         if(!mPrefs.getBoolean("proxSensor", true)) {
-            turnOnScreen = turnOnScreen && !mCloseToProximitySensor;
+            turnOnScreen = turnOnScreen && mSensorsAllowWakeUp;
         }
 
         mLogger.debug("Should turn on screen: " + turnOnScreen);
