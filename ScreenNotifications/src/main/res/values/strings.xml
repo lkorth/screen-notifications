@@ -30,8 +30,8 @@
     <string name="disabled_wake_length">Device Admin option must be enabled first</string>
     <string name="full_brightness">Full Brightness</string>
     <string name="full_brightness_summary">When checked, the screen will always turn on at full brightness for notifications</string>
-    <string name="disable_sensor">Disable Proximity Sensor</string>
-    <string name="disable_sensor_summary">When checked, the screen will always turn on for notifications, even in your pocket</string>
+    <string name="disable_sensor">Disable Sensors</string>
+    <string name="disable_sensor_summary">When checked, the screen will always turn on for notifications, even in your pocket. </string>
     <string name="quiet_time">Quiet Time</string>
     <string name="experimental">Experimental</string>
     <string name="help">Help</string>
@@ -48,7 +48,9 @@
     <string name="stopTime">Stop quiet hours</string>
     <string name="set">Set</string>
     <string name="statusBar">Open notification tray</string>
-    <string name="statusBarSum">Open the notification tray when the screen is turned on due to a notification. 
+    <string name="test_notification">Test Notification</string>
+    <string name="test_notification_summary">This will create a test notification after 5 seconds</string>
+    <string name="statusBarSum">Open the notification tray when the screen is turned on due to a notification.
         This is experimental and will only work on a small number of phones. It will not cause any issues if it 
         does not work on your phone.</string>
 
@@ -64,4 +66,8 @@
 		If you have issues or enhancements, fork me on github:
 		https://github.com/lkorth/screen-notifications
     </string>
+    <string name="maximumPoolingTime">Maximum Pooling Time</string>
+    <string name="maximumPoolingTime_summary">Defines in seconds how long the sensors should listen for movement or proximity to wake up device. Higher values will use a little bit more battery</string>
+    <string name="accelerometerThreshold">Accelerometer Sensibility</string>
+    <string name="accelerometerThreshold_summary">A lower value will wake up the device more easily when it moves, higher values will make it wake up only when it is moved more (default=2)</string>
 </resources>

@@ -12,6 +12,10 @@
             android:key="device_admin"
             android:title="@string/admin_title"
             android:summary="@string/admin_summary" />
+        <Preference
+            android:key="test_notification"
+            android:title="@string/test_notification"
+            android:summary="@string/test_notification_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/apps" >
         <Preference
@@ -34,10 +38,22 @@
             android:title="@string/full_brightness"
             android:summary="@string/full_brightness_summary" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
             android:summary="@string/disable_sensor_summary" />
+        <EditTextPreference
+            android:defaultValue="5"
+            android:inputType="number"
+            android:title="@string/maximumPoolingTime"
+            android:summary="@string/maximumPoolingTime_summary"
+            android:key="maximumPoolingTime"/>
+        <EditTextPreference
+            android:defaultValue="2"
+            android:inputType="number"
+            android:title="@string/accelerometerThreshold"
+            android:summary="@string/accelerometerThreshold_summary"
+            android:key="accelerometerThreshold"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/quiet_time">
         <CheckBoxPreference
@@ -64,6 +80,12 @@
             android:title="@string/statusBar" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/help">
+        <Preference
+            android:selectable="false"
+            android:enabled="true"
+            android:key="restarting_info"
+            android:title="It does not work?!"
+            android:summary="Try to restart your phone, sometimes the app can just receive and react to notifications after the phone was restarted." />
         <Preference
             android:key="contact"
             android:title="@string/contact"

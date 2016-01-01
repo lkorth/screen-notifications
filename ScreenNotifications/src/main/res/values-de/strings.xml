@@ -16,4 +16,10 @@
   <string name="quietHours">Ruhezeit einschalten</string>
   <string name="quietSum">Das Display wird während der Ruhezeiten nicht durch Benachrichtigungen eingeschaltet</string>
   <string name="statusBarSum">Öffnet die Benachrichtigungsleiste wenn das Display durch eine Benachrichtigung aktiviert wird.\nDies ist experimentell und wird nur bei wenigen Telefonen funktionieren. Andererseits wird es keine Probleme bereiten, falls es auf diesem Telefon nicht funktioniert.</string>
+  <string name="disable_sensor">Sensoren deaktivieren</string>
+  <string name="disable_sensor_summary">Wenn aktiviert, schaltet sich das Display bei einer Benachrichtigung sofort ein. Auch wenn es in der Tasche steckt.</string>
+  <string name="maximumPoolingTime_summary">Legt fest wie lange die Sensoren (in Sekunden) aktiv sein sollen um das Gerät aufzuwecken. Höhere Werte verbrauchen etwas mehr Strom.</string>
+  <string name="accelerometerThreshold">Beschleunigungssensor Sensibilität</string>
+  <string name="accelerometerThreshold_summary">Kleinere Werte werden das Gerät eher aufwecken, während höhere Werte erst bei starken Bewegungen das Gerät aufwecken werden. (Standard ist 2)</string>
+  <string name="maximumPoolingTime">Zeitspanne für Sensoren</string>
 </resources>

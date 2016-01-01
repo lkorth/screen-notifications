@@ -3,18 +3,27 @@ package com.lukekorth.screennotifications;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -29,6 +38,8 @@ import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
+    private static final String TAG = "SettingsFragment";
+
     private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
 
     private SharedPreferences mPrefs;
@@ -40,6 +51,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceAdmin;
     private CheckBoxPreference mDeviceAdminPreference;
+
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
 
         findPreference("contact").setOnPreferenceClickListener(this);
+        findPreference("test_notification").setOnPreferenceClickListener(this);
         findPreference("version").setSummary(BuildConfig.VERSION_NAME);
 
         initializeService();
@@ -66,8 +80,33 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 .checkAndShow();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+    boolean mServiceBound = false;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mServiceBound = false;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mServiceBound = true;
+        }
+    };
     public void onResume() {
         super.onResume();
+
+        //TODO:Refactor me, just a fix for non-starting service
+        if (!mServiceBound) {
+            Intent intent = new Intent(getActivity(), com.lukekorth.screennotifications.services.NotificationListener.class);
+            getActivity().startService(intent);
+            getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        }
 
         checkForRunningService();
         checkForActiveDeviceAdmin();
@@ -268,6 +307,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private boolean isServiceRunning() {
         ActivityManager manager = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+//            Log.d(TAG, "isServiceRunning: "+ service.service.getClassName());
             if (mSupportsNotificationListenerService &&
                     NotificationListener.class.getName().equals(service.service.getClassName())) {
                 return true;
@@ -283,6 +323,26 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("contact")) {
             new LogReporting(getActivity()).collectAndSendLogs();
+            return true;
+        }else if(preference.getKey().equals("test_notification")) {
+            Log.d(TAG, "onPreferenceClick: create Notification");
+            final NotificationManager mNotifyMgr = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            final NotificationCompat.Builder  builder = new NotificationCompat.Builder(mContext)
+                    .setContentTitle("Test Notification")
+                    .setContentText("This is just a test")
+                    .setTicker( "Test Notification" )
+                    .setSound(alarmSound)
+                    .setSmallIcon(R.drawable.ic_launcher);
+            final Notification notification = builder.build();
+            notification.defaults = Notification.DEFAULT_ALL;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "run: Now showing the notification");
+                    mNotifyMgr.notify(1447, notification);
+                }
+            }, 5000);
             return true;
         }
         return false;
