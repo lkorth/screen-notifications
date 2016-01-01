@@ -1,4 +1,6 @@
+import groovy.swing.SwingBuilder
 apply plugin: 'com.android.application'
+
 
 android {
     compileSdkVersion 23
@@ -7,24 +9,31 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 18
-        versionName "0.12.0"
+        versionCode 19
+        versionName "0.13.0"
     }
 
-//    signingConfigs {
-//        release {
-//            storeFile file(System.properties['KEYSTORE_PATH'])
-//            storePassword "PLACEHOLDER"
-//            keyAlias System.properties['KEYSTORE_EMAIL']
-//            keyPassword "PLACEHOLDER"
-//        }
-//    }
+    signingConfigs {
+        release {
+            try {
+                storeFile file(System.properties['KEYSTORE_PATH'])
+                storePassword "PLACEHOLDER"
+                keyAlias System.properties['KEYSTORE_EMAIL']
+                keyPassword "PLACEHOLDER"
+            }
+            catch (ex) {
+                println "You should define KEYSTORE_PATH and KEYSTORE_EMAIL in a gradle.properties file."
+                //throw new InvalidUserDataException("You should define KEYSTORE_PATH and KEYSTORE_EMAIL in a gradle.properties file.")
+            }
 
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//        }
-//    }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 
     lintOptions {
         abortOnError false
@@ -37,22 +46,42 @@ dependencies {
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.3@aar'
 }
 
-// borrowed from https://www.timroes.de/2014/01/19/using-password-prompts-with-gradle-build-files/
-// and https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/
-//gradle.taskGraph.whenReady { taskGraph ->
-    // Only execute when we are trying to assemble a release build
-//    if(taskGraph.hasTask(':ScreenNotifications:assembleRelease') || taskGraph.hasTask(':ScreenNotifications:installRelease')) {
-//        def password = System.console().readPassword("\nPlease enter key passphrase: ")
-//
-//        if(password.size() <= 0) {
-//            throw new InvalidUserDataException("You must enter a password to proceed.")
-//        }
-//
-//        // Must create String because System.readPassword() returns char[]
-//        // (and assigning that below fails silently)
-//        password = new String(password)
-//
-//        android.signingConfigs.release.storePassword = password
-//        android.signingConfigs.release.keyPassword = password
-//    }
-//}
+// see Tim Roes https://www.timroes.de/2014/01/19/using-password-prompts-with-gradle-build-files/
+gradle.taskGraph.whenReady { taskGraph ->
+    if (taskGraph.hasTask(':ScreenNotifications:assembleRelease')) {
+        if(android.signingConfigs.release.storePassword.size() <= 0) {
+            def pass = ''
+            if (System.console() == null) {
+                new SwingBuilder().edt {
+                    dialog(modal: true, // Otherwise the build will continue running before you closed the dialog
+                            title: 'Enter password', // Dialog title
+                            alwaysOnTop: true, // pretty much what the name says
+                            resizable: false, // Don't allow the user to resize the dialog
+                            locationRelativeTo: null, // Place dialog in center of the screen
+                            pack: true, // We need to pack the dialog (so it will take the size of it's children)
+                            show: true // Let's show it
+                    ) {
+                        vbox { // Put everything below each other
+                            label(text: "Please enter key passphrase:")
+                            input = passwordField()
+                            button(defaultButton: true, text: 'OK', actionPerformed: {
+                                pass = input.password; // Set pass variable to value of input field
+                                dispose(); // Close dialog
+                            })
+                        } // vbox end
+                    } // dialog end
+                } // edt end
+            } else {
+                pass = System.console().readPassword("\nPlease enter key passphrase: ")
+            }
+
+            if (pass.size() <= 0) {
+                throw new InvalidUserDataException("You must enter a password to proceed.")
+            }
+
+            pass = new String(pass)
+            android.signingConfigs.release.storePassword = pass
+            android.signingConfigs.release.keyPassword = pass
+        }
+    }
+}
