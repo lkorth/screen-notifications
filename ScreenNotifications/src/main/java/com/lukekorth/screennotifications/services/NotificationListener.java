@@ -21,7 +21,8 @@ public class NotificationListener extends NotificationListenerService implements
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         if (!sbn.isOngoing() && isAppEnabled(sbn)) {
-            LoggerFactory.getLogger("NotificationListener").debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
+            LoggerFactory.getLogger("NotificationListener")
+                    .debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
             if (isProximitySensorEnabled()) {
                 if (!registerProximitySensorListener()) {
                     new ScreenController(this, false).handleNotification();
