@@ -59,6 +59,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         initializeDeviceAdmin();
         initializeTime();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         AppRate.with(getActivity())
                 .text(R.string.rate)
                 .initialLaunchCount(3)
