@@ -106,11 +106,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private void checkForRunningService() {
         mServiceActive = isServiceRunning();
-        if(mServiceActive) {
+        if (mServiceActive) {
             mServicePreference.setChecked(true);
             enableOptions(true);
-        }
-        else {
+        } else {
             mServicePreference.setChecked(false);
             enableOptions(false);
         }
