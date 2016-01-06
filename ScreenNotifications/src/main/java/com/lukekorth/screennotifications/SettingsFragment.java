@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
+import android.preference.CheckBoxPreference;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +35,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private boolean mServiceActive;
     private boolean mSupportsNotificationListenerService = false;
-    private SwitchPreference mServicePreference;
+    private CheckBoxPreference mServicePreference;
 
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceAdmin;
-    private SwitchPreference mDeviceAdminPreference;
+    private CheckBoxPreference mDeviceAdminPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     private void initializeService() {
-        mServicePreference = (SwitchPreference) findPreference("service");
+        mServicePreference = (CheckBoxPreference) findPreference("service");
         mServicePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -119,7 +119,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private void initializeDeviceAdmin() {
         mDPM = (DevicePolicyManager) getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceAdmin = new ComponentName(getActivity(), ScreenNotificationsDeviceAdminReceiver.class);
-        mDeviceAdminPreference = (SwitchPreference) findPreference("device_admin");
+        mDeviceAdminPreference = (CheckBoxPreference) findPreference("device_admin");
 
         mDeviceAdminPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

@@ -4,14 +4,16 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <PreferenceCategory android:title="@string/service" >
-         <SwitchPreference
+        <CheckBoxPreference
             android:key="service"
-            android:title="@string/service_title" 
-            android:summary="@string/service_summary" />
-        <SwitchPreference
+            android:title="@string/service_title"
+            android:summary="@string/service_summary"
+            android:widgetLayout="@layout/preference_switch_layout" />
+        <CheckBoxPreference
             android:key="device_admin"
             android:title="@string/admin_title"
-            android:summary="@string/admin_summary" />
+            android:summary="@string/admin_summary"
+            android:widgetLayout="@layout/preference_switch_layout" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/apps" >
         <Preference
@@ -28,23 +30,26 @@
         <Preference
             android:key="wake_length"
             android:title="@string/wake_length" />
-        <SwitchPreference
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="bright"
             android:title="@string/full_brightness"
-            android:summary="@string/full_brightness_summary" />
-        <SwitchPreference
+            android:summary="@string/full_brightness_summary"
+            android:widgetLayout="@layout/preference_switch_layout" />
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
-            android:summary="@string/disable_sensor_summary" />
+            android:summary="@string/disable_sensor_summary"
+            android:widgetLayout="@layout/preference_switch_layout" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/quiet_time">
-        <SwitchPreference
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="quiet"
             android:summary="@string/quietSum"
-            android:title="@string/quietHours" />
+            android:title="@string/quietHours"
+            android:widgetLayout="@layout/preference_switch_layout" />
         <com.lukekorth.screennotifications.views.TimePreference
             android:defaultValue="22:00"
             android:key="startTime"
@@ -57,11 +62,12 @@
             android:title="@string/stopTime" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/experimental">
-        <SwitchPreference
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="status-bar"
             android:summary="@string/statusBarSum"
-            android:title="@string/statusBar" />
+            android:title="@string/statusBar"
+            android:widgetLayout="@layout/preference_switch_layout" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/help">
         <Preference
