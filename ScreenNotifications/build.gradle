@@ -13,7 +13,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.properties['KEYSTORE_PATH'])
+            storeFile System.properties['KEYSTORE_PATH'] ? file(System.properties['KEYSTORE_PATH']) : null
             storePassword "PLACEHOLDER"
             keyAlias System.properties['KEYSTORE_EMAIL']
             keyPassword "PLACEHOLDER"
