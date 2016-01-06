@@ -10,15 +10,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.CheckBoxPreference;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
+import com.lukekorth.screennotifications.billing.IabHelper;
+import com.lukekorth.screennotifications.billing.IabResult;
 import com.lukekorth.screennotifications.helpers.LogReporting;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 import com.lukekorth.screennotifications.services.NotificationListener;
@@ -58,7 +60,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         initializeService();
         initializeDeviceAdmin();
         initializeTime();
-
+        initializeDonations();
     }
 
     @Override
@@ -213,6 +215,46 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                     }
                                 }
                         )
+                        .show();
+
+                return true;
+            }
+        });
+    }
+
+    private void initializeDonations() {
+        findPreference("donate").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.select_an_amount)
+                        .setItems(getResources().getStringArray(R.array.amounts), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                final String purchaseItem = getResources().getStringArray(R.array.billing_items)[which];
+                                final IabHelper iabHelper = new IabHelper(getActivity(), getString(R.string.billing_public_key));
+
+                                iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                                    @Override
+                                    public void onIabSetupFinished(IabResult result) {
+                                        if (result.isSuccess()) {
+                                            iabHelper.launchPurchaseFlow(getActivity(), purchaseItem, 1, null, "donate");
+                                        } else {
+                                            new AlertDialog.Builder(getActivity())
+                                                    .setTitle(R.string.there_was_a_problem)
+                                                    .setMessage(R.string.failed_billing)
+                                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .create()
                         .show();
 
                 return true;

@@ -15,6 +15,12 @@
         For this app to work you will need to turn on Screen Notifications.
         Android will warn you that the app may capture your private data, this app in no way captures any data and has no access to the internet.</string>
     <string name="device_admin_explanation">Screen Notifications needs device admin access to turn off your screen after a notification</string>
+    <string name="ok">OK</string>
+    <string name="donate">Donate</string>
+    <string name="donate_summary">Donate to help support app development</string>
+    <string name="select_an_amount">Select a donation amount</string>
+    <string name="there_was_a_problem">There was a problem</string>
+    <string name="failed_billing">There was a problem trying to make a donation, your phone may not support in app billing or there may be a problem communicating with the server. Please try again later</string>
     <string name="service">Service</string>
     <string name="service_title">Screen Notifications Service</string>
     <string name="service_summary">Enable to turn on Screen Notifications</string>
@@ -41,7 +47,7 @@
     <string name="select">Select Apps</string>
     <string name="inverse">Inverse</string>
     <string name="uncheck_all">Uncheck all</string>
-    <string name="loading">Loading. Please wait…</string>
+    <string name="loading">Loading. Please wait...</string>
     <string name="quietHours">Enable quiet hours</string>
     <string name="quietSum">Do not turn the screen on between the hours below</string>
     <string name="startTime">Start quiet hours</string>

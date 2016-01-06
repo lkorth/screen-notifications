@@ -4,6 +4,9 @@
   <string name="description">Screen Notification zapne Váš displej při oznámení ze zvolené aplikace. Displej se nezapne, když máte zařízení v kapse.</string>
   <string name="accessibility_launch">Nyní přejede do nastavení zabezpečení telefonu.\nJestli budete chtít zastavit Screen Notifications, jednoduše ho vypněte.</string>
   <string name="accessibility_warning">Stisknutím na OK, přejdeme do nastavení systému - Usnadnění.\nAby byla aplikace funkční je potřeba zde Screen Notification povolit.\nAndroid Vás bude varovat, že aplikace může zaznamenávat Vaše data, ale tato aplikace nezaznamenává žádná data ani nevyžaduje přístup k internetu.</string>
+  <string name="ok">OK</string>
+  <string name="donate">Donate</string>
+  <string name="donate_summary">Přispějte na vývoj aplikace</string>
   <string name="service">Služby</string>
   <string name="apps">Aplikace</string>
   <string name="select_apps">Vyber aplikace</string>
@@ -19,7 +22,7 @@
   <string name="select">Vyber aplikace</string>
   <string name="inverse">Inverzní</string>
   <string name="uncheck_all">Zruš vše</string>
-  <string name="loading">Nahráván. Prosím čekejte…</string>
+  <string name="loading">Nahráván. Prosím čekejte...</string>
   <string name="quietHours">Povolit noční režim</string>
   <string name="quietSum">Nezapínat obrazovku v následující době</string>
   <string name="startTime">Začátek nočního režimu</string>
