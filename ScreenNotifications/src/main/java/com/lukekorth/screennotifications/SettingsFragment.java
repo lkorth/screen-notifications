@@ -10,10 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +35,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private boolean mServiceActive;
     private boolean mSupportsNotificationListenerService = false;
-    private CheckBoxPreference mServicePreference;
+    private SwitchPreference mServicePreference;
 
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceAdmin;
-    private CheckBoxPreference mDeviceAdminPreference;
+    private SwitchPreference mDeviceAdminPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     private void initializeService() {
-        mServicePreference = (CheckBoxPreference) findPreference("service");
+        mServicePreference = (SwitchPreference) findPreference("service");
         mServicePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -113,7 +113,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private void initializeDeviceAdmin() {
         mDPM = (DevicePolicyManager) getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceAdmin = new ComponentName(getActivity(), ScreenNotificationsDeviceAdminReceiver.class);
-        mDeviceAdminPreference = (CheckBoxPreference) findPreference("device_admin");
+        mDeviceAdminPreference = (SwitchPreference) findPreference("device_admin");
 
         mDeviceAdminPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

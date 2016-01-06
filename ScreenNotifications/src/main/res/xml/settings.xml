@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <PreferenceCategory android:title="@string/service" >
-         <CheckBoxPreference
+         <SwitchPreference
             android:key="service"
             android:title="@string/service_title" 
             android:summary="@string/service_summary" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="device_admin"
             android:title="@string/admin_title"
             android:summary="@string/admin_summary" />
@@ -28,19 +28,19 @@
         <Preference
             android:key="wake_length"
             android:title="@string/wake_length" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="bright"
             android:title="@string/full_brightness"
             android:summary="@string/full_brightness_summary" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
             android:summary="@string/disable_sensor_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/quiet_time">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="quiet"
             android:summary="@string/quietSum"
@@ -57,7 +57,7 @@
             android:title="@string/stopTime" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/experimental">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="status-bar"
             android:summary="@string/statusBarSum"

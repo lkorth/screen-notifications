@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AppsActivity extends FragmentActivity implements EzLoaderInterface<DisplayableApps> {
+public class AppsActivity extends AppCompatActivity implements EzLoaderInterface<DisplayableApps> {
 
 	private ProgressDialog mLoadingDialog;
 	private AppAdapter mAdapter;
@@ -32,6 +32,10 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.apps);
+
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		mLoadingDialog = ProgressDialog.show(AppsActivity.this, "", getString(R.string.loading), true);
 		getSupportLoaderManager().initLoader(0, null, this);
@@ -47,20 +51,23 @@ public class AppsActivity extends FragmentActivity implements EzLoaderInterface<
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int itemId = item.getItemId();
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
 
 		if(mAdapter != null) {
-			switch (itemId) {
+			switch (item.getItemId()) {
 				case R.id.uncheck_all_apps:
 					mAdapter.uncheckAll();
-					break;
+					return true;
 				case R.id.inverse_apps:
 					mAdapter.invertSelection();
-					break;
+					return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
