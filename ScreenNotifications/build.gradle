@@ -25,6 +25,10 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    lintOptions {
+        warning 'MissingTranslation'
+    }
 }
 
 dependencies {
