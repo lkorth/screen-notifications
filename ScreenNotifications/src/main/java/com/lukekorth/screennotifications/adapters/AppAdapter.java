@@ -98,11 +98,12 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
+		final ViewHolder holder;
 		
 		if(convertView == null) {
 			convertView = mInflater.inflate(R.layout.app, null);
 			holder = new ViewHolder();
+			holder.container = convertView;
 			holder.icon = (ImageView) convertView.findViewById(R.id.icon);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.selected = (CheckBox) convertView.findViewById(R.id.selected);
@@ -115,6 +116,14 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 		holder.name.setText(apps[position].name);
 
 		final String packageName = apps[position].packageName;
+		holder.container.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				boolean checked = holder.selected.isChecked();
+				holder.selected.setChecked(!checked);
+				mPrefs.edit().putBoolean(packageName, !checked).apply();
+			}
+		});
 		holder.selected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -128,6 +137,7 @@ public class AppAdapter extends BaseAdapter implements SectionIndexer {
 	}
 	
 	static class ViewHolder {
+		View container;
 		ImageView icon;
 		TextView name;
 		CheckBox selected;
