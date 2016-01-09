@@ -20,7 +20,7 @@ public class NotificationServiceHelper {
             String notificationListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
             return (notificationListeners != null && notificationListeners.contains(componentName.flattenToString()));
         } else {
-            ComponentName componentName = new ComponentName(context, NotificationListener.class);
+            ComponentName componentName = new ComponentName(context, ScreenNotificationsService.class);
             String accessibilityServices = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
             return (accessibilityServices != null && accessibilityServices.contains(componentName.flattenToString()));
         }
