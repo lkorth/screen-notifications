@@ -1,7 +1,5 @@
 package com.lukekorth.screennotifications;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -22,9 +20,8 @@ import android.widget.NumberPicker;
 import com.lukekorth.screennotifications.billing.IabHelper;
 import com.lukekorth.screennotifications.billing.IabResult;
 import com.lukekorth.screennotifications.helpers.LogReporting;
+import com.lukekorth.screennotifications.helpers.NotificationServiceHelper;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
-import com.lukekorth.screennotifications.services.NotificationListener;
-import com.lukekorth.screennotifications.services.ScreenNotificationsService;
 
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
@@ -107,7 +104,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     private void checkForRunningService() {
-        mServiceActive = isServiceRunning();
+        mServiceActive = NotificationServiceHelper.isServiceRunning(getActivity());
         if (mServiceActive) {
             mServicePreference.setChecked(true);
             enableOptions(true);
@@ -310,20 +307,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                     }
                 })
                 .show();
-    }
-
-    private boolean isServiceRunning() {
-        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Activity.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (mSupportsNotificationListenerService &&
-                    NotificationListener.class.getName().equals(service.service.getClassName())) {
-                return true;
-            } else if (ScreenNotificationsService.class.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override
