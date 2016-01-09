@@ -48,6 +48,7 @@ public class LogReporting {
             message.append("Device product: " + Build.PRODUCT + "\n");
 			message.append("App version: " + BuildConfig.VERSION_NAME + "\n");
             message.append("Debug: " + BuildConfig.DEBUG + "\n");
+			message.append("Service enabled: " + NotificationServiceHelper.isServiceEnabled(mContext));
 			message.append("Service running: " + NotificationServiceHelper.isServiceRunning(mContext));
 
 			Map<String,?> keys = prefs.getAll();
