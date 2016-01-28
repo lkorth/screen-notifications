@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import com.lukekorth.screennotifications.helpers.AppHelper;
 import com.lukekorth.screennotifications.helpers.ScreenController;
 
 import org.slf4j.LoggerFactory;
@@ -20,16 +21,23 @@ public class NotificationListener extends NotificationListenerService implements
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        if (!sbn.isOngoing() && isAppEnabled(sbn)) {
-            LoggerFactory.getLogger("NotificationListener")
-                    .debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
-            if (isProximitySensorEnabled()) {
-                if (!registerProximitySensorListener()) {
-                    new ScreenController(this, false).handleNotification();
-                }
-            } else {
+        if (sbn.isOngoing()) {
+            return;
+        }
+
+        AppHelper.recordNotificationFromApp(this, sbn.getPackageName());
+        if (!AppHelper.isAppEnabled(this, sbn.getPackageName())) {
+            return;
+        }
+
+        LoggerFactory.getLogger("NotificationListener")
+                .debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
+        if (isProximitySensorEnabled()) {
+            if (!registerProximitySensorListener()) {
                 new ScreenController(this, false).handleNotification();
             }
+        } else {
+            new ScreenController(this, false).handleNotification();
         }
     }
 
@@ -41,10 +49,6 @@ public class NotificationListener extends NotificationListenerService implements
             boolean close = event.values[0] < event.sensor.getMaximumRange();
             new ScreenController(this, close).handleNotification();
         }
-    }
-
-    private boolean isAppEnabled(StatusBarNotification sbn) {
-        return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sbn.getPackageName(), false);
     }
 
     private boolean isProximitySensorEnabled() {

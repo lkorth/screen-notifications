@@ -1,31 +1,25 @@
 package com.lukekorth.screennotifications;
 
-import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.lukekorth.ez_loaders.EzLoader;
-import com.lukekorth.ez_loaders.EzLoaderInterface;
 import com.lukekorth.screennotifications.adapters.AppAdapter;
+import com.lukekorth.screennotifications.helpers.AppHelper;
 import com.lukekorth.screennotifications.models.App;
-import com.lukekorth.screennotifications.models.DisplayableApps;
-import com.lukekorth.screennotifications.models.Section;
 
+import org.slf4j.LoggerFactory;
+
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
+import java.util.HashSet;
 
-public class AppsActivity extends AppCompatActivity implements EzLoaderInterface<DisplayableApps> {
-
-	private ProgressDialog mLoadingDialog;
-	private AppAdapter mAdapter;
+public class AppsActivity extends AppCompatActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,16 +31,7 @@ public class AppsActivity extends AppCompatActivity implements EzLoaderInterface
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
-		mLoadingDialog = ProgressDialog.show(AppsActivity.this, "", getString(R.string.loading), true);
-		getSupportLoaderManager().initLoader(0, null, this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.apps_menu, menu);
-
-		return true;
+		init();
 	}
 
 	@Override
@@ -56,77 +41,39 @@ public class AppsActivity extends AppCompatActivity implements EzLoaderInterface
 			return true;
 		}
 
-		if(mAdapter != null) {
-			switch (item.getItemId()) {
-				case R.id.uncheck_all_apps:
-					mAdapter.uncheckAll();
-					return true;
-				case R.id.inverse_apps:
-					mAdapter.invertSelection();
-					return true;
-			}
-		}
-
 		return false;
 	}
 
-	@Override
-	public Loader<DisplayableApps> onCreateLoader(int arg0, Bundle arg1) {
-		return new EzLoader<DisplayableApps>(this, "android.intent.action.PACKAGE_ADDED", this);
-	}
+	public void init() {
+		PackageManager packageManager = getPackageManager();
+		HashSet<String> packages = AppHelper.getNotifyingApps(this);
+		ArrayList<App> apps = new ArrayList<>();
 
-	@Override
-	public DisplayableApps loadInBackground(int id) {
-		final PackageManager pm = getPackageManager();
-		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-		Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
-
-		DisplayableApps data = new DisplayableApps();
-		data.sections = new ArrayList<Section>();
-		data.apps = new App[packages.size()];
-
-		String lastSection = "";
-		String currentSection;
-		for(int i = 0; i < packages.size(); i++) {
-			ApplicationInfo appInfo = packages.get(i);
-
-			data.apps[i] = new App();
-			data.apps[i].name = (String) appInfo.loadLabel(pm);
-			data.apps[i].packageName = appInfo.packageName;
-
+		ApplicationInfo applicationInfo;
+		App app;
+		for (String packageName : packages) {
+			app = new App();
+			app.packageName = packageName;
 			try {
-				data.apps[i].icon = appInfo.loadIcon(pm);
+				applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+				app.name = (String) applicationInfo.loadLabel(packageManager);
+				app.icon = applicationInfo.loadIcon(packageManager);
+				apps.add(app);
 			} catch (OutOfMemoryError e) {
-				data.apps[i].icon = getResources().getDrawable(R.drawable.sym_def_app_icon);
-			}
-
-			if(data.apps[i].name != null && data.apps[i].name.length() > 0) {
-				currentSection = data.apps[i].name.substring(0, 1).toUpperCase();
-				if(!lastSection.equals(currentSection)) {
-					data.sections.add(new Section(i, currentSection));
-					lastSection = currentSection;
-				}
-			}
+				LoggerFactory.getLogger("AppsActivity").warn("OutOfMemoryError: " + e);
+				app.icon = getResources().getDrawable(R.drawable.sym_def_app_icon);
+				apps.add(app);
+			} catch (PackageManager.NameNotFoundException ignored) {}
 		}
 
-		return data;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<DisplayableApps> arg0, DisplayableApps data) {
-		mAdapter = new AppAdapter(this, data);
-		((ListView) findViewById(R.id.appsList)).setAdapter(mAdapter);
-
-		if(mLoadingDialog.isShowing())
-			mLoadingDialog.cancel();
-	}
-
-	@Override
-	public void onLoaderReset(Loader<DisplayableApps> arg0) {
-	}
-
-	@Override
-	public void onReleaseResources(DisplayableApps t) {
+		final Collator collator = Collator.getInstance();
+		Collections.sort(apps, new Comparator<App>() {
+			@Override
+			public int compare(App lhs, App rhs) {
+				return collator.compare(lhs.name, rhs.name);
+			}
+		});
+		((ListView) findViewById(R.id.appsList)).setAdapter(new AppAdapter(this, apps));
 	}
 }
 

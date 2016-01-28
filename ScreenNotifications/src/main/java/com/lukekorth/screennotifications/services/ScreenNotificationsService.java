@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.lukekorth.screennotifications.helpers.AppHelper;
 import com.lukekorth.screennotifications.helpers.ScreenController;
 
 import org.slf4j.LoggerFactory;
@@ -17,17 +18,23 @@ public class ScreenNotificationsService extends AccessibilityService implements 
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED &&
-                isAppEnabled(event)) {
-            LoggerFactory.getLogger("BaseAccessibilityService")
-                    .debug("Received a notification accessibility event for an enabled app. " + event.getPackageName());
-            if (isProximitySensorEnabled()) {
-                if (!registerProximitySensorListener()) {
-                    new ScreenController(this, false).handleNotification();
-                }
-            } else {
+        if (event.getEventType() != AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+            return;
+        }
+
+        AppHelper.recordNotificationFromApp(this, event.getPackageName().toString());
+        if (!AppHelper.isAppEnabled(this, event.getPackageName().toString())) {
+            return;
+        }
+
+        LoggerFactory.getLogger("BaseAccessibilityService")
+                .debug("Received a notification accessibility event for an enabled app. " + event.getPackageName());
+        if (isProximitySensorEnabled()) {
+            if (!registerProximitySensorListener()) {
                 new ScreenController(this, false).handleNotification();
             }
+        } else {
+            new ScreenController(this, false).handleNotification();
         }
     }
 
@@ -39,11 +46,6 @@ public class ScreenNotificationsService extends AccessibilityService implements 
             boolean close = event.values[0] < event.sensor.getMaximumRange();
             new ScreenController(this, close).handleNotification();
         }
-    }
-
-    private boolean isAppEnabled(AccessibilityEvent event) {
-        return PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(event.getPackageName().toString(), false);
     }
 
     private boolean isProximitySensorEnabled() {

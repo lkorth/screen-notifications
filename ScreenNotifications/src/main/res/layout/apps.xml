@@ -3,7 +3,4 @@
     android:id="@+id/appsList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fastScrollEnabled="true"
-    android:scrollingCache="true" >
-
-</ListView>
+    android:scrollingCache="true"/>
