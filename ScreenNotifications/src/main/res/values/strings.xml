@@ -28,6 +28,7 @@
     <string name="admin_summary">Enable to allow shorter screen timeouts</string>
     <string name="apps">Apps</string>
     <string name="select_apps">Select Apps</string>
+    <string name="no_apps">No app has created a notification yet. Check back later to enable or disable an app. By default any notification will turn the screen on unless the app is diabled here.</string>
     <string name="select_apps_summary">Select apps that will turn the screen on when they create a notification</string>
     <string name="options">Options</string>
     <string name="wake_length">Screen wake length</string>

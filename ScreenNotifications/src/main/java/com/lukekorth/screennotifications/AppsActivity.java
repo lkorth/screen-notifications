@@ -73,7 +73,9 @@ public class AppsActivity extends AppCompatActivity {
 				return collator.compare(lhs.name, rhs.name);
 			}
 		});
-		((ListView) findViewById(R.id.appsList)).setAdapter(new AppAdapter(this, apps));
+		ListView listView = (ListView) findViewById(R.id.appsList);
+		listView.setAdapter(new AppAdapter(this, apps));
+		listView.setEmptyView(findViewById(R.id.no_apps));
 	}
 }
 
