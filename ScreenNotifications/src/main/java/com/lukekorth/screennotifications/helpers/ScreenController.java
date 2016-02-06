@@ -20,10 +20,11 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ScreenController {
 
-    private static long sLastNotificationTime;
+    private static AtomicLong sLastNotificationTime = new AtomicLong();
 
     private Context mContext;
     private Logger mLogger;
@@ -40,7 +41,7 @@ public class ScreenController {
     }
 
     public void handleNotification() {
-        ScreenController.sLastNotificationTime = System.currentTimeMillis();
+        sLastNotificationTime.set(System.currentTimeMillis());
         if(shouldTurnOnScreen()) {
             Executors.newSingleThreadExecutor().submit(new Runnable() {
                 @Override
@@ -82,8 +83,7 @@ public class ScreenController {
         do {
             mLogger.debug("Sleeping for " + actualWakeLength);
             SystemClock.sleep(actualWakeLength);
-            actualWakeLength = ScreenController.sLastNotificationTime + desiredWakeLength -
-                    System.currentTimeMillis();
+            actualWakeLength = sLastNotificationTime.get() + desiredWakeLength - System.currentTimeMillis();
         } while (actualWakeLength > 1000);
 
         wakeLock.release();
