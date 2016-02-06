@@ -1,7 +1,9 @@
 package com.lukekorth.screennotifications.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.preference.DialogPreference;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
@@ -14,56 +16,65 @@ import com.lukekorth.screennotifications.R;
 
 public class TimePreference extends DialogPreference {
 
-    protected int lastHour = 0;
-    protected int lastMinute = 0;
-    protected boolean is24HourFormat;
-    protected TimePicker picker = null;
-    protected TextView timeDisplay;
+    private int mLastHour = 0;
+    private int mLastMinute = 0;
+    private boolean mIs24HourFormat;
+    private TimePicker mPicker = null;
+    private TextView mTimeDisplay;
 
-    public TimePreference(Context ctxt) {
-        this(ctxt, null);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public TimePreference(Context context) {
+        super(context);
+        init(context);
     }
 
-    public TimePreference(Context ctxt, AttributeSet attrs) {
-        this(ctxt, attrs, 0);
+    public TimePreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
     }
 
-    public TimePreference(Context ctxt, AttributeSet attrs, int defStyle) {
-        super(ctxt, attrs, defStyle);
+    public TimePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
 
-        is24HourFormat = DateFormat.is24HourFormat(ctxt);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public TimePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context);
+    }
+
+    private void init(Context context) {
+        mIs24HourFormat = DateFormat.is24HourFormat(context);
         setPositiveButtonText(R.string.set);
         setNegativeButtonText(android.R.string.cancel);
     }
 
     @Override
     public String toString() {
-        if (is24HourFormat) {
-            return ((lastHour < 10) ? "0" : "")
-                    + Integer.toString(lastHour)
-                    + ":" + ((lastMinute < 10) ? "0" : "")
-                    + Integer.toString(lastMinute);
+        if (mIs24HourFormat) {
+            return ((mLastHour < 10) ? "0" : "") + Integer.toString(mLastHour)
+                    + ":" + ((mLastMinute < 10) ? "0" : "") + Integer.toString(mLastMinute);
         } else {
-            int myHour = lastHour % 12;
+            int myHour = mLastHour % 12;
             return ((myHour == 0) ? "12" : ((myHour < 10) ? "0" : "") + Integer.toString(myHour))
-                    + ":" + ((lastMinute < 10) ? "0" : "")
-                    + Integer.toString(lastMinute)
-                    + ((lastHour >= 12) ? " PM" : " AM");
+                    + ":" + ((mLastMinute < 10) ? "0" : "") + Integer.toString(mLastMinute)
+                    + ((mLastHour >= 12) ? " PM" : " AM");
         }
     }
 
     @Override
     protected View onCreateDialogView() {
-        picker = new TimePicker(getContext());
-        return picker;
+        mPicker = new TimePicker(getContext());
+        return mPicker;
     }
 
     @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
-        picker.setIs24HourView(is24HourFormat);
-        picker.setCurrentHour(lastHour);
-        picker.setCurrentMinute(lastMinute);
+        mPicker.setIs24HourView(mIs24HourFormat);
+        mPicker.setCurrentHour(mLastHour);
+        mPicker.setCurrentMinute(mLastMinute);
     }
 
     @Override
@@ -74,10 +85,12 @@ public class TimePreference extends DialogPreference {
             widgetLayout = ((ViewGroup) view).getChildAt(childCounter);
             childCounter++;
         } while (widgetLayout.getId() != android.R.id.widget_frame);
+
         ((ViewGroup) widgetLayout).removeAllViews();
-        timeDisplay = new TextView(widgetLayout.getContext());
-        timeDisplay.setText(toString());
-        ((ViewGroup) widgetLayout).addView(timeDisplay);
+        mTimeDisplay = new TextView(widgetLayout.getContext());
+        mTimeDisplay.setText(toString());
+        ((ViewGroup) widgetLayout).addView(mTimeDisplay);
+
         super.onBindView(view);
     }
 
@@ -86,15 +99,15 @@ public class TimePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            picker.clearFocus();
-            lastHour = picker.getCurrentHour();
-            lastMinute = picker.getCurrentMinute();
+            mPicker.clearFocus();
+            mLastHour = mPicker.getCurrentHour();
+            mLastMinute = mPicker.getCurrentMinute();
 
-            String time = String.valueOf(lastHour) + ":" + String.valueOf(lastMinute);
+            String time = String.valueOf(mLastHour) + ":" + String.valueOf(mLastMinute);
 
             if (callChangeListener(time)) {
                 persistString(time);
-                timeDisplay.setText(toString());
+                mTimeDisplay.setText(toString());
             }
         }
     }
@@ -106,8 +119,7 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time = null;
-
+        String time;
         if (restoreValue) {
             if (defaultValue == null) {
                 time = getPersistedString("00:00");
@@ -126,7 +138,7 @@ public class TimePreference extends DialogPreference {
         }
 
         String[] timeParts = time.split(":");
-        lastHour = Integer.parseInt(timeParts[0]);
-        lastMinute = Integer.parseInt(timeParts[1]);
+        mLastHour = Integer.parseInt(timeParts[0]);
+        mLastMinute = Integer.parseInt(timeParts[1]);
     }
 }
