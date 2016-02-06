@@ -55,9 +55,8 @@
     <string name="stopTime">Stop quiet hours</string>
     <string name="set">Set</string>
     <string name="statusBar">Open notification tray</string>
-    <string name="statusBarSum">Open the notification tray when the screen is turned on due to a notification. 
-        This is experimental and will only work on a small number of phones. It will not cause any issues if it 
-        does not work on your phone.</string>
+    <string name="statusBarSum">Open the tray when the screen is turned for a notification.
+        This is experimental and will only work on a small number of phones.</string>
 
     <string name="market_description">
         A very simple app that turns your screen on for a specified period time when you get a notification. 
