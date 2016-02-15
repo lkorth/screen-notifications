@@ -30,7 +30,11 @@ public class RecentAppsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mApps.size();
+        if (mApps.size() > 50) {
+            return 50;
+        } else {
+            return mApps.size();
+        }
     }
 
     @Override
