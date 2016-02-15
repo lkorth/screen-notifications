@@ -77,6 +77,10 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/help">
         <Preference
+            android:key="recent_apps"
+            android:title="@string/recent_apps"
+            android:summary="@string/recent_apps_summary" />
+        <Preference
             android:key="contact"
             android:title="@string/contact"
             android:summary="@string/contact_summary" />

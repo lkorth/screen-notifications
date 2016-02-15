@@ -35,6 +35,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.lukekorth:mailable_log:0.1.3'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.3@aar'
+    compile 'io.realm:realm-android:0.87.4'
 }
 
 // borrowed from https://www.timroes.de/2014/01/19/using-password-prompts-with-gradle-build-files/

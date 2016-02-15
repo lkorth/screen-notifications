@@ -4,7 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.lukekorth.screennotifications.models.RecentApp;
+
 import java.util.HashSet;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class AppHelper {
 
@@ -25,6 +31,23 @@ public class AppHelper {
                     .putStringSet(NOTIFYING_APPS, apps)
                     .apply();
         }
+    }
+
+    public static void recordRecentNotification(String packageName) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        RecentApp recentApp = realm.createObject(RecentApp.class);
+        recentApp.setPackageName(packageName);
+        recentApp.setTimestamp(System.currentTimeMillis());
+
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public static RealmResults<RecentApp> getRecentNotifyingApps() {
+        return Realm.getDefaultInstance().where(RecentApp.class)
+                .findAllSorted("timestamp", Sort.DESCENDING);
     }
 
     public static HashSet<String> getNotifyingApps(Context context) {

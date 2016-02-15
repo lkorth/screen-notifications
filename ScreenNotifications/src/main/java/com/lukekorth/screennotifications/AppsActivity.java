@@ -34,16 +34,6 @@ public class AppsActivity extends AppCompatActivity {
 		init();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			finish();
-			return true;
-		}
-
-		return false;
-	}
-
 	public void init() {
 		PackageManager packageManager = getPackageManager();
 		HashSet<String> packages = AppHelper.getNotifyingApps(this);
@@ -76,6 +66,16 @@ public class AppsActivity extends AppCompatActivity {
 		ListView listView = (ListView) findViewById(R.id.appsList);
 		listView.setAdapter(new AppAdapter(this, apps));
 		listView.setEmptyView(findViewById(R.id.no_apps));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+
+		return false;
 	}
 }
 

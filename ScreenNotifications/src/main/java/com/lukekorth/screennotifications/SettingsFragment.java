@@ -51,6 +51,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             mSupportsNotificationListenerService = true;
         }
 
+        findPreference("recent_apps").setOnPreferenceClickListener(this);
         findPreference("contact").setOnPreferenceClickListener(this);
         findPreference("version").setSummary(BuildConfig.VERSION_NAME);
 
@@ -313,6 +314,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("contact")) {
             new LogReporting(getActivity()).collectAndSendLogs();
+            return true;
+        } else if (preference.getKey().equals("recent_apps")) {
+            startActivity(new Intent(getActivity(), RecentAppsActivity.class));
             return true;
         }
         return false;

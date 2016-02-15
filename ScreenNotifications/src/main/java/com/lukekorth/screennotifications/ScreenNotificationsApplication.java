@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class ScreenNotificationsApplication extends Application implements Thread.UncaughtExceptionHandler {
 
     private static final String VERSION = "version";
@@ -27,6 +30,7 @@ public class ScreenNotificationsApplication extends Application implements Threa
         super.onCreate();
         migrate();
         MailableLog.init(this, BuildConfig.DEBUG);
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
         mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }

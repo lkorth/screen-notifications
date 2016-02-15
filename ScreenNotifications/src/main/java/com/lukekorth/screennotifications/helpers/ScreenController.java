@@ -40,9 +40,10 @@ public class ScreenController {
         mCloseToProximitySensor = closeToProximitySensor;
     }
 
-    public void handleNotification() {
+    public void handleNotification(String packageName) {
         sLastNotificationTime.set(System.currentTimeMillis());
         if(shouldTurnOnScreen()) {
+            AppHelper.recordRecentNotification(packageName);
             Executors.newSingleThreadExecutor().submit(new Runnable() {
                 @Override
                 public void run() {

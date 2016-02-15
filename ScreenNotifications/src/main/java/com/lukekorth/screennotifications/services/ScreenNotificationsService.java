@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public class ScreenNotificationsService extends AccessibilityService implements SensorEventListener {
 
+    private String mLastNotifyingPackage;
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event.getEventType() != AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
@@ -29,12 +31,13 @@ public class ScreenNotificationsService extends AccessibilityService implements 
 
         LoggerFactory.getLogger("BaseAccessibilityService")
                 .debug("Received a notification accessibility event for an enabled app. " + event.getPackageName());
+        mLastNotifyingPackage = event.getPackageName().toString();
         if (isProximitySensorEnabled()) {
             if (!registerProximitySensorListener()) {
-                new ScreenController(this, false).handleNotification();
+                new ScreenController(this, false).handleNotification(mLastNotifyingPackage);
             }
         } else {
-            new ScreenController(this, false).handleNotification();
+            new ScreenController(this, false).handleNotification(mLastNotifyingPackage);
         }
     }
 
@@ -44,7 +47,7 @@ public class ScreenNotificationsService extends AccessibilityService implements 
             unregisterProximitySensorListener();
 
             boolean close = event.values[0] < event.sensor.getMaximumRange();
-            new ScreenController(this, close).handleNotification();
+            new ScreenController(this, close).handleNotification(mLastNotifyingPackage);
         }
     }
 

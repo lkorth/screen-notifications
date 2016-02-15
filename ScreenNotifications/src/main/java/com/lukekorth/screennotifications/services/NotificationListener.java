@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class NotificationListener extends NotificationListenerService implements SensorEventListener {
 
+    private String mLastNotifyingPackage;
+
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         if (sbn.isOngoing()) {
@@ -32,12 +34,13 @@ public class NotificationListener extends NotificationListenerService implements
 
         LoggerFactory.getLogger("NotificationListener")
                 .debug("Got a non-ongoing notification for an enabled app. " + sbn.getPackageName());
+        mLastNotifyingPackage = sbn.getPackageName();
         if (isProximitySensorEnabled()) {
             if (!registerProximitySensorListener()) {
-                new ScreenController(this, false).handleNotification();
+                new ScreenController(this, false).handleNotification(mLastNotifyingPackage);
             }
         } else {
-            new ScreenController(this, false).handleNotification();
+            new ScreenController(this, false).handleNotification(mLastNotifyingPackage);
         }
     }
 
@@ -47,7 +50,7 @@ public class NotificationListener extends NotificationListenerService implements
             unregisterProximitySensorListener();
 
             boolean close = event.values[0] < event.sensor.getMaximumRange();
-            new ScreenController(this, close).handleNotification();
+            new ScreenController(this, close).handleNotification(mLastNotifyingPackage);
         }
     }
 

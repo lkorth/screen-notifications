@@ -23,8 +23,10 @@
         </activity>
         <activity
             android:name=".AppsActivity"
-            android:icon="@drawable/ic_launcher"
             android:label="@string/select" />
+        <activity
+            android:name=".RecentAppsActivity"
+            android:label="@string/recent_apps" />
 
         <service
             android:name=".services.ScreenNotificationsService"
