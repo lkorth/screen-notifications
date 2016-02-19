@@ -37,9 +37,9 @@
     <string name="wake_length_summary_2">seconds after notification</string>
     <string name="disabled_wake_length">Device Admin option must be enabled first</string>
     <string name="full_brightness">Full Brightness</string>
-    <string name="full_brightness_summary">When checked, the screen will always turn on at full brightness for notifications</string>
+    <string name="full_brightness_summary">When enabled, the screen will always turn on at full brightness for notifications</string>
     <string name="disable_sensor">Disable Proximity Sensor</string>
-    <string name="disable_sensor_summary">When checked, the screen will always turn on for notifications, even in your pocket</string>
+    <string name="disable_sensor_summary">When enabled, the screen will always turn on for notifications, even in your pocket</string>
     <string name="quiet_time">Quiet Time</string>
     <string name="experimental">Experimental</string>
     <string name="help">Help</string>

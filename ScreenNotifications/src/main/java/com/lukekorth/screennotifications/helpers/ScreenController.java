@@ -124,7 +124,7 @@ public class ScreenController {
     private boolean shouldTurnOnScreen() {
         boolean turnOnScreen = !isInQuietTime() && !isInCall() && !mPowerManager.isScreenOn();
 
-        if(!mPrefs.getBoolean("proxSensor", true)) {
+        if(!mPrefs.getBoolean("proxSensor", false)) {
             turnOnScreen = turnOnScreen && !mCloseToProximitySensor;
         }
 

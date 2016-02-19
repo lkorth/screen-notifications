@@ -43,7 +43,7 @@
             android:summary="@string/full_brightness_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
             android:summary="@string/disable_sensor_summary"
