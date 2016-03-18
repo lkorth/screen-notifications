@@ -27,8 +27,8 @@ public class NotificationListener extends NotificationListenerService implements
             return;
         }
 
-        AppHelper.recordNotificationFromApp(this, sbn.getPackageName());
-        if (!AppHelper.isAppEnabled(this, sbn.getPackageName())) {
+        AppHelper.recordNotificationFromApp(sbn.getPackageName());
+        if (!AppHelper.isAppEnabled(sbn.getPackageName())) {
             return;
         }
 

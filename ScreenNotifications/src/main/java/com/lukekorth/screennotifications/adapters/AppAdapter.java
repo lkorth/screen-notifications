@@ -1,8 +1,6 @@
 package com.lukekorth.screennotifications.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +16,18 @@ import com.lukekorth.screennotifications.models.App;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+
 public class AppAdapter extends BaseAdapter {
-	
+
 	private LayoutInflater mInflater;
-	private SharedPreferences mPrefs;
 	private ArrayList<App> mApps;
+	private Realm mRealm;
 
 	public AppAdapter(Context context, ArrayList<App> apps) {
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		mApps = apps;
+		mRealm = Realm.getDefaultInstance();
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class AppAdapter extends BaseAdapter {
 
 	@Override
 	public String getItem(int position) {
-		return mApps.get(position).name;
+		return mApps.get(position).getName();
 	}
 
 	@Override
@@ -61,17 +61,19 @@ public class AppAdapter extends BaseAdapter {
 
 		final App app = mApps.get(position);
 		
-		holder.icon.setImageDrawable(app.icon);
-		holder.name.setText(app.name);
+		holder.icon.setImageDrawable(app.getIcon());
+		holder.name.setText(app.getName());
 
 		holder.selected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				mPrefs.edit().putBoolean(app.packageName, isChecked).apply();
+				mRealm.beginTransaction();
+				app.setEnabled(isChecked);
+				mRealm.commitTransaction();
 			}
 		});
 		
-		holder.selected.setChecked(mPrefs.getBoolean(app.packageName, true));
+		holder.selected.setChecked(app.getEnabled());
 		
 		return convertView;
 	}

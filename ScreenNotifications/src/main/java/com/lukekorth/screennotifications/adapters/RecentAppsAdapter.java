@@ -1,7 +1,6 @@
 package com.lukekorth.screennotifications.adapters;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +17,13 @@ import io.realm.RealmResults;
 
 public class RecentAppsAdapter extends BaseAdapter {
 
-    private PackageManager mPackageManager;
+    private Context mContext;
     private LayoutInflater mInflater;
     private RealmResults<RecentApp> mApps;
 
     public RecentAppsAdapter(Context context) {
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPackageManager = context.getPackageManager();
+        mContext = context;
+        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mApps = AppHelper.getRecentNotifyingApps();
     }
 
@@ -62,11 +61,12 @@ public class RecentAppsAdapter extends BaseAdapter {
         }
 
         final RecentApp app = mApps.get(position);
-        try {
-            holder.icon.setImageDrawable(mPackageManager.getApplicationIcon(app.getPackageName()));
-            holder.name.setText(mPackageManager.getApplicationInfo(app.getPackageName(), 0).loadLabel(mPackageManager));
+        RecentApp.fetchInformation(app, mContext);
+        if (app.isInstalled()) {
+            holder.icon.setImageDrawable(app.getIcon());
+            holder.name.setText(app.getName());
             holder.notificationTime.setText(DateUtils.getRelativeTimeSpanString(app.getTimestamp(), System.currentTimeMillis(), 0));
-        } catch (PackageManager.NameNotFoundException ignored) {
+        } else {
             holder.icon.setImageResource(R.drawable.ic_launcher);
             holder.name.setText(R.string.uninstalled_app);
             holder.notificationTime.setText(DateUtils.getRelativeTimeSpanString(app.getTimestamp(), System.currentTimeMillis(), 0));

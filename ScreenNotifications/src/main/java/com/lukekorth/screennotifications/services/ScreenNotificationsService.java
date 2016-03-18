@@ -24,8 +24,8 @@ public class ScreenNotificationsService extends AccessibilityService implements 
             return;
         }
 
-        AppHelper.recordNotificationFromApp(this, event.getPackageName().toString());
-        if (!AppHelper.isAppEnabled(this, event.getPackageName().toString())) {
+        AppHelper.recordNotificationFromApp(event.getPackageName().toString());
+        if (!AppHelper.isAppEnabled(event.getPackageName().toString())) {
             return;
         }
 

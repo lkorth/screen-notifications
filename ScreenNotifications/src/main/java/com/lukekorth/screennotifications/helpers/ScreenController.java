@@ -43,7 +43,7 @@ public class ScreenController {
     public void handleNotification(String packageName) {
         sLastNotificationTime.set(System.currentTimeMillis());
         if(shouldTurnOnScreen()) {
-            AppHelper.recordRecentNotification(packageName);
+            AppHelper.recordScreenWakeFromApp(packageName);
             Executors.newSingleThreadExecutor().submit(new Runnable() {
                 @Override
                 public void run() {

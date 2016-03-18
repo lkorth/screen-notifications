@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.lukekorth.mailable_log.MailableLog;
-import com.lukekorth.screennotifications.helpers.AppHelper;
+import com.lukekorth.screennotifications.models.App;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,7 @@ import io.realm.RealmConfiguration;
 
 public class ScreenNotificationsApplication extends Application implements Thread.UncaughtExceptionHandler {
 
+    private static final String NOTIFYING_APPS = "notifying_apps";
     private static final String VERSION = "version";
 
     private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
@@ -28,9 +29,9 @@ public class ScreenNotificationsApplication extends Application implements Threa
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
         migrate();
         MailableLog.init(this, BuildConfig.DEBUG);
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
         mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
@@ -41,6 +42,10 @@ public class ScreenNotificationsApplication extends Application implements Threa
         if (BuildConfig.VERSION_CODE > version) {
             if (version < 20) {
                 migrateToNewAppList(prefs);
+            }
+
+            if (version < 22) {
+                migrateToNewAppDatabase(prefs);
             }
 
             String now = new Date().toString();
@@ -89,7 +94,24 @@ public class ScreenNotificationsApplication extends Application implements Threa
             }
         }
 
-        prefs.edit().putStringSet(AppHelper.NOTIFYING_APPS, apps).apply();
+        prefs.edit().putStringSet(NOTIFYING_APPS, apps).apply();
+    }
+
+    private void migrateToNewAppDatabase(SharedPreferences prefs) {
+        Set<String> apps = prefs.getStringSet(NOTIFYING_APPS, null);
+        if (apps != null) {
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+
+            for (String packageName : apps) {
+                App app = realm.createObject(App.class);
+                app.setPackageName(packageName);
+                app.setEnabled(prefs.getBoolean(packageName, true));
+            }
+
+            realm.commitTransaction();
+            realm.close();
+        }
     }
 
     private boolean isAppInstalled(String packageName) {

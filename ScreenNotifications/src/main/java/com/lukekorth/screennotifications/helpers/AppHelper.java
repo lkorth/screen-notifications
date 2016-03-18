@@ -1,12 +1,7 @@
 package com.lukekorth.screennotifications.helpers;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
+import com.lukekorth.screennotifications.models.App;
 import com.lukekorth.screennotifications.models.RecentApp;
-
-import java.util.HashSet;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -14,26 +9,44 @@ import io.realm.Sort;
 
 public class AppHelper {
 
-    public static final String NOTIFYING_APPS = "notifying_apps";
+    public static boolean isAppEnabled(String packageName) {
+        Realm realm = Realm.getDefaultInstance();
 
-    public static boolean isAppEnabled(Context context, String packageName) {
-        return getPreferences(context).getBoolean(packageName, true);
-    }
+        App existingApp = realm.where(App.class)
+                .equalTo("packageName", packageName)
+                .findFirst();
 
-    public static void recordNotificationFromApp(Context context, String packageName) {
-        SharedPreferences preferences = getPreferences(context);
-        if (!preferences.contains(packageName)) {
-            HashSet<String> apps = getNotifyingApps(context);
-            apps.add(packageName);
-
-            preferences.edit()
-                    .putBoolean(packageName, true)
-                    .putStringSet(NOTIFYING_APPS, apps)
-                    .apply();
+        boolean enabled = false;
+        if (existingApp != null) {
+            enabled = existingApp.getEnabled();
         }
+
+        realm.close();
+
+        return enabled;
     }
 
-    public static void recordRecentNotification(String packageName) {
+    public static void recordNotificationFromApp(String packageName) {
+        Realm realm = Realm.getDefaultInstance();
+
+        App existingApp = realm.where(App.class)
+                .equalTo("packageName", packageName)
+                .findFirst();
+
+        if (existingApp == null) {
+            realm.beginTransaction();
+
+            App app = realm.createObject(App.class);
+            app.setPackageName(packageName);
+            app.setEnabled(true);
+
+            realm.commitTransaction();
+        }
+
+        realm.close();
+    }
+
+    public static void recordScreenWakeFromApp(String packageName) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
@@ -50,11 +63,8 @@ public class AppHelper {
                 .findAllSorted("timestamp", Sort.DESCENDING);
     }
 
-    public static HashSet<String> getNotifyingApps(Context context) {
-        return new HashSet<>(getPreferences(context).getStringSet(NOTIFYING_APPS, new HashSet<String>()));
-    }
-
-    private static SharedPreferences getPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+    public static RealmResults<App> getNotifyingApps() {
+        return Realm.getDefaultInstance().where(App.class)
+                .findAll();
     }
 }
