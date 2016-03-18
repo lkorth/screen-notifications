@@ -36,6 +36,9 @@
         <Preference
             android:key="wake_length"
             android:title="@string/wake_length" />
+        <Preference
+            android:key="delay"
+            android:title="@string/delay_title" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="bright"

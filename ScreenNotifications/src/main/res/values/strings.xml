@@ -36,6 +36,8 @@
     <string name="wake_length_summary">Keep screen on for</string>
     <string name="wake_length_summary_2">seconds after notification</string>
     <string name="disabled_wake_length">Device Admin option must be enabled first</string>
+    <string name="delay_title">Delay</string>
+    <string name="delay_summary">Wait %d seconds before turning the screen on.\n\nUse this option if turning the screen on prevents notification sounds from playing.</string>
     <string name="full_brightness">Full Brightness</string>
     <string name="full_brightness_summary">When enabled, the screen will always turn on at full brightness for notifications</string>
     <string name="disable_sensor">Disable Proximity Sensor</string>

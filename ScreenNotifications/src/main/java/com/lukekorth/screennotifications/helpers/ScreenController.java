@@ -56,9 +56,10 @@ public class ScreenController {
     private void turnOnScreen() {
         mLogger.debug("Turning on screen");
 
-        if(mPrefs.getBoolean("status-bar", false)) {
-            mLogger.debug("Sleeping for 3 seconds before turning on screen");
-            SystemClock.sleep(3000);
+        int delay = mPrefs.getInt("delay", 0);
+        if(delay > 0) {
+            mLogger.debug("Sleeping for " + delay + " seconds before turning on screen");
+            SystemClock.sleep(delay * 1000);
         }
 
         int flag;

@@ -58,6 +58,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         initializeService();
         initializeDeviceAdmin();
         initializeTime();
+        setDelaySummary();
         initializeDonations();
     }
 
@@ -168,6 +169,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 mPrefs.getInt("wake_length", 10) + " " + getString(R.string.wake_length_summary_2));
     }
 
+    private void setDelaySummary() {
+        findPreference("delay").setSummary(getString(R.string.delay_summary,
+                mPrefs.getInt("delay", 0)));
+    }
+
     private void initializeTime() {
         Preference.OnPreferenceChangeListener listener = new Preference.OnPreferenceChangeListener() {
             @Override
@@ -203,6 +209,41 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 mPrefs.edit().putInt("wake_length", numberPicker.getValue()).apply();
                                 setWakeLengthSummary();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.dismiss();
+                                    }
+                                }
+                        )
+                        .show();
+
+                return true;
+            }
+        });
+
+        findPreference("delay").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                LayoutInflater inflater = (LayoutInflater)
+                        getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View numberPickerView = inflater.inflate(R.layout.number_picker_dialog, null);
+
+                final NumberPicker numberPicker = (NumberPicker) numberPickerView.findViewById(R.id.number_picker);
+                numberPicker.setMinValue(0);
+                numberPicker.setMaxValue(900);
+                numberPicker.setValue(mPrefs.getInt("delay", 0));
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.delay_title)
+                        .setView(numberPickerView)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                mPrefs.edit().putInt("delay", numberPicker.getValue()).apply();
+                                setDelaySummary();
                                 dialog.dismiss();
                             }
                         })
