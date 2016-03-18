@@ -28,6 +28,7 @@
         android:layout_below="@id/name"
         android:layout_toRightOf="@id/icon"
         android:paddingLeft="8dp"
+        android:layout_marginBottom="4dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
