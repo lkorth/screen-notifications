@@ -67,7 +67,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         AppRate.with(getActivity())
                 .text(R.string.rate)
-                .initialLaunchCount(3)
+                .initialLaunchCount(9)
                 .retryPolicy(RetryPolicy.EXPONENTIAL)
                 .checkAndShow();
     }
