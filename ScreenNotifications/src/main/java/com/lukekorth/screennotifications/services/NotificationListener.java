@@ -1,12 +1,10 @@
 package com.lukekorth.screennotifications.services;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -16,7 +14,6 @@ import com.lukekorth.screennotifications.helpers.ScreenController;
 
 import org.slf4j.LoggerFactory;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class NotificationListener extends NotificationListenerService implements SensorEventListener {
 
     private String mLastNotifyingPackage;
