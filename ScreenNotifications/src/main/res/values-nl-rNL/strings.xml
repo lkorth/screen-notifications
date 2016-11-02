@@ -2,8 +2,6 @@
 <resources>
   <string name="app_name">Scherm Notificaties</string>
   <string name="description">Scherm Notificaties zal u scherm aan zetten als u een notificatie krijgt van een geselecteerde app. U scherm zal niet aan gaan als u apparaat in u zak zit.</string>
-  <string name="accessibility_launch">U gaat nu naar de toegankelijkheids instellingen. \n Indien u wenst te stoppen met Scherm Notificaties, sluit dan simpel het programma af.</string>
-  <string name="accessibility_warning">Klikt u op OK dan zult u naar de toegankelijkheids instellingen gaan. \n Om deze app te laten werken dient u scherm notificaties te activeren. \n Android zal u waarschuwen dat de app mogelijk prive data opslaat, deze app slaat op geen enkele manier gegevens op en maakt ook geen verbinding met het internet.</string>
   <string name="ok">OK</string>
   <string name="donate">Doneer</string>
   <string name="donate_summary">Doneer om verdere ontwikkeling van de app te steunen</string>

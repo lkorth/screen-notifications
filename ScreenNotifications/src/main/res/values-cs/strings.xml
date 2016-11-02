@@ -2,8 +2,6 @@
 <resources>
   <string name="app_name">Screen Notifications</string>
   <string name="description">Screen Notification zapne Váš displej při oznámení ze zvolené aplikace. Displej se nezapne, když máte zařízení v kapse.</string>
-  <string name="accessibility_launch">Nyní přejede do nastavení zabezpečení telefonu.\nJestli budete chtít zastavit Screen Notifications, jednoduše ho vypněte.</string>
-  <string name="accessibility_warning">Stisknutím na OK, přejdeme do nastavení systému - Usnadnění.\nAby byla aplikace funkční je potřeba zde Screen Notification povolit.\nAndroid Vás bude varovat, že aplikace může zaznamenávat Vaše data, ale tato aplikace nezaznamenává žádná data ani nevyžaduje přístup k internetu.</string>
   <string name="ok">OK</string>
   <string name="donate">Donate</string>
   <string name="donate_summary">Přispějte na vývoj aplikace</string>

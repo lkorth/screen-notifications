@@ -2,8 +2,6 @@
 <resources>
   <string name="app_name">Screen Notifications</string>
   <string name="description">Screen Notifications accenderà il tuo schermo quando riceverai una\nnotifica dalle app selezionate. Lo schermo non si accenderà se il tuo dispositivo è in tasca.</string>
-  <string name="accessibility_launch">Ora sarai portato alle impostazioni di Accessibilità.        \nSe vuoi disattivare Screen Notificaitons, semplicemente impostalo su OFF.</string>
-  <string name="accessibility_warning">Cliccando ok verrai portato alle impostazioni di Accessibilità. \nPer far si che questa app funzioni dovrai impostare Screen Notifications su ON.\nAndroid ti avvertirà che alcune app potrebbero acquisire informazioni riservate, ma questa non accede né a informazioni personali né a internet.</string>
   <string name="ok">OK</string>
   <string name="donate">Dona</string>
   <string name="donate_summary">Dona per supportare lo sviluppo dell\'applicazione</string>

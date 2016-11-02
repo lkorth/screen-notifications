@@ -4,11 +4,6 @@
     <string name="rate">Rate Screen Notifications</string>
     <string name="description">Screen Notifications will turn your screen on when you get a 
         notification from the selected apps. The screen will not turn on if your device is in your pocket.</string>
-    <string name="accessibility_launch">You will be now taken to the Accessibility settings. 
-        If you wish to stop Screen Notificaitons, simply turn it off.</string>
-    <string name="accessibility_warning">Clicking ok will take you to the Accessibility settings. 
-        For this app to work you will need to turn on Screen Notifications. 
-        Android will warn you that the app may capture your private data, this app in no way captures any data and has no access to the internet.</string>
     <string name="notification_listener_launch">You will be now taken to the notification settings.
         If you wish to stop Screen Notifications, simply turn it off.</string>
     <string name="notification_listener_warning">Clicking ok will take you to the notification settings.

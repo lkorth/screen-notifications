@@ -33,7 +33,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private SharedPreferences mPrefs;
 
     private boolean mServiceActive;
-    private boolean mSupportsNotificationListenerService = false;
     private CheckBoxPreference mServicePreference;
 
     private DevicePolicyManager mDPM;
@@ -46,10 +45,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         addPreferencesFromResource(R.xml.settings);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        if (android.os.Build.VERSION.SDK_INT >= 18) {
-            mSupportsNotificationListenerService = true;
-        }
 
         findPreference("recent_apps").setOnPreferenceClickListener(this);
         findPreference("contact").setOnPreferenceClickListener(this);
@@ -86,17 +81,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mServiceActive) {
-                    if (mSupportsNotificationListenerService) {
-                        showServiceDialog(R.string.notification_listener_launch);
-                    } else {
-                        showServiceDialog(R.string.accessibility_launch);
-                    }
+                    showServiceDialog(R.string.notification_listener_launch);
                 } else {
-                    if (mSupportsNotificationListenerService) {
-                        showServiceDialog(R.string.notification_listener_warning);
-                    } else {
-                        showServiceDialog(R.string.accessibility_warning);
-                    }
+                    showServiceDialog(R.string.notification_listener_warning);
                 }
 
                 // don't update checkbox until we're really active
@@ -340,12 +327,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface alertDialog, int id) {
                         alertDialog.cancel();
-
-                        if (mSupportsNotificationListenerService) {
-                            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-                        } else {
-                            startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
-                        }
+                        startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
                     }
                 })
                 .show();
