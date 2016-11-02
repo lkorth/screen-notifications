@@ -21,4 +21,7 @@ dependencies {
     compile 'com.lukekorth:mailable_log:0.1.4'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.3@aar'
     compile 'io.realm:realm-android:0.87.4'
+    compile 'com.google.firebase:firebase-crash:9.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
