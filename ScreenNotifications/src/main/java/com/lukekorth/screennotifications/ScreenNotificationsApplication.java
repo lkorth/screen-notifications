@@ -29,9 +29,15 @@ public class ScreenNotificationsApplication extends Application implements Threa
     @Override
     public void onCreate() {
         super.onCreate();
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
+
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
         migrate();
+
         MailableLog.init(this, BuildConfig.DEBUG);
+
         mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
