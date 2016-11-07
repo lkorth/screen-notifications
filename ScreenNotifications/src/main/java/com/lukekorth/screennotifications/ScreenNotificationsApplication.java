@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.lukekorth.mailable_log.MailableLog;
+import com.lukekorth.screennotifications.helpers.DatabaseMigrations;
 import com.lukekorth.screennotifications.models.App;
 
 import org.slf4j.Logger;
@@ -31,7 +32,10 @@ public class ScreenNotificationsApplication extends Application implements Threa
         super.onCreate();
 
         Realm.init(this);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .schemaVersion(0)
+                .migration(new DatabaseMigrations())
+                .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
         migrate();
