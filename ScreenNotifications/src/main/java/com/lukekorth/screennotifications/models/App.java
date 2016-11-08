@@ -1,32 +1,19 @@
 package com.lukekorth.screennotifications.models;
 
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-
-import com.lukekorth.screennotifications.R;
-
-import org.slf4j.LoggerFactory;
+import android.support.annotation.Nullable;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.Required;
+import io.realm.internal.OutOfMemoryError;
 
 public class App extends RealmObject {
 
     @Required
     private String packageName;
-    private boolean enabled;
-
-    @Ignore
-    private boolean informationFetched;
-    @Ignore
-    private boolean installed;
-    @Ignore
     private String name;
-    @Ignore
-    private Drawable icon;
+    private boolean enabled;
 
     public String getPackageName() {
         return packageName;
@@ -44,14 +31,6 @@ public class App extends RealmObject {
         this.enabled = enabled;
     }
 
-    public boolean isInstalled() {
-        return installed;
-    }
-
-    public void setInstalled(boolean installed) {
-        this.installed = installed;
-    }
-
     public String getName() {
         return name;
     }
@@ -60,40 +39,12 @@ public class App extends RealmObject {
         this.name = name;
     }
 
-    public Drawable getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
-    }
-
-    public boolean isInformationFetched() {
-        return informationFetched;
-    }
-
-    public void setInformationFetched(boolean informationFetched) {
-        this.informationFetched = informationFetched;
-    }
-
-    public static void fetchInformation(App app, Context context) {
-        if (app.isInformationFetched()) {
-            return;
-        }
-
-        PackageManager packageManager = context.getPackageManager();
+    @Nullable
+    public static Drawable getIcon(App app, PackageManager packageManager) {
         try {
-            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(app.getPackageName(), 0);
-            app.setInstalled(true);
-            app.setName((String) applicationInfo.loadLabel(packageManager));
-            app.setIcon(applicationInfo.loadIcon(packageManager));
-        } catch (OutOfMemoryError e) {
-            LoggerFactory.getLogger("App").warn("OutOfMemoryError: " + e);
-            app.setIcon(context.getResources().getDrawable(R.drawable.sym_def_app_icon));
-        } catch (PackageManager.NameNotFoundException e) {
-            app.setInstalled(false);
+            return packageManager.getApplicationInfo(app.getPackageName(), 0).loadIcon(packageManager);
+        } catch (PackageManager.NameNotFoundException | NullPointerException | OutOfMemoryError e) {
+            return null;
         }
-
-        app.setInformationFetched(true);
     }
 }

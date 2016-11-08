@@ -28,6 +28,8 @@
             android:name=".RecentAppsActivity"
             android:label="@string/recent_apps" />
 
+        <service android:name=".services.AppScanningService"/>
+
         <service android:name=".services.NotificationListener"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
