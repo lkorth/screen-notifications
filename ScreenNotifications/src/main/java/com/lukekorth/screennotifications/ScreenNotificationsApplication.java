@@ -7,19 +7,14 @@ import android.preference.PreferenceManager;
 import com.lukekorth.mailable_log.MailableLog;
 import com.lukekorth.screennotifications.helpers.DatabaseMigrations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class ScreenNotificationsApplication extends Application implements Thread.UncaughtExceptionHandler {
+public class ScreenNotificationsApplication extends Application {
 
     private static final String VERSION = "version";
-
-    private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
 
     @Override
     public void onCreate() {
@@ -35,9 +30,6 @@ public class ScreenNotificationsApplication extends Application implements Threa
         migrate();
 
         MailableLog.init(this, BuildConfig.DEBUG);
-
-        mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     private void migrate() {
@@ -53,28 +45,5 @@ public class ScreenNotificationsApplication extends Application implements Threa
 
             MailableLog.clearLog(this);
         }
-    }
-
-    @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
-        Logger logger = LoggerFactory.getLogger("Exception");
-
-        logger.error("thread.toString(): " + thread.toString());
-        logger.error("Exception: " + ex.toString());
-        logger.error("Exception stacktrace:");
-        for (StackTraceElement trace : ex.getStackTrace()) {
-            logger.error(trace.toString());
-        }
-
-        logger.error("");
-
-        logger.error("cause.toString(): " + ex.getCause().toString());
-        logger.error("Cause: " + ex.getCause().toString());
-        logger.error("Cause stacktrace:");
-        for (StackTraceElement trace : ex.getCause().getStackTrace()) {
-            logger.error(trace.toString());
-        }
-
-        mDefaultExceptionHandler.uncaughtException(thread, ex);
     }
 }
