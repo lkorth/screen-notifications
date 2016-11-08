@@ -3,25 +3,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+
      <PreferenceCategory android:title="@string/donate" >
+
          <Preference
             android:key="donate"
             android:title="@string/donate"
             android:summary="@string/donate_summary" />
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/service" >
+
         <CheckBoxPreference
             android:key="service"
             android:title="@string/service_title"
             android:summary="@string/service_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
+
         <CheckBoxPreference
             android:key="device_admin"
             android:title="@string/admin_title"
             android:summary="@string/admin_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/apps" >
+
         <Preference
             android:key="app"
             android:title="@string/select_apps"
@@ -31,64 +40,85 @@
                      android:targetPackage="com.lukekorth.screennotifications"
                      android:targetClass="com.lukekorth.screennotifications.AppsActivity" />
             </Preference>
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/options" >
+
         <Preference
             android:key="wake_length"
             android:title="@string/wake_length" />
+
         <Preference
             android:key="delay"
             android:title="@string/delay_title" />
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="bright"
             android:title="@string/full_brightness"
             android:summary="@string/full_brightness_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="proxSensor"
             android:title="@string/disable_sensor"
             android:summary="@string/disable_sensor_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/quiet_time">
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="quiet"
             android:summary="@string/quietSum"
             android:title="@string/quietHours"
             android:widgetLayout="@layout/preference_switch_layout" />
+
         <com.lukekorth.screennotifications.views.TimePreference
             android:defaultValue="22:00"
             android:key="startTime"
             android:showDefault="true"
             android:title="@string/startTime" />
+
         <com.lukekorth.screennotifications.views.TimePreference
             android:defaultValue="08:00"
             android:key="stopTime"
             android:showDefault="true"
             android:title="@string/stopTime" />
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/experimental">
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="status-bar"
             android:summary="@string/statusBarSum"
             android:title="@string/statusBar"
             android:widgetLayout="@layout/preference_switch_layout" />
+
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/help">
+
         <Preference
             android:key="recent_apps"
             android:title="@string/recent_apps"
             android:summary="@string/recent_apps_summary" />
+
         <Preference
             android:key="contact"
             android:title="@string/contact"
             android:summary="@string/contact_summary" />
+
         <Preference
             android:key="version"
             android:title="@string/version" />
+
     </PreferenceCategory>
+
 </PreferenceScreen>
