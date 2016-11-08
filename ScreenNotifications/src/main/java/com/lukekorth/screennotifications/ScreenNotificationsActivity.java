@@ -1,7 +1,10 @@
 package com.lukekorth.screennotifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.lukekorth.screennotifications.services.AppScanningService;
 
 public class ScreenNotificationsActivity extends AppCompatActivity {
 
@@ -9,5 +12,7 @@ public class ScreenNotificationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        startService(new Intent(this, AppScanningService.class));
     }
 }
