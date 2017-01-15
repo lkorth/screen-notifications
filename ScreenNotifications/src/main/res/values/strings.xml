@@ -15,7 +15,7 @@
     <string name="donate_summary">Donate to help support app development</string>
     <string name="select_an_amount">Select a donation amount</string>
     <string name="there_was_a_problem">There was a problem</string>
-    <string name="failed_billing">There was a problem trying to make a donation, your phone may not support in app billing or there may be a problem communicating with the server. Please try again later</string>
+    <string name="failed_billing">There was a problem trying to make a donation, your device may not support in app billing or there may be a problem communicating with the server. Please try again later</string>
     <string name="service">Service</string>
     <string name="service_title">Screen Notifications Service</string>
     <string name="service_summary">Enable to turn on Screen Notifications</string>
@@ -37,6 +37,9 @@
     <string name="full_brightness_summary">When enabled, the screen will always turn on at full brightness for notifications</string>
     <string name="disable_sensor">Disable Proximity Sensor</string>
     <string name="disable_sensor_summary">When enabled, the screen will always turn on for notifications, even in your pocket</string>
+    <string name="wake_on_pickup">Turn the screen on when picked up</string>
+    <string name="wake_on_pickup_summary">When enabled, the screen will turn on when picked up</string>
+    <string name="picked_up">Device picked up</string>
     <string name="quiet_time">Quiet Time</string>
     <string name="experimental">Experimental</string>
     <string name="help">Help</string>
@@ -58,7 +61,7 @@
     <string name="set">Set</string>
     <string name="statusBar">Open notification tray</string>
     <string name="statusBarSum">Open the tray when the screen is turned for a notification.
-        This is experimental and will only work on a small number of phones.</string>
+        This is experimental and will only work on a small number of devices.</string>
 
     <string name="market_description">
         A very simple app that turns your screen on for a specified period time when you get a notification. 

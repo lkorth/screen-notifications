@@ -11,6 +11,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
+import com.lukekorth.screennotifications.BuildConfig;
 import com.lukekorth.screennotifications.receivers.ScreenNotificationsDeviceAdminReceiver;
 
 import org.slf4j.Logger;
@@ -50,6 +51,25 @@ public class ScreenController {
                     turnOnScreen();
                 }
             });
+        }
+    }
+
+    public void handlePickup() {
+        if(!isInCall() && !mPowerManager.isScreenOn()) {
+            AppHelper.recordScreenWakeFromApp(BuildConfig.APPLICATION_ID);
+            mLogger.debug("Turning on screen for pickup");
+
+            int flag;
+            if(mPrefs.getBoolean("bright", false)) {
+                flag = PowerManager.SCREEN_BRIGHT_WAKE_LOCK;
+            } else {
+                flag = PowerManager.SCREEN_DIM_WAKE_LOCK;
+            }
+
+            PowerManager.WakeLock wakeLock = mPowerManager.newWakeLock(
+                    flag | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Screen Notifications");
+            wakeLock.acquire();
+            wakeLock.release();
         }
     }
 

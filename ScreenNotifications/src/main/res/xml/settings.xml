@@ -67,6 +67,13 @@
             android:summary="@string/disable_sensor_summary"
             android:widgetLayout="@layout/preference_switch_layout" />
 
+        <CheckBoxPreference
+            android:key="wake_on_pickup"
+            android:title="@string/wake_on_pickup"
+            android:summary="@string/wake_on_pickup_summary"
+            android:defaultValue="false"
+            android:widgetLayout="@layout/preference_switch_layout"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/quiet_time">

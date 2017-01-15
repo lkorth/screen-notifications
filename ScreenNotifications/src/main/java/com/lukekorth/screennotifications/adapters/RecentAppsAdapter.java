@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lukekorth.screennotifications.BuildConfig;
 import com.lukekorth.screennotifications.R;
 import com.lukekorth.screennotifications.helpers.AppHelper;
 import com.lukekorth.screennotifications.models.RecentApp;
@@ -64,7 +65,13 @@ public class RecentAppsAdapter extends BaseAdapter {
         RecentApp.fetchInformation(app, mContext);
         if (app.isInstalled()) {
             holder.icon.setImageDrawable(app.getIcon());
-            holder.name.setText(app.getName());
+
+            if (app.getPackageName().equals(BuildConfig.APPLICATION_ID)) {
+                holder.name.setText(R.string.picked_up);
+            } else {
+                holder.name.setText(app.getName());
+            }
+
             holder.notificationTime.setText(DateUtils.getRelativeTimeSpanString(app.getTimestamp(), System.currentTimeMillis(), 0));
         } else {
             holder.icon.setImageResource(R.drawable.ic_launcher);

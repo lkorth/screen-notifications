@@ -1,10 +1,13 @@
 package com.lukekorth.screennotifications.services;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.hardware.TriggerEvent;
+import android.hardware.TriggerEventListener;
 import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -14,9 +17,25 @@ import com.lukekorth.screennotifications.helpers.ScreenController;
 
 import org.slf4j.LoggerFactory;
 
-public class NotificationListener extends NotificationListenerService implements SensorEventListener {
+public class NotificationListener extends NotificationListenerService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String mLastNotifyingPackage;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
@@ -69,6 +88,38 @@ public class NotificationListener extends NotificationListenerService implements
 
     private void unregisterProximitySensorListener() {
         ((SensorManager) getSystemService(Context.SENSOR_SERVICE)).unregisterListener(this);
+    }
+
+    private boolean isWakeOnPickupEnabled() {
+        return PreferenceManager.getDefaultSharedPreferences(this).getBoolean("wake_on_pickup", false);
+    }
+
+    private void registerPickupListener() {
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor pickupSensor = sensorManager.getDefaultSensor(25);
+        if (pickupSensor != null) {
+            sensorManager.requestTriggerSensor(new TriggerEventListener() {
+                @Override
+                public void onTrigger(TriggerEvent triggerEvent) {
+                    new ScreenController(NotificationListener.this, false).handlePickup();
+
+                    if (isWakeOnPickupEnabled()) {
+                        registerPickupListener();
+                    }
+                }
+            }, pickupSensor);
+        } else {
+            LoggerFactory.getLogger("NotificationListener").debug("No pickup listener available");
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals("wake_on_pickup")) {
+            if (isWakeOnPickupEnabled()) {
+                registerPickupListener();
+            }
+        }
     }
 
     @Override
