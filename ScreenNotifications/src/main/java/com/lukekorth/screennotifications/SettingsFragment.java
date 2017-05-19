@@ -291,8 +291,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private void enableOptions(boolean enable) {
         findPreference("app").setEnabled(enable);
         findPreference("wake_length").setEnabled(enable);
+        findPreference("delay").setEnabled(enable);
         findPreference("bright").setEnabled(enable);
         findPreference("proxSensor").setEnabled(enable);
+        findPreference("wake_on_pickup").setEnabled(enable);
         findPreference("quiet").setEnabled(enable);
         findPreference("startTime").setEnabled(enable);
         findPreference("stopTime").setEnabled(enable);
