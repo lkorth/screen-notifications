@@ -17,7 +17,8 @@ import com.lukekorth.screennotifications.helpers.ScreenController;
 
 import org.slf4j.LoggerFactory;
 
-public class NotificationListener extends NotificationListenerService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class NotificationListener extends NotificationListenerService implements SensorEventListener,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String mLastNotifyingPackage;
 
