@@ -19,6 +19,8 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.lukekorth:mailable_log:0.1.6'
+    compile ('com.lukekorth:mailable_log:0.1.6') {
+             exclude group: 'com.google.android'
+            }
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
 }
